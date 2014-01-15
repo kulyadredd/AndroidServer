@@ -2,8 +2,8 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>org.test</groupId>
-	<artifactId>test</artifactId>
+	<groupId>AndroidServer</groupId>
+	<artifactId>AS</artifactId>
 	<packaging>jar</packaging>
 
 	<name>PyschChecker</name>
@@ -82,12 +82,12 @@
 							<goal>shade</goal>
 						</goals>
 						<configuration>
-							<finalName>pysch-${project.version}-uberjar</finalName>
+							<finalName>AndroidServer-${project.version}-uberjar</finalName>
 							<transformers>
 								<transformer
 									implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
 									<manifestEntries>
-										<Main-Class>org.test.web.WebServer</Main-Class>
+										<Main-Class>webs.WebServer</Main-Class>
 										<Build-Number>${project.version}</Build-Number>
 									</manifestEntries>
 								</transformer>
@@ -120,5 +120,5 @@
 			</plugins>
 		</pluginManagement>
 	</build>
-	<version>0.3.16</version>
+	<version>0.0.1</version>
 </project>
