@@ -1,0 +1,10 @@
+<html>
+	<head>
+		<title> Log in page. </title>
+	</head>
+	<body>		
+		<input type="file" name="to_upload">
+		</br>
+		<a href="/Login">Back</a>
+	</body>
+</html>

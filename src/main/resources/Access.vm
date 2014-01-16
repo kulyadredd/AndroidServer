@@ -1,0 +1,20 @@
+<html>
+	<head>
+		<title> Log in page. </title>
+	</head>
+	<body>
+		<form method="post">
+			<center>
+				Hello $name
+				</br>
+				Some settings
+				</br>
+				To upload files go by this url <a href="$link"> To upload </a>
+				</br>
+				<form>
+					<input type="submit" name="btn_e" value="Exit">
+				</form>
+			</center>
+		</form>
+	</body>
+</html>
