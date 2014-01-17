@@ -1,10 +1,13 @@
 <html>
 	<head>
-		<title> Log in page. </title>
+		<title> Upload page </title>
 	</head>
-	<body>		
+	<body>			
+	<form enctype="multipart/form-data" action="" method="POST">
 		<input type="file" name="to_upload">
-		</br>
-		<a href="/Login">Back</a>
+		<input type="submit" value="Upload It Now">
+	</form>
+	</br>
+	<a href="/Login">Back</a>
 	</body>
 </html>

@@ -64,6 +64,12 @@ public class Config {
     	
     	return Integer.parseInt(s);
     }
+    public String getPathResources(){
+    	
+    	  String path = getClass().getResource("").toString();
+    	  return path; 
+    	  
+    	 }
     
     public static File tildeExpand(String path) {
     	if (path.startsWith("~")) {
