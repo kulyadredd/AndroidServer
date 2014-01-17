@@ -1,7 +1,9 @@
 package webs;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Enumeration;
 import java.util.HashMap;
 
 import javax.servlet.ServletException;
@@ -9,11 +11,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
+import org.eclipse.jetty.util.MultiPartInputStream;
+import org.eclipse.jetty.util.MultiPartInputStream.MultiPart;
+
 import mvc.Controller;
 import mvc.PathParser;
 import mvc.TemplateView;
 import mvc.View;
-import webs.UPFile;
+
 
 public class UpLoadFile extends Controller {
 	
@@ -27,16 +32,18 @@ public class UpLoadFile extends Controller {
 		if(session.getAttribute(session_tag)!=null)
 			return new TemplateView("Upload.vm", new HashMap<String, Object>());
 		else
-			return new TemplateView("ErrorUrl.vm", new HashMap<String, Object>());
+			return new TemplateView("NoAccess.vm", new HashMap<String, Object>());
 	}
 	
 	public View post(HttpServletRequest request,PathParser pathInfo) 
 			throws IOException, ServletException {
-		InputStream in = request.getInputStream();
-		if (in!=null){
-		new UPFile(in);     
-		return new TemplateView("Uploads.vm", new HashMap<String, Object>());	
-		}else return new TemplateView("Uploadf.vm", new HashMap<String, Object>());	
+		session  = request.getSession();
+		System.out.println(request.getContentType());
+		if (session.getAttribute(session_tag)!=null){						
+			DownloadManager dm = new DownloadManager(request.getInputStream());
+			dm.upload();			
+		return new TemplateView("Upload.vm", new HashMap<String, Object>());	
+		}else return new TemplateView("NoAccess.vm", new HashMap<String, Object>());	
 	}	
 }
 

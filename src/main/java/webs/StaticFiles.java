@@ -22,7 +22,7 @@ public class StaticFiles extends Controller{
 	public View get(HttpServletRequest request, PathParser pathInfo)
 			throws Exception {
 		// TODO Auto-generated method stub
-		return new StaticFilesView(request.getRequestURI());
+		return new StaticFilesView(request.getRequestURI().substring(1));
 	}
 	
 

@@ -3,9 +3,9 @@
 		<title> Upload page </title>
 	</head>
 	<body>			
-	<form enctype="multipart/form-data" action="" method="POST">
-		<input type="file" name="to_upload">
-		<input type="submit" value="Upload It Now">
+	<form enctype="multipart/form-data" action="" method="post">
+		<input type="file"  name="to_upload" >
+		<input type="submit" value="Upload" >
 	</form>
 	</br>
 	<a href="/Login">Back</a>
