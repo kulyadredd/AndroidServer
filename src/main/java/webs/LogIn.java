@@ -14,8 +14,6 @@ import mvc.View;
 
 public class LogIn extends Controller{
 	
-//	private String user_name = "1234"; // from db ))
-//	private String user_password = "1234"; // its too
 	private HttpSession session;
 	private static HashMap<String, Object> map;
 	private final String upload_url = "/up";
@@ -54,8 +52,7 @@ public class LogIn extends Controller{
 	
 	private boolean checkUser(String name, String pass) throws UnknownHostException{
 		if(name!=null&&pass!=null)
-			if(Mongo.mongo(name, pass))
-				return true;
+			return UserDB.isUser(name, pass);
 		return false;			
 	}
 }
