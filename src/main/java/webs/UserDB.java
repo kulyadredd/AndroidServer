@@ -12,13 +12,12 @@ public class UserDB {
 	  MongoClient mongo = new MongoClient("192.168.146.129", 27017);
 	  DB db = mongo.getDB("AndroidServer");
 	  DBCollection coll = db.getCollection("Users");
-	  DBCursor cur = coll.find();
-	  String s = null;
-	  while(cur.hasNext()) {
-		  s = cur.next().toString() ;
-	      if(s.contains("\"username\" : "+"\""+name+"\"")&&s.contains("\"password\" : "+"\""+pass+"\""))
-	    	 return true;
-	  }
+	  BasicDBObject querry = new BasicDBObject();
+	  querry.put("username", name );
+	  querry.put("password", pass);
+	  DBCursor cur = coll.find(querry);
+	  if( cur.hasNext() )
+    	 return true;
 	  return false;	  	  
   }
 }
