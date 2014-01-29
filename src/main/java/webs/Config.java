@@ -25,8 +25,8 @@ public class Config {
 	private File configFile;
 	private int port = 8080;
 	public String staticRoot = "/";
-	private static final int dbport = 27017;
-	private static final String ipdb = "192.168.146.129";
+	public static final int DBPORT = 27017;
+	public static final String IPDB = "192.168.146.129";
 	private static final String IMAGES_PATH = "images/cats";
 	private static final String AUDIO_PATH = "audio/cats";
     
@@ -97,14 +97,6 @@ public class Config {
 
 	public int getPort() {
 		return port;
-	}
-	
-	public static String getIpDB(){
-		return ipdb;
-	}
-	
-	public static int getPortDB(){
-		return dbport;
 	}
 	
 	public static String getPath(String file){
