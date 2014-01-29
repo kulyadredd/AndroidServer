@@ -9,7 +9,7 @@ public class UserDB {
 	
   public static boolean isUser (String name, String pass) throws UnknownHostException {
 	  
-	  MongoClient mongo = new MongoClient("192.168.146.129", 27017);
+	  MongoClient mongo = new MongoClient(Config.getIpDB(), Config.getPortDB());
 	  DB db = mongo.getDB("AndroidServer");
 	  DBCollection coll = db.getCollection("Users");
 	  BasicDBObject querry = new BasicDBObject();

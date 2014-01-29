@@ -25,12 +25,14 @@ public class Config {
 	private File configFile;
 	private int port = 8080;
 	public String staticRoot = "/";
+	private static final int dbport = 27017;
+	private static final String ipdb = "192.168.146.129";
 	private static final String IMAGES_PATH = "images/cats";
 	private static final String AUDIO_PATH = "audio/cats";
     
     public static Config parse(File configFile) throws IOException {
         System.err.println("Reading config file: " + configFile.getAbsolutePath());
-
+        
         Config cfg = parse(loadProperties(configFile));
         cfg.configFile = configFile;
         return cfg;
@@ -52,7 +54,6 @@ public class Config {
     
     public static Config parse(Properties config) throws IOException {
         Config cfg = new Config();
-        
         cfg.port = getProperty(config, "port", cfg.port);
         cfg.staticRoot = config.getProperty("static.root", cfg.staticRoot);
         
@@ -96,6 +97,14 @@ public class Config {
 
 	public int getPort() {
 		return port;
+	}
+	
+	public static String getIpDB(){
+		return ipdb;
+	}
+	
+	public static int getPortDB(){
+		return dbport;
 	}
 	
 	public static String getPath(String file){
