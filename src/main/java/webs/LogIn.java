@@ -1,7 +1,6 @@
 package webs;
 
 import java.net.UnknownHostException;
-import java.util.Enumeration;
 import java.util.HashMap;
 
 import javax.servlet.http.HttpServletRequest;

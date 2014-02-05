@@ -5,12 +5,9 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
-import java.util.Properties;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import webs.Config;
 
 public class StaticFilesView implements View {
 	
@@ -29,11 +26,14 @@ public class StaticFilesView implements View {
 //		if(!root.startsWith(Config.parse(new Properties()).staticRoot))
 //			return;				
 		
-
 		if(root.endsWith(".png")||root.endsWith(".jpg"))
 			response.setContentType("image/png");
 		else if(root.endsWith(".mid"))
 			response.setContentType("audio/midi");
+		else if(root.endsWith(".mp3"))
+			response.setContentType("audio/mpeg");
+		else if(root.endsWith(".txt"))	
+			response.setContentType("text/plain");
 
 		try{			
 			writeFile(response.getWriter(), root);

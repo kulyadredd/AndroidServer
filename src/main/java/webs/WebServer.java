@@ -24,6 +24,8 @@ public class WebServer {
 
 	    server.add("/images/*", new StaticFiles() );
 	    server.add("/sounds/*", new StaticFiles() );
+	    server.add("/titles/*", new StaticFiles());
+	    server.add("/info", new DataInfo());
 	    server.add("/Login", new LogIn() );
 	    server.add("/up", new UpLoadFile() );
         System.out.println("Init completed.");
