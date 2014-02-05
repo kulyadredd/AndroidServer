@@ -1,6 +1,7 @@
 package webs;
 
 import java.io.File;
+import java.util.Arrays;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -15,19 +16,26 @@ public class DataInfo extends Controller{
 	
 	public View get(HttpServletRequest request, PathParser pathInfo)
 			throws Exception {
-		if (request.getRequestURI().toString()!=null && request.getRequestURI().toString().contains("/info")&&
-			request.getParameter("param")==null	)
+		
+		if (request.getParameter("datainfo")!=null && request.getParameter("datainfo").equals("1"))
 			return new DataInfoView(resourcesInfo(null));
-		else
-			return new DataInfoView(resourcesInfo(request.getParameter("param")));
+		else if (request.getParameter("VOfC")!=null) 
+			return new DataInfoView(resourcesInfo(request.getParameter("VOfC")));
+		else return null;
+		
 	}
-	private String[] resourcesInfo(String param) {
+	
+	
+	private String resourcesInfo(String valueOfCategories) {
+		
 		String dirName = null;
-		if (param!=null)
-		dirName = System.getProperty("user.dir")+"\\images\\"+param;
+		if (valueOfCategories!=null)
+			dirName = System.getProperty("user.dir")+"\\images\\"+valueOfCategories;
 		else dirName = System.getProperty("user.dir")+"\\images\\";
 		File checkDir = new File (dirName);
 		resources =checkDir.list();
-		return resources ;		
+		if (resources!=null)
+			return Arrays.toString(resources);	
+		else return "";
 	}
 }

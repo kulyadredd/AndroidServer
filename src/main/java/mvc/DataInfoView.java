@@ -1,22 +1,21 @@
 package mvc;
 
 import java.io.*;
-import java.util.Arrays;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 public class DataInfoView implements View {
 	
-	private String[] resources;  
+	private String catalogOfResources;  
 	
-	public DataInfoView(String[] resourcesInfo) {
-		this.resources = resourcesInfo;
+	public DataInfoView(String resourcesInfo) {
+		this.catalogOfResources = resourcesInfo;
 	}
 
 	@Override
 	public void view(HttpServletRequest request, HttpServletResponse response)
 			throws IOException {		
-		response.getWriter().print(Arrays.toString(resources));
+		response.getWriter().print(catalogOfResources);
 	}
 }
