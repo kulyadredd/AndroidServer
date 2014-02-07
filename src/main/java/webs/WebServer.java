@@ -22,6 +22,7 @@ public class WebServer {
         ErrorHandler errorHandler = new ErrorHandler();
         errorHandler.setShowStacks(true);
 
+        UserDB.initDB();
 	    server.add("/images/*", new StaticFiles() );
 	    server.add("/sounds/*", new StaticFiles() );
 	    server.add("/text/*", new StaticFiles());
