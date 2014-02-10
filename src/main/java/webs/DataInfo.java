@@ -16,12 +16,11 @@ public class DataInfo extends Controller{
 	
 	public View get(HttpServletRequest request, PathParser pathInfo)
 			throws Exception {
-		
-		if (request.getParameter("datainfo")!=null && request.getParameter("datainfo").equals("1"))
+		String typeOfData = request.getRequestURI().substring(1);
+		if (typeOfData.endsWith("info/"))
 			return new DataInfoView(resourcesInfo(null));
-		else if (request.getParameter("VOfC")!=null) 
-			return new DataInfoView(resourcesInfo(request.getParameter("VOfC")));
-		else return null;
+		else 
+			return new DataInfoView(resourcesInfo(typeOfData.substring(5, typeOfData.length())));
 		
 	}
 	
