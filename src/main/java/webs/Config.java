@@ -24,7 +24,7 @@ public class Config {
 
 	private File configFile;
 	private int port = 8080;
-	public String staticRoot = "/";
+	public String staticRoot = ".";
 	public static final int DB_PORT = 27017;
 	public static final String IP_DB = "127.0.0.1";
 	private static final String IMAGES_PATH = "images/cats";
@@ -105,4 +105,8 @@ public class Config {
 		else
 			return Config.AUDIO_PATH;
 	}
+
+    public String getStaticRoot() {
+        return this.staticRoot;
+    }
 }

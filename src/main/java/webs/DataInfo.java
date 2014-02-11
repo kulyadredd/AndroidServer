@@ -1,40 +1,48 @@
 package webs;
 
+import static org.apache.commons.lang.StringUtils.isBlank;
+
 import java.io.File;
 import java.util.Arrays;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.lang.StringUtils;
+
 import mvc.Controller;
 import mvc.DataInfoView;
+import mvc.JsonView;
 import mvc.PathParser;
 import mvc.View;
 
 public class DataInfo extends Controller{
 	
-	private String[] resources;
+    private String dataRoot;
+	
+	public DataInfo(String dataRoot){
+        this.dataRoot = dataRoot;
+	}
 	
 	public View get(HttpServletRequest request, PathParser pathInfo)
 			throws Exception {
-		String typeOfData = request.getRequestURI().substring(1);
-		if (typeOfData.endsWith("info/"))
-			return new DataInfoView(resourcesInfo(null));
+	    String rest = pathInfo.cutNext();
+		if (isBlank(rest))
+			return new JsonView(getCategoryList());
 		else 
-			return new DataInfoView(resourcesInfo(typeOfData.substring(5, typeOfData.length())));
+			return new JsonView(getFileList(rest));
 		
 	}
+
+    private String[] getCategoryList() {
+        String dirName = dataRoot + File.separator + "images" + File.separator;
+        File checkDir = new File(dirName);
+        return checkDir.list();
+    }
 	
-	
-	private String resourcesInfo(String valueOfCategories) {
+	private String[] getFileList(String valueOfCategories) {
 		
-		String dirName = null;
-		if (valueOfCategories!=null)
-			dirName = System.getProperty("user.dir")+"\\images\\"+valueOfCategories;
-		else dirName = System.getProperty("user.dir")+"\\images\\";
+		String dirName = dataRoot+File.separator+"images"+File.separator+valueOfCategories;
 		File checkDir = new File (dirName);
-		resources =checkDir.list();
-		if (resources!=null)
-			return Arrays.toString(resources);	
-		else return "";
+		return checkDir.list();
 	}
 }

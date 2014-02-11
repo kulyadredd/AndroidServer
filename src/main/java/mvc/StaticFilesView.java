@@ -12,11 +12,10 @@ import javax.servlet.http.HttpServletResponse;
 public class StaticFilesView implements View {
 	
 	private InputStream in;
-	private String root;
+	private String path;
 
-	public StaticFilesView(String staticRoot) {
-		
-		this.root = staticRoot.toLowerCase();
+	public StaticFilesView(String path) {
+	    this.path = path;
 	}
 
 	@Override
@@ -26,17 +25,17 @@ public class StaticFilesView implements View {
 //		if(!root.startsWith(Config.parse(new Properties()).staticRoot))
 //			return;				
 		
-		if(root.endsWith(".png")||root.endsWith(".jpg"))
+		if(path.endsWith(".png")||path.endsWith(".jpg"))
 			response.setContentType("image/png");
-		else if(root.endsWith(".mid"))
+		else if(path.endsWith(".mid"))
 			response.setContentType("audio/midi");
-		else if(root.endsWith(".mp3"))
+		else if(path.endsWith(".mp3"))
 			response.setContentType("audio/mpeg");
-		else if(root.endsWith(".txt"))	
+		else if(path.endsWith(".txt"))	
 			response.setContentType("text/plain");
 
 		try{			
-			writeFile(response.getWriter(), root);
+			writeFile(response.getWriter(), path);
 		}
 		catch(Exception e){
 			e.getMessage();
@@ -46,7 +45,7 @@ public class StaticFilesView implements View {
 	}
 	
 private void writeFile(PrintWriter out, String path)throws IOException{		
-		in = new FileInputStream(new File(root));
+		in = new FileInputStream(new File(path));
 		int ch = 0;
 		while((ch = in.read()) != -1){
 			out.print((char) ch);			
