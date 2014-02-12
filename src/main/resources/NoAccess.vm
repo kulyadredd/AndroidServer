@@ -1,12 +1,37 @@
+<!DOCTYPE html>
 <html>
 	<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css">
+	<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap-theme.min.css">
+	<script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
+	<script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
 		<title> Log in page. </title>
+		<style type="text/css">
+    		.bs{
+			    margin: 10px auto; 
+				width:250px;
+    		}
+		</style>
 	</head>
 	<body>
-		<form method="post">
-			<input type="text" name="log_name">
-			<input type="password" name="log_pass">
-			<input type="submit" name="Ok">
-		</form>
+		<div class= bs>
+		    <form method="post">
+		        <div class="form-group">
+		            <label for="inputEmail">Username:</label>
+		            <input type="TEXT" class="form-control" name="log_name" placeholder="Username">
+		        </div>
+		        <div class="form-group">
+		            <label for="inputPassword">Password:</label>
+		            <input type="password" class="form-control" name="log_pass" placeholder="Password">
+		        </div>
+		        <div align="center">
+		        <button type="submit" name="Ok" class="btn btn-primary">Login</button>
+		        </div>
+		    </form>
+		</div>
+		<script>
+    		$incorrect
+  		</script>		
 	</body>
 </html>

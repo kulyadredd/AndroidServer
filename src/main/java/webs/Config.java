@@ -26,7 +26,7 @@ public class Config {
 	private int port = 8080;
 	public String staticRoot = ".";
 	public static final int DB_PORT = 27017;
-	public static final String IP_DB = "127.0.0.1";
+	public static final String IP_DB = "192.168.146.133";
 	private static final String IMAGES_PATH = "images/cats";
 	private static final String AUDIO_PATH = "audio/cats";
     

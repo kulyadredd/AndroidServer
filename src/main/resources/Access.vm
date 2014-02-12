@@ -1,20 +1,76 @@
+<!DOCTYPE html>
 <html>
 	<head>
-		<title> Log in page. </title>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css">
+		<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap-theme.min.css">
+		<script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
+		<script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+		<title> Main page. </title>
+		<style type="text/css">
+    	</style>
 	</head>
 	<body>
-		<form method="post">
-			<center>
-				Hello $name
-				</br>
-				Some settings
-				</br>
-				To upload files go by this url <a href="$link"> To upload </a>
-				</br>
-				<form>
-					<input type="submit" name="btn_e" value="Exit">
-				</form>
-			</center>
-		</form>
+  	<div class="navbar navbar-inverse">
+      <div class="navbar-inner">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a href="#/" class="navbar-brand">Назва проекту</a>
+      </div>
+      <div class="collapse navbar-collapse navbar-ex1-collapse">
+        <ul class="nav navbar-nav">
+          <li class="divider-vertical"></li>
+          <li><a href="#"><span class="glyphicon glyphicon-home"></span>Main</a></li>
+          <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">About Company<b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                  <li><a href="#">Arsen</a></li>
+                  <li><a href="#">Semen</a></li>
+                  <li><a href="#">Romko</a></li>
+              </ul>
+          </li>
+          <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Services<b class="caret"></b></a>
+            <ul class="dropdown-menu">
+              <li><a href="#">Softvare developer</a></li>
+                <li class="dropdown dropdown-submenu"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Web-developer<b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                  <li><a href="#">Create new site</a></li>
+                  <li><a href="#">Udate site</a></li>
+                </ul>
+              </li>        
+            </ul>
+          </li>
+          <li><a href="#">Price</a></li>
+          <li><a href="#">Contacts</a></li>
+          <li><a href="$link"><i class="glyphicon glyphicon-upload"></i> Upload file </a></li>
+          </ul>
+          <form class="form-search navbar-form navbar-right" method="post">
+            <font color="white" size="5"> <i class="glyphicon glyphicon-user"></i> Hello $name </font>
+            <input type="submit" name="btn_e" value="Exit" class="btn">
+          </form>
+      </div>
+    </div>
+    <div class="container">
+      <header>
+          <h1>Назва сайту</h1>
+      </header>
+      <article class="row">
+          <p class="col-md-4">
+              Любий текст який може колись прийти в голову
+               і буде написаний на цій сторінці.
+          </p>
+          <p class="col-md-4">
+              Любий текст який може колись прийти в голову
+               і буде написаний на цій сторінці.
+          </p>
+          <p class="col-md-4">
+              Любий текст який може колись прийти в голову
+               і буде написаний на цій сторінці.
+          </p>
+      </article>
+    </div>
 	</body>
 </html>

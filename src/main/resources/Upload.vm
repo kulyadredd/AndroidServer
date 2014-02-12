@@ -8,6 +8,6 @@
 		<input type="submit" value="Upload" >
 	</form>
 	</br>
-	<a href="/Login">Back</a>
+	<a href="/">Back</a>
 	</body>
 </html>
