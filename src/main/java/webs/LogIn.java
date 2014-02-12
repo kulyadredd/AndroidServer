@@ -14,7 +14,7 @@ import mvc.View;
 public class LogIn extends Controller{
 	
 	private HttpSession session;
-	public static HashMap<String, Object> map =  new HashMap<String, Object>();
+	private static HashMap<String, Object> map = new HashMap<String, Object>();
 	private final String upload_url = "up";
 	private final String session_tag = "Login";
 	

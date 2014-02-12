@@ -17,14 +17,18 @@ public class UpLoadFile extends Controller {
 	
 	private HttpSession session;
 	private final String session_tag = "Login";
+	private static HashMap<String, Object> map = new HashMap<String, Object>();;
     
 	@Override
 	public View get(HttpServletRequest request, PathParser pathInfo)
 			throws Exception {
 		session = request.getSession();
-		if(session.getAttribute(session_tag)!=null)
-			return new TemplateView("Upload.vm", new HashMap<String, Object>());
-		else
+		if(session.getAttribute(session_tag)!=null){
+			map.clear();
+			map.put("success", "");
+			map.put("name", session.getAttribute(session_tag).toString() );
+			return new TemplateView("Upload.vm", map);
+		}else
 			return new TemplateView("NoAccess.vm", new HashMap<String, Object>());
 	}
 	
@@ -34,8 +38,9 @@ public class UpLoadFile extends Controller {
 		System.out.println(request.getContentType());
 		if (session.getAttribute(session_tag)!=null){						
 			DownloadManager dm = new DownloadManager(request.getInputStream());
-			dm.upload();			
-		return new TemplateView("Upload.vm", new HashMap<String, Object>());	
+			dm.upload();
+			map.put("success", "alert('Файл завантажено успішно!');");
+			return new TemplateView("Upload.vm", map);	
 		}else return new TemplateView("NoAccess.vm", new HashMap<String, Object>());	
 	}	
 }

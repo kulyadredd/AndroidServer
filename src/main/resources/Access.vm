@@ -7,8 +7,6 @@
 		<script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
 		<script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
 		<title> Main page. </title>
-		<style type="text/css">
-    	</style>
 	</head>
 	<body>
   	<div class="navbar navbar-inverse">
@@ -49,7 +47,7 @@
           </ul>
           <form class="form-search navbar-form navbar-right" method="post">
             <font color="white" size="5"> <i class="glyphicon glyphicon-user"></i> Hello $name </font>
-            <input type="submit" name="btn_e" value="Exit" class="btn">
+            <input type="submit" name="btn_e" value="Exit" class="btn btn-info">
           </form>
       </div>
     </div>
