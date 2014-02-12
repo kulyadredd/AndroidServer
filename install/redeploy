@@ -1,0 +1,8 @@
+#!/bin/bash
+
+FILENAME=/var/log/server/deploy-`date +%Y%m%d%H%M`.log
+
+
+./install/server stop >> $FILENAME 2>&1
+./install/deploy  >> $FILENAME 2>&1
+./install/server start  >> $FILENAME 2>&1

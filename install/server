@@ -1,0 +1,263 @@
+#!/bin/bash
+#
+# server      This shell script takes care of starting and stopping backend
+#
+# chkconfig: - 80 20
+#
+### BEGIN INIT INFO
+# Provides: server
+# Required-Start: $network $syslog
+# Required-Stop: $network $syslog
+# Default-Start: 3 5
+# Default-Stop: 0 1 2 6
+# Description: KittnsServer
+# Short-Description: start and stop server
+### END INIT INFO
+#
+
+#set -xue
+
+# commented out until the RHEL and FC daemon functions converge
+# Source the function library
+#if [ -r "/etc/rc.d/init.d/functions" ]; then
+    #. /etc/rc.d/init.d/functions
+#fi
+NAME="$(basename $0)"
+
+if [ -z "${KILL_SIGNAL}" ]; then
+    KILL_SIGNAL="9"
+fi
+
+unset ISBOOT
+if [ "${NAME:0:1}" = "S" -o "${NAME:0:1}" = "K" ]; then
+    NAME="${NAME:3}"
+    ISBOOT="1"
+fi
+
+# For SELinux we need to use 'runuser' not 'su'
+if [ -x "/sbin/runuser" ]; then
+    SU="/sbin/runuser"
+else
+    SU="su"
+fi
+
+#######
+NOW=$(date +"%m-%d-%Y-%T")
+SERVER_PROG="$NAME"
+SERVER_LOG="/var/log/$NAME/$NAME-stdout-$NOW.log"
+SERVER_HOME="." #"/usr/share/$NAME"
+SERVER_CFG="${HOME}/etc/$NAME/$NAME.conf"  #"/etc/$NAME/$NAME.conf"
+
+log ()
+{
+    echo "$1"
+    echo "$1" >> $SERVER_LOG
+}
+
+# Get the molecule config (use this for environment specific settings)
+if [ -r "$SERVER_CFG" ]; then
+    . ${SERVER_CFG}
+fi
+
+if [ -z "$SERVER_USER" ]; then
+    log "$SERVER_USER is empty, should be set in $SERVER_CFG"
+    SERVER_USER=`whoami`
+    # exit 1;
+fi
+
+CUR_USER="$(whoami)"
+
+log "Current user: $CUR_USER"
+log "Target user: $SERVER_USER"
+
+if [ "$SERVER_USER" = "$CUR_USER" ]; then
+    SAME_USER="true"
+else
+    SAME_USER="false"
+fi
+
+log "Same user? = $SAME_USER"
+
+SERVER_JAR="$SERVER_HOME/target/server-uberjar.jar"
+
+# Define molecule start script
+SERVER_START_CMD="java $SERVER_JAVA_OPTS -Dapple.awt.UIElement=true -Djava.awt.headless=true -Dfile.encoding=UTF-8 -jar $SERVER_JAR $SERVER_CFG >> $SERVER_LOG 2>&1 &"
+
+log "Start command: $SERVER_START_CMD"
+########
+
+RETVAL="0"
+
+# remove when the RHEL and FC daemon functions converge
+# (pulled from /etc/rc.d/init.d/functions)
+function checkpid() {
+    local i
+    for i in $* ; do
+        if [ -d "/proc/${i}" ]; then
+            return 0
+        fi
+    done
+    return 1
+}
+
+# remove when the RHEL and FC daemon functions converge
+# (pulled from /etc/rc.d/init.d/functions)
+function echo_failure() {
+    log -en "\\033[60G"
+    log -n "[  "
+    log -n $"FAILED"
+    log -n "  ]"
+    log -ne "\r"
+    return 1
+}
+
+# remove when the RHEL and FC daemon functions converge
+# (pulled from /etc/rc.d/init.d/functions)
+function echo_success() {
+    echo -en "\\033[60G"
+    echo -n "[  "
+    echo -n $"OK"
+    echo -n "  ]"
+    echo -ne "\r"
+    log "OK"
+    return 0
+}
+
+# See how we were called.
+function start() {
+    log "Starting ${SERVER_PROG}:"
+    echo -n "Starting ${SERVER_PROG}: "
+#    if [ -f "/var/lock/subsys/${NAME}" ] ; then
+        if [ -f "/var/run/${NAME}/${NAME}.pid" ]; then
+            read kpid < /var/run/${NAME}/${NAME}.pid
+                if checkpid $kpid 2>&1; then
+                    log "$NAME process already running"
+                        return -1
+                fi
+        fi
+#    fi
+    export SERVER_PID="/var/run/${NAME}/${NAME}.pid"
+    touch $SERVER_PID 2>&1 || RETVAL="4"
+    if [ "$RETVAL" -eq "0" -a "$?" -eq "0" ]; then
+       chown ${SERVER_USER} $SERVER_PID
+    fi
+    [ "$RETVAL" -eq "0" ] && touch $SERVER_LOG 2>&1 || RETVAL="4"
+    if [ "$RETVAL" -eq "0" -a "$?" -eq "0" ]; then
+       chown ${SERVER_USER} ${SERVER_LOG}
+    fi
+
+    if [ $SAME_USER = "true" ]; then
+        log "About to start: nohup $SERVER_START_CMD"
+        nohup $SERVER_START_CMD >> $SERVER_LOG 2>> $SERVER_LOG < /dev/null &
+        sleep 1s
+        if [ -n `pgrep -u $SERVER_USER -f ${NAME}.jar` ]; then
+           RETVAL=0
+        else
+           RETVAL=1
+        fi
+
+        log "Return value:$RETVAL"
+    else
+    log "$SU - $SERVER_USER -c $SERVER_START_CMD"
+        $SU - $SERVER_USER -c "$SERVER_START_CMD" >> $SERVER_LOG 3>&1
+        RETVAL="$?"
+        log "Return value:$RETVAL"
+    fi
+
+    if [ "$RETVAL" -eq 0 ]; then 
+        pgrep -u $SERVER_USER -f ${SERVER_JAR} > $SERVER_PID
+        echo_success
+        # touch /var/lock/subsys/${NAME}
+    else
+        echo_failure
+    fi
+    echo
+    return $RETVAL
+}
+
+function status() {
+    RETVAL="1"
+    if [ -f "/var/run/${NAME}/${NAME}.pid" ]; then
+        read kpid < /var/run/${NAME}/${NAME}.pid
+        if checkpid $kpid 2>&1; then
+            log "$0 is already running (${kpid})"
+            RETVAL="0"
+        else
+            log "lock file found but no process running for pid $kpid"
+        fi
+    else
+        pid="$(pgrep -u $SERVER_USER -f ${NAME}.jar)"
+        if [ -n "$pid" ]; then
+            echo "$0 running (${pid}) but no PID file exists"
+            RETVAL="0"
+        else
+            echo "$0 is stopped"
+        fi
+    fi
+    return $RETVAL
+}
+
+function stop() {
+    log "Stopping ${SERVER_PROG}: "
+    if [ -f "/var/run/${NAME}/${NAME}.pid" ]; then
+        read kpid < /var/run/${NAME}/${NAME}.pid
+        if [ -z "$kpid" ]; then
+           log "There is no pid in the /var/run/${NAME}/${NAME}.pid file, trying to ps"
+           kpid="$(pgrep -u $SERVER_USER -f ${NAME}.jar)"
+           log "pgrepped kpid=$kpid"
+        fi
+    else
+        log "There is no file /var/run/${NAME}/${NAME}.pid, trying to ps"
+        kpid="$(pgrep -u $SERVER_USER -f ${NAME}.jar)"
+        log "pgrepped kpid=$kpid"
+    fi
+
+    if [ -n "$kpid" ]; then 
+        log "sending kill signal to the process with pid=${kpid}"
+        
+        if [ $SAME_USER = "true" ]; then
+            kill -${KILL_SIGNAL} ${kpid} >> $SERVER_LOG 2>&1
+            # rm -f /var/lock/subsys/$NAME 
+            rm -f /var/run/${NAME}/$NAME.pid
+            log -n "Stopping ${SERVER_PROG}: "
+            echo_success
+        else
+            $SU - $SERVER_USER -c "kill -${KILL_SIGNAL} ${kpid}" >> $SERVER_LOG 2>&1
+            # rm -f /var/lock/subsys/$NAME 
+            rm -f /var/run/${NAME}/$NAME.pid
+            log -n "Stopping ${SERVER_PROG}: "
+            echo_success
+        fi
+
+     else
+        log "Couldn't find the proccess pid"
+        log -n "Stopping ${SERVER_PROG}: "
+        echo_failure
+     fi       
+    
+    return 0
+}
+
+
+# See how we were called.
+case "$1" in
+    start)
+        start
+        ;;
+    stop)
+        stop
+        ;;
+    restart)
+        stop
+        sleep 2    
+        start
+        ;;
+    status)
+        status
+        ;;
+    *)
+        exit 1
+esac
+
+exit $RETVAL
+
