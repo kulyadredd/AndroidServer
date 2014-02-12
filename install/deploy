@@ -1,0 +1,4 @@
+#!/bin/bash
+
+mvn clean package && cd target && ln -svf AndroidServer*uberjar.jar server-uberjar.jar
+
