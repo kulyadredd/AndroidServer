@@ -7,11 +7,12 @@ import java.io.InputStream;
 import java.util.LinkedList;
 import java.util.List;
 
+import mvc.TemplateView;
+
 public class DownloadManager {
 	private InputStream in;
 	private String fileName;
 	private LinkedList<Byte> nameLine = new LinkedList<>();
-
 	
 	public DownloadManager(InputStream in){
 		this.in = in;
@@ -26,7 +27,6 @@ public class DownloadManager {
 		while ((b = in.read()) != -1) list.add((byte) b);		
 		clearWrap(list);
 		File f = new File(Config.getPath(fileName.toLowerCase())+fileName);
-		System.out.println(f.getAbsolutePath());
 		out = new FileOutputStream(f);
 		for (Byte bt : list) out.write(bt);
 		in.close();
