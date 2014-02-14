@@ -24,8 +24,13 @@ public class StaticFilesView implements View {
 		
 //		if(!root.startsWith(Config.parse(new Properties()).staticRoot))
 //			return;				
-		
-		if(path.endsWith(".png")||path.endsWith(".jpg"))
+		if(path.endsWith(".js"))
+			response.setContentType("text/plain");
+		else if(path.endsWith(".css"))
+			response.setContentType("text/css");
+		else if(path.endsWith(".html"))
+			response.setContentType("text/html");
+		else if(path.endsWith(".png")||path.endsWith(".jpg"))
 			response.setContentType("image/png");
 		else if(path.endsWith(".mid"))
 			response.setContentType("audio/midi");

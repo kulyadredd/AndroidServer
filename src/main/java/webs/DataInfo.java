@@ -7,6 +7,7 @@ import java.io.File;
 import javax.servlet.http.HttpServletRequest;
 
 
+
 import mvc.Controller;
 import mvc.JsonView;
 import mvc.PathParser;
@@ -15,7 +16,6 @@ import mvc.View;
 public class DataInfo extends Controller{
 	
     private String dataRoot;
-	
 	public DataInfo(String dataRoot){
         this.dataRoot = dataRoot;
 	}

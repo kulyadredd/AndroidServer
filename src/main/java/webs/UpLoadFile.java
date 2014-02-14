@@ -1,7 +1,7 @@
 package webs;
 
+import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.HashMap;
 
 import javax.servlet.ServletException;
@@ -18,31 +18,43 @@ public class UpLoadFile extends Controller {
 	
 	private HttpSession session;
 	private final String session_tag = "Login";
-	private static HashMap<String, Object> map = new HashMap<String, Object>();
-    
+	private static HashMap<String, Object> map = new HashMap<String, Object>();    
+	
 	@Override
 	public View get(HttpServletRequest request, PathParser pathInfo)
 			throws Exception {
 		session = request.getSession();
 		if(session.getAttribute(session_tag)!=null){
 			map.clear();
-			map.put("success", "");
 			map.put("name", session.getAttribute(session_tag).toString());
+			map.put("server", getFileUpload());
 			return new TemplateView("Upload.vm", map);
 		}else
 			return new TemplateView("NoAccess.vm", new HashMap<String, Object>());
 	}
 	
+	private String getFileUpload() {
+		String s = "";
+		File checkDir = new File (System.getProperty("user.dir")+"\\images\\cats");
+		for(int i=0;i<checkDir.list().length;i++){
+			if (i==0)
+				s+="['"+checkDir.list()[i] +"',";
+			else if(i+1==checkDir.list().length)
+				s+="'"+checkDir.list()[i] +"']";
+			else s += "'"+checkDir.list()[i] +"',";
+		}
+		return s;
+	}
+
 	public View post(HttpServletRequest request,PathParser pathInfo) 
 			throws IOException, ServletException {
 		session  = request.getSession();
 		if (session.getAttribute(session_tag)!=null && request.getInputStream().available()>193){
 			DownloadManager dm = new DownloadManager(request.getInputStream());			
 			dm.upload();
-			map.put("success", "alert('Файл завантажено успішно!');");
+			map.put("server", getFileUpload());
 			return new TemplateView("Upload.vm", map);	
 		}else
-			map.put("success", "alert('Файл не обрано!');");
 		return new TemplateView("Upload.vm", map);	
 	}	
 }

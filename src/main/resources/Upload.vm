@@ -1,75 +1,102 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="app">
 	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-		<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css">
-		<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap-theme.min.css">
-		<script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
-		<script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
-		<title> Upload page </title>
-		<style type="text/css">
-    		.bs{
-			    margin: 10px auto; 
-				  width:300px;
-    		}
-    	</style>
-	</head>
-	<body>
-    <div class="navbar navbar-inverse">
-      <div class="navbar-inner">
-        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-        </button>
-        <a href="#/" class="navbar-brand">Назва проекту</a>
-      </div>
-      <div class="collapse navbar-collapse navbar-ex1-collapse">
-        <ul class="nav navbar-nav">
-          <li class="divider-vertical"></li>
-          <li><a href="#"><span class="glyphicon glyphicon-home"></span>Main</a></li>
-          <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown">About Company<b class="caret"></b></a>
-              <ul class="dropdown-menu">
-                  <li><a href="#">Arsen</a></li>
-                  <li><a href="#">Semen</a></li>
-                  <li><a href="#">Romko</a></li>
-              </ul>
-          </li>
-          <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Services<b class="caret"></b></a>
-            <ul class="dropdown-menu">
-              <li><a href="#">Softvare developer</a></li>
-                <li class="dropdown dropdown-submenu"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Web-developer<b class="caret"></b></a>
-                <ul class="dropdown-menu">
-                  <li><a href="#">Create new site</a></li>
-                  <li><a href="#">Udate site</a></li>
-                </ul>
-              </li>        
-            </ul>
-          </li>
-          <li><a href="#">Price</a></li>
-          <li><a href="#">Contacts</a></li>
-          <li><a href="$link"><i class="glyphicon glyphicon-upload"></i> Upload file </a></li>
-          </ul>
-          <form class="form-search navbar-form navbar-right" method="post">
-            <font color="white" size="5"> <i class="glyphicon glyphicon-user"></i> Hello $name </font>
-            <a href="/" class = "btn btn-info">Back</a>
-          </form>
-      </div>
-    </div>
-    <div class=bs>
-    <form enctype="multipart/form-data" action="" method="post">
-  		<fieldset>
-		    <legend>Завантаж файл</legend>
-		    <input type="file"  name="to_upload" class = "btn btn-info">
-		    </br>
-    		<div align="center">
-    		  <input type="submit" value="Upload" class = "btn btn-info">
-    		</div>
-  		</fieldset>
-    </form>
-    <script>
-      $success
-    </script> 	
+			<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+			<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css">
+			<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap-theme.min.css">
+			<script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
+			<script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+			<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.12/angular.min.js"></script>
+			<script src="resources/js/upload.js"></script>
+			<link rel="stylesheet" type="text/css" href="resources/css/upload.css">
+			<title> Upload page </title>
+			<style type="text/css">
+	    		.bs{
+				    margin: 10px auto; 
+					width:300px;
+	    		}
+	    	</style>
+		</head>
+	<body ng-controller="FileUploadCtrl">
+	    <div class="navbar navbar-inverse">
+	      <div class="navbar-inner">
+	        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+	          <span class="icon-bar"></span>
+	          <span class="icon-bar"></span>
+	          <span class="icon-bar"></span>
+	        </button>
+	        <a href="#/" class="navbar-brand">Назва проекту</a>
+	      </div>
+	      <div class="collapse navbar-collapse navbar-ex1-collapse">
+	        <ul class="nav navbar-nav">
+	          <li class="divider-vertical"></li>
+	          <li><a href="#"><span class="glyphicon glyphicon-home"></span>Main</a></li>
+	          <li class="dropdown">
+	              <a href="#" class="dropdown-toggle" data-toggle="dropdown">About Company<b class="caret"></b></a>
+	              <ul class="dropdown-menu">
+	                  <li><a href="#">Arsen</a></li>
+	                  <li><a href="#">Semen</a></li>
+	                  <li><a href="#">Romko</a></li>
+	              </ul>
+	          </li>
+	          <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Services<b class="caret"></b></a>
+	            <ul class="dropdown-menu">
+	              <li><a href="#">Softvare developer</a></li>
+	                <li class="dropdown dropdown-submenu"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Web-developer<b class="caret"></b></a>
+	                <ul class="dropdown-menu">
+	                  <li><a href="#">Create new site</a></li>
+	                  <li><a href="#">Udate site</a></li>
+	                </ul>
+	              </li>        
+	            </ul>
+	          </li>
+	          <li><a href="#">Price</a></li>
+	          <li><a href="#">Contacts</a></li>
+	          <li><a href="$link"><i class="glyphicon glyphicon-upload"></i> Upload file </a></li>
+	          </ul>
+	          <form class="form-search navbar-form navbar-right" method="post">
+	            <font color="white" size="5"> <i class="glyphicon glyphicon-user"></i> Hello $name </font>
+	            <a href="/" class = "btn btn-info">Back</a>
+	          </form>
+	      </div>
+	    </div>
+	    <header>
+	        <h1>Андроід сервер</h1>
+	    </header>
+	    <div class="row" ng-init="server=$server">
+	      <div class="col-md-6">        
+	      	<div class=bs>
+	          <legend>Завантаж файл</legend>
+	          <input type="file" ng-model-instant id="fileToUpload" multiple onchange="angular.element(this).scope().setFiles(this)" class = "btn btn-info" />
+	          </br>
+	          <div id="dropbox" class="dropbox" ng-class="dropClass"><span>{{dropText}}</span></div>
+	          <div ng-show="files.length">
+	              <div ng-repeat="file in files.slice(0)">
+	                <span>{{file.webkitRelativePath || file.name}}</span>
+	                (<span ng-switch="file.size > 1024*1024">
+	                  <span ng-switch-when="true">{{file.size / 1024 / 1024 | number:2}} MB</span>
+	                  <span ng-switch-default>{{file.size / 1024 | number:2}} kB</span>
+	                </span>)
+	              </div>
+	              </br>
+	            <input type="button" ng-click="uploadFile()" value="Upload" class = "btn btn-info"/>
+	            <div ng-show="progressVisible">
+	              <div class="percent">{{progress}}%</div>
+	              <div class="progress-bar">
+	                  <div class="uploaded" ng-style="{'width': progress+'%'}"></div>
+	              </div>
+	            </div>
+	          </div>
+	    	   </div>
+	      </div>
+	      <div class="col-md-6">
+	        <div class=bs>
+	          <legend>Файли які вже завантажені:</legend>
+	          <ul>
+	            <li ng-repeat="fileConsist in server">{{fileConsist}}</li>
+	          </ul>
+	        </div>
+	      </div>
+	    </div>
 	</body>
 </html>
