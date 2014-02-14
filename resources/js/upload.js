@@ -25,7 +25,6 @@ function FileUploadCtrl(scope) {
         })
     }, false)
     dropbox.addEventListener("drop", function(evt) {
-        console.log('drop evt:', JSON.parse(JSON.stringify(evt.dataTransfer)))
         evt.stopPropagation()
         evt.preventDefault()
         scope.$apply(function(){
@@ -45,7 +44,6 @@ function FileUploadCtrl(scope) {
 
     scope.setFiles = function(element) {
     scope.$apply(function(scope) {
-      console.log('files:', element.files);
         scope.files = []
         for (var i = 0; i < element.files.length; i++) {
           scope.files.push(element.files[i])
@@ -94,19 +92,4 @@ function FileUploadCtrl(scope) {
         })
         alert("The upload has been canceled by the user or the browser dropped the connection.");
     }
-	var timeReload = 1;//время в минутах
-	timeReload = timeReload*60;
-	var timenow=0;
-
-    function isReload()
-    {
-    timenow++;
-    if (timenow>=timeReload) {
-    timenow=0;
-
-    document.location.reload();
-    }
-    }
-
-    var t=setInterval("isReload()",1000);
 }
