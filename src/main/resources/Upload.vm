@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html ng-app="app">
+<html ng-app=>
 	<head>
 			<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 			<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css">
@@ -15,7 +15,7 @@
 				    margin: 10px auto; 
 					width:300px;
 	    		}
-	    	</style>
+	    </style>
 		</head>
 	<body ng-controller="FileUploadCtrl">
 	    <div class="navbar navbar-inverse">
@@ -63,7 +63,7 @@
 	    <header>
 	        <h1>Андроід сервер</h1>
 	    </header>
-	    <div class="row" ng-init="server=$server">
+	    <div class="row">
 	      <div class="col-md-6">        
 	      	<div class=bs>
 	          <legend>Завантаж файл</legend>
@@ -89,14 +89,45 @@
 	          </div>
 	    	   </div>
 	      </div>
-	      <div class="col-md-6">
+	      <div class="col-md-6"  >
 	        <div class=bs>
 	          <legend>Файли які вже завантажені:</legend>
-	          <ul>
-	            <li ng-repeat="fileConsist in server">{{fileConsist}}</li>
-	          </ul>
+			  <ul ng-controller="ServerFile">
+		      	<li ng-repeat="name in fileName">{{name}}</li>
+		      </ul>
 	        </div>
 	      </div>
 	    </div>
+	     
+    <script>
+    
+      $(document).ready(function(){  
+      	show();  
+      	setInterval('show()',1000);       
+      });
+      
+      var names; 
+           
+      var ServerFile = function ($scope){   
+      	$scope.fileName = names;
+      };
+      
+      function show(){
+      var name= new Array;
+        $.ajax({  
+          url: "/info/cats",  
+          cache: false,
+          dataType: "json",  
+          success: function(text){
+            for(var n in text){
+				name[n]=text[n];
+            } 
+          names=name;
+          } 
+        });
+      }
+      
+    </script>
+     	        
 	</body>
 </html>

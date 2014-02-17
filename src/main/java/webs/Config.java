@@ -28,7 +28,8 @@ public class Config {
 	public static final int DB_PORT = 27017;
 	public static final String IP_DB = "127.0.0.1";
 	private static final String IMAGES_PATH = "images/cats";
-	private static final String AUDIO_PATH = "audio/cats";
+	private static final String AUDIO_PATH = "sounds/cats";
+	private static final String TEST_PATH = "text/cats";
     
     public static Config parse(File configFile) throws IOException {
         System.err.println("Reading config file: " + configFile.getAbsolutePath());
@@ -102,8 +103,9 @@ public class Config {
 	public static String getPath(String file){
 		if(file.endsWith(".png")||file.endsWith(".jpg"))
 			return Config.IMAGES_PATH;
-		else
+		else if (file.endsWith(".mid"))
 			return Config.AUDIO_PATH;
+		else return Config.TEST_PATH;
 	}
 
     public String getStaticRoot() {

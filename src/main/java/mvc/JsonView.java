@@ -20,7 +20,7 @@ public class JsonView implements View {
     public void view(HttpServletRequest request, HttpServletResponse response)
                     throws IOException {
             response.setContentType("application/json");
-            response.getWriter().print(jsonParam);               
+            response.getWriter().print(jsonParam);      
     }
    
     static class Weapon{                
