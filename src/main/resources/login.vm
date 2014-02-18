@@ -15,23 +15,27 @@
 		</style>
 	</head>
 	<body>
-		<div class= bs>
-		    <form method="post">
+		<div class="bs">
+		    <form method="post" action="/login">
 		        <div class="form-group">
 		            <label for="inputEmail">Username:</label>
-		            <input type="TEXT" class="form-control" name="log_name" placeholder="Username">
+		            <input type="TEXT" class="form-control" name="name" placeholder="Username">
 		        </div>
 		        <div class="form-group">
 		            <label for="inputPassword">Password:</label>
-		            <input type="password" class="form-control" name="log_pass" placeholder="Password">
+		            <input type="password" class="form-control" name="pass" placeholder="Password">
 		        </div>
 		        <div align="center">
 		        <button type="submit" name="Ok" class="btn btn-info">Login</button>
 		        </div>
 		    </form>
 		</div>
-		<script>
-    		$incorrect
-  		</script>		
+		#if ( $err )
+		  #if ( "$err" == "email")
+		<div class="center bg-warning">Invalid email and/or password</div>
+		  #elseif( "$err" == "blank" )
+		<div class="center bg-warning">Both fields must be filled.</div>
+		  #end
+		#end
 	</body>
 </html>

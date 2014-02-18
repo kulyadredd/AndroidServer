@@ -2,11 +2,11 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>AndroidServer</groupId>
-	<artifactId>AS</artifactId>
+	<groupId>org.kittns</groupId>
+	<artifactId>kittns</artifactId>
 	<packaging>jar</packaging>
 
-	<name>PyschChecker</name>
+	<name>Kittns</name>
 	<url>http://maven.apache.org</url>
 
 	<properties>
@@ -124,5 +124,5 @@
 			</plugins>
 		</pluginManagement>
 	</build>
-	<version>0.0.2</version>
+	<version>0.0.3</version>
 </project>

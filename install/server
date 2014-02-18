@@ -45,7 +45,7 @@ fi
 NOW=$(date +"%m-%d-%Y-%T")
 SERVER_PROG="$NAME"
 SERVER_LOG="/var/log/$NAME/$NAME-stdout-$NOW.log"
-SERVER_HOME="." #"/usr/share/$NAME"
+SERVER_HOME="${HOME}/Builds/AndroidServer" #"/usr/share/$NAME"
 SERVER_CFG="${HOME}/etc/$NAME/$NAME.conf"  #"/etc/$NAME/$NAME.conf"
 
 log ()
