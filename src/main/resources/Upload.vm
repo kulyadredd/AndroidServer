@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html ng-app=>
+<html ng-app="testApp">
 	<head>
 			<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 			<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css">
@@ -99,35 +99,17 @@
 	      </div>
 	    </div>
 	     
-    <script>
-    
-      $(document).ready(function(){  
-      	show();  
-      	setInterval('show()',1000);       
-      });
+  #[[<script>
+  
+		var app = angular.module('testApp',[]);
+		app.controller('ServerFile', 
+			['$scope','$http', function ($scope, $http) {	     
+				setInterval(function(){
+					$http.get("info/cats").success(function (data){$scope.fileName = data;});},1000);
+			}]
+		);   
       
-      var names; 
-           
-      var ServerFile = function ($scope){   
-      	$scope.fileName = names;
-      };
-      
-      function show(){
-      var name= new Array;
-        $.ajax({  
-          url: "/info/cats",  
-          cache: false,
-          dataType: "json",  
-          success: function(text){
-            for(var n in text){
-				name[n]=text[n];
-            } 
-          names=name;
-          } 
-        });
-      }
-      
-    </script>
+  </script>]]#
      	        
 	</body>
 </html>
