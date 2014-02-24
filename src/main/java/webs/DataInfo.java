@@ -22,7 +22,7 @@ public class DataInfo extends Controller{
 	
 	public View get(HttpServletRequest request, PathParser pathInfo)
 			throws Exception {
-	    String rest = pathInfo.cutNext();
+	    String rest = pathInfo.getRest().toString();
 		if (isBlank(rest))
 			return new JsonView(getCategoryList());
 		else 
@@ -38,7 +38,7 @@ public class DataInfo extends Controller{
 	
 	private String[] getFileList(String valueOfCategories) {
 		
-		String dirName = dataRoot+File.separator+"images"+File.separator+valueOfCategories;
+		String dirName = dataRoot+File.separator+valueOfCategories;
 		File checkDir = new File (dirName);
 		return checkDir.list();
 	}

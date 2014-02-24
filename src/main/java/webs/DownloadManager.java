@@ -7,11 +7,10 @@ import java.io.InputStream;
 import java.util.LinkedList;
 import java.util.List;
 
-import mvc.TemplateView;
-
 public class DownloadManager {
 	private InputStream in;
 	private String fileName;
+	private String category;
 	private LinkedList<Byte> nameLine = new LinkedList<>();
 	
 	public DownloadManager(InputStream in){
@@ -26,7 +25,7 @@ public class DownloadManager {
 		int b = 0;
 		while ((b = in.read()) != -1) list.add((byte) b);		
 		clearWrap(list);
-		File f = new File(Config.getPath(fileName.toLowerCase())+fileName);
+		File f = new File(Config.getPath(fileName.toLowerCase(), category)+fileName);
 		out = new FileOutputStream(f);
 		for (Byte bt : list) out.write(bt);
 		in.close();
@@ -56,8 +55,7 @@ public class DownloadManager {
 		int index = 0;
 		for (Byte b : nameLine) array[index++]=b;	
 		String line = new String(array);
-		this.fileName = "/"+line.substring(line.lastIndexOf("=")+2,line.length()-2);		
+		this.fileName = "/"+line.substring(line.lastIndexOf("=")+2,line.length()-2);
+		this.category = "/"+line.substring(line.indexOf("=")+2,line.lastIndexOf(";")-1);
 	}	
-
-
 }

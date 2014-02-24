@@ -9,46 +9,24 @@
 		<title> Main page. </title>
 	</head>
 	<body>
-  	<div class="navbar navbar-inverse">
-      <div class="navbar-inner">
-        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-        </button>
-        <a href="#/" class="navbar-brand">Назва проекту</a>
-      </div>
-      <div class="collapse navbar-collapse navbar-ex1-collapse">
-        <ul class="nav navbar-nav">
-          <li class="divider-vertical"></li>
-          <li><a href="#"><span class="glyphicon glyphicon-home"></span>Main</a></li>
-          <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown">About Company<b class="caret"></b></a>
-              <ul class="dropdown-menu">
-                  <li><a href="#">Arsen</a></li>
-                  <li><a href="#">Semen</a></li>
-                  <li><a href="#">Romko</a></li>
-              </ul>
-          </li>
-          <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Services<b class="caret"></b></a>
-            <ul class="dropdown-menu">
-              <li><a href="#">Softvare developer</a></li>
-                <li class="dropdown dropdown-submenu"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Web-developer<b class="caret"></b></a>
-                <ul class="dropdown-menu">
-                  <li><a href="#">Create new site</a></li>
-                  <li><a href="#">Udate site</a></li>
-                </ul>
-              </li>        
-            </ul>
-          </li>
-          <li><a href="#">Price</a></li>
-          <li><a href="#">Contacts</a></li>
-          <li><a href="$link"><i class="glyphicon glyphicon-upload"></i> Upload file </a></li>
-          </ul>
+  	 <div class="navbar navbar-inverse">
+        <div class="navbar-inner">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a href="/" class="navbar-brand">Android server</a>
+        </div>
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+          <div class="nav navbar-nav">
+            <li><a href="/up"><i class="glyphicon glyphicon-upload"></i> Upload file </a></li>
+          </div>
           <form class="form-search navbar-form navbar-right" method="post">
             <font color="white" size="5"> <i class="glyphicon glyphicon-user"></i> Hello $name </font>
             <input type="submit" name="btn_e" value="Exit" class="btn btn-info">
           </form>
+        </div>
       </div>
     </div>
     <div class="container">

@@ -26,7 +26,7 @@ public class UpLoadFile extends Controller {
 		session = request.getSession();
 		if(session.getAttribute(session_tag)!=null){
 			map.clear();
-			map.put("name", session.getAttribute(session_tag).toString());
+			map.put("name",session.getAttribute(session_tag));
 			return new TemplateView("Upload.vm", map);
 		}else
 			return new TemplateView("NoAccess.vm", new HashMap<String, Object>());
@@ -35,7 +35,7 @@ public class UpLoadFile extends Controller {
 	public View post(HttpServletRequest request,PathParser pathInfo) 
 			throws IOException, ServletException {
 		session  = request.getSession();
-		if (session.getAttribute(session_tag)!=null && request.getInputStream().available()>193){
+		if (session.getAttribute(session_tag)!=null){
 			DownloadManager dm = new DownloadManager(request.getInputStream());			
 			dm.upload();
 			return new TemplateView("Upload.vm", map);	

@@ -27,9 +27,9 @@ public class Config {
 	public String staticRoot = ".";
 	public static final int DB_PORT = 27017;
 	public static final String IP_DB = "127.0.0.1";
-	private static final String IMAGES_PATH = "images/cats";
-	private static final String AUDIO_PATH = "sounds/cats";
-	private static final String TEXT_PATH = "text/cats";
+	private static final String IMAGES_PATH = "images";
+	private static final String AUDIO_PATH = "sounds";
+	private static final String TEXT_PATH = "text";
     
     public static Config parse(File configFile) throws IOException {
         System.err.println("Reading config file: " + configFile.getAbsolutePath());
@@ -100,12 +100,12 @@ public class Config {
 		return port;
 	}
 	
-	public static String getPath(String file){
+	public static String getPath(String file,String category){
 		if(file.endsWith(".png")||file.endsWith(".jpg"))
-			return Config.IMAGES_PATH;
-		else if (file.endsWith(".mid"))
-			return Config.AUDIO_PATH;
-		else return Config.TEXT_PATH;
+			return Config.IMAGES_PATH+category;
+		else if (file.endsWith(".txt"))
+			return Config.TEXT_PATH+category;			
+		else return Config.AUDIO_PATH+category;
 	}
 
     public String getStaticRoot() {

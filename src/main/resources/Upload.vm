@@ -1,23 +1,23 @@
 <!DOCTYPE html>
 <html ng-app="testApp">
 	<head>
-			<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-			<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css">
-			<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap-theme.min.css">
-			<script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
-			<script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
-			<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.12/angular.min.js"></script>
-			<script src="resources/js/upload.js"></script>
-			<link rel="stylesheet" type="text/css" href="resources/css/upload.css">
-			<title> Upload page </title>
-			<style type="text/css">
-	    		.bs{
-				    margin: 10px auto; 
-					width:300px;
-	    		}
-	    </style>
-		</head>
-	<body ng-controller="FileUploadCtrl">
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css">
+		<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap-theme.min.css">
+		<script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
+		<script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.12/angular.min.js"></script>
+		<script src="resources/js/upload.js"></script>
+		<link rel="stylesheet" type="text/css" href="resources/css/upload.css">
+		<title> Upload page </title>
+		<style type="text/css">
+			.bs{
+			    margin: 10px auto; 
+				width:285px;
+			}
+		</style>
+	</head>
+	<body ng-controller="FileUploadCtrl" ng-init=init()>
 	    <div class="navbar navbar-inverse">
 	      <div class="navbar-inner">
 	        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
@@ -25,91 +25,74 @@
 	          <span class="icon-bar"></span>
 	          <span class="icon-bar"></span>
 	        </button>
-	        <a href="#/" class="navbar-brand">Назва проекту</a>
+	        <a href="/" class="navbar-brand">Android server</a>
 	      </div>
 	      <div class="collapse navbar-collapse navbar-ex1-collapse">
-	        <ul class="nav navbar-nav">
-	          <li class="divider-vertical"></li>
-	          <li><a href="#"><span class="glyphicon glyphicon-home"></span>Main</a></li>
-	          <li class="dropdown">
-	              <a href="#" class="dropdown-toggle" data-toggle="dropdown">About Company<b class="caret"></b></a>
-	              <ul class="dropdown-menu">
-	                  <li><a href="#">Arsen</a></li>
-	                  <li><a href="#">Semen</a></li>
-	                  <li><a href="#">Romko</a></li>
-	              </ul>
-	          </li>
-	          <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Services<b class="caret"></b></a>
-	            <ul class="dropdown-menu">
-	              <li><a href="#">Softvare developer</a></li>
-	                <li class="dropdown dropdown-submenu"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Web-developer<b class="caret"></b></a>
-	                <ul class="dropdown-menu">
-	                  <li><a href="#">Create new site</a></li>
-	                  <li><a href="#">Udate site</a></li>
-	                </ul>
-	              </li>        
-	            </ul>
-	          </li>
-	          <li><a href="#">Price</a></li>
-	          <li><a href="#">Contacts</a></li>
-	          <li><a href="$link"><i class="glyphicon glyphicon-upload"></i> Upload file </a></li>
-	          </ul>
-	          <form class="form-search navbar-form navbar-right" method="post">
+	      	<div class="nav navbar-nav">
+	          <li><a href="/up"><i class="glyphicon glyphicon-upload"></i> Upload file </a></li>
+	        </div>
+	        <form class="form-search navbar-form navbar-right">
 	            <font color="white" size="5"> <i class="glyphicon glyphicon-user"></i> Hello $name </font>
 	            <a href="/" class = "btn btn-info">Back</a>
-	          </form>
+	        </font>
 	      </div>
 	    </div>
-	    <header>
-	        <h1>Андроід сервер</h1>
-	    </header>
-	    <div class="row">
-	      <div class="col-md-6">        
-	      	<div class=bs>
-	          <legend>Завантаж файл</legend>
-	          <input type="file" ng-model-instant id="fileToUpload" multiple onchange="angular.element(this).scope().setFiles(this)" class = "btn btn-info" />
-	          </br>
-	          <div id="dropbox" class="dropbox" ng-class="dropClass"><span>{{dropText}}</span></div>
-	          <div ng-show="files.length">
-	              <div ng-repeat="file in files.slice(0)">
-	                <span>{{file.webkitRelativePath || file.name}}</span>
-	                (<span ng-switch="file.size > 1024*1024">
-	                  <span ng-switch-when="true">{{file.size / 1024 / 1024 | number:2}} MB</span>
-	                  <span ng-switch-default>{{file.size / 1024 | number:2}} kB</span>
-	                </span>)
-	              </div>
-	              </br>
-	            <input type="button" ng-click="uploadFile()" value="Upload" class = "btn btn-info"/>
-	            <div ng-show="progressVisible">
-	              <div class="percent">{{progress}}%</div>
-	              <div class="progress-bar">
-	                  <div class="uploaded" ng-style="{'width': progress+'%'}"></div>
-	              </div>
-	            </div>
-	          </div>
+	  </div>
+	  <div class="row">
+	  	<div class="col-md-6">
+	  		</br>
+	  		<h1 class="text-center">Завантажувач файлів</h1>
+	  		<h4 class = "text-center">По замовчуванні завантаження буде відбуватися в "cats", і завантажені файли відображаються також звітам.</h4>
+	  		<div class="row">      
+	      		<div class="col-md-6">
+		      		</br>
+		      		</br>
+	          		<input type="file" ng-model-instant id="fileToUpload" multiple onchange="angular.element(this).scope().setFiles(this)" class = "btn btn-info"/>
+	          		<div ng-show="files.length">
+	              		<div ng-repeat="file in files">
+	                		<span>{{file.webkitRelativePath || file.name}}</span>
+	                		(<span ng-switch="file.size > 1024*1024">
+			                <span ng-switch-when="true">{{file.size / 1024 / 1024 | number:2}} MB</span>
+			                <span ng-switch-default>{{file.size / 1024 | number:2}} kB</span>
+	                		</span>)
+	              		</div>
+	              		</br>
+	              		<div align="center">
+	            			<input type="button" ng-click="uploadFile()" value="Upload" class = "btn btn-info"/>
+	          			</div>
+	          		</div>
 	    	   </div>
+	    	   <div class="col-md-6"  ng-controller="ServerCategory">
+	    	   		<h4 class="text-center">Оберіть категорію!</h4>
+					<select class="form-control"  ng-model="ncateg" ng-options="ncateg for ncateg in category">
+   					</select>
+   					<span style="visibility: hidden" id="categoryName">{{ncateg}}</span>
+	      		</div>
 	      </div>
-	      <div class="col-md-6"  >
-	        <div class=bs>
-	          <legend>Файли які вже завантажені:</legend>
-			  <ul ng-controller="ServerFile">
-		      	<li ng-repeat="name in fileName">{{name}}</li>
-		      </ul>
+	    </div>
+	    <div class="col-md-6">
+	      	<h1 class="text-center">Завантажені файли</h1>
+	      	<div class="row">
+		        <div class="col-md-4">
+		        	<h3 class="text-center">Зображення</h3>
+					<ul ng-controller="ServerFileI">
+						<li ng-repeat="name in fileNameI">{{name}}</li>
+					</ul>
+				</div>
+				<div class="col-md-4">
+					<h3 class="text-center">Звукові файли</h3>
+					<ul ng-controller="ServerFileS">
+						<li ng-repeat="name in fileNameS">{{name}}</li>
+					</ul>
+				</div>
+				<div class="col-md-4">
+					<h3 class="text-center">Текстові файли</h3>
+					<ul ng-controller="ServerFileT">
+						<li ng-repeat="name in fileNameT">{{name}}</li>
+					</ul>				
+		   		</div>
 	        </div>
 	      </div>
-	    </div>
-	     
-  #[[<script>
-  
-		var app = angular.module('testApp',[]);
-		app.controller('ServerFile', 
-			['$scope','$http', function ($scope, $http) {	     
-				setInterval(function(){
-					$http.get("info/cats").success(function (data){$scope.fileName = data;});},1000);
-			}]
-		);   
-      
-  </script>]]#
-     	        
+	  </div>    	        
 	</body>
 </html>

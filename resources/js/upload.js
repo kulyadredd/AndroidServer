@@ -1,46 +1,47 @@
-﻿angular.module('app', [], function() {})
-FileUploadCtrl.$inject = ['$scope']
-function FileUploadCtrl(scope) {
-    var dropbox = document.getElementById("dropbox")
-    scope.dropText = 'Перетягніть файл сюди'
+﻿var app = angular.module('testApp', [], function() {})
 
-    function dragEnterLeave(evt) {
-        evt.stopPropagation()
-        evt.preventDefault()
-        scope.$apply(function(){
-            scope.dropText = 'Перетягніть файл сюди'
-            scope.dropClass = ''
-        })
-    }
-    dropbox.addEventListener("dragenter", dragEnterLeave, false)
-    dropbox.addEventListener("dragleave", dragEnterLeave, false)
-    dropbox.addEventListener("dragover", function(evt) {
-        evt.stopPropagation()
-        evt.preventDefault()
-        var clazz = 'not-available'
-        var ok = evt.dataTransfer && evt.dataTransfer.types && evt.dataTransfer.types.indexOf('Files') >= 0
-        scope.$apply(function(){
-            scope.dropText = ok ? 'Перетягніть файл сюди' : 'Only files are allowed!'
-            scope.dropClass = ok ? 'over' : 'not-available'
-        })
-    }, false)
-    dropbox.addEventListener("drop", function(evt) {
-        evt.stopPropagation()
-        evt.preventDefault()
-        scope.$apply(function(){
-            scope.dropText = 'Перетягніть файл сюди'
-            scope.dropClass = ''
-        })
-        var files = evt.dataTransfer.files
-        if (files.length > 0) {
-            scope.$apply(function(){
-                scope.files = []
-                for (var i = 0; i < files.length; i++) {
-                    scope.files.push(files[i])
-                }
-            })
+function ServerCategory($scope,$http) {
+    $http.get("info").success(
+        function(data){
+            $scope.category=data;
+            $scope.ncateg=category[0];
         }
-    }, false)
+    )
+}
+
+app.controller('ServerFileI', 
+            ['$scope','$http', function ($scope, $http) {        
+                setInterval(function(){
+                    var catName = document.getElementById("categoryName").innerHTML;
+                    if (catName =="") catName = "cats";
+                    $http.get("info/images/"+catName).success(
+                        function (data){$scope.fileNameI = data;});},1000);
+            }]
+        );
+
+app.controller('ServerFileS', 
+            ['$scope','$http', function ($scope, $http) {        
+                setInterval(function(){
+                    var catName = document.getElementById("categoryName").innerHTML;
+                    if (catName =="") catName = "cats";
+                    $http.get("info/sounds/"+catName).success(
+                        function (data){$scope.fileNameS = data;});},1000);
+            }]
+        ); 
+
+app.controller('ServerFileT', 
+            ['$scope','$http', function ($scope, $http) {        
+                setInterval(function(){
+                    var catName = document.getElementById("categoryName").innerHTML;
+                    if (catName =="") catName = "cats";
+                    $http.get("info/text/"+catName).success(
+                        function (data){$scope.fileNameT = data;});},1000);
+            }]
+        );   
+ 
+FileUploadCtrl.$inject = ['$scope']
+
+function FileUploadCtrl(scope) {
 
     scope.setFiles = function(element) {
     scope.$apply(function(scope) {
@@ -53,43 +54,22 @@ function FileUploadCtrl(scope) {
     };
 
     scope.uploadFile = function() {
-        var fd = new FormData()
+        var catName = document.getElementById("categoryName").innerHTML;
+        if (catName =="") catName = "cats";
+        var fd = new FormData();
         for (var i in scope.files) {
-            fd.append("uploadedFile", scope.files[i])
+            fd.append( catName , scope.files[i]);
         }
         var xhr = new XMLHttpRequest()
-        xhr.upload.addEventListener("progress", uploadProgress, false)
-        xhr.addEventListener("load", uploadComplete, false)
-        xhr.addEventListener("error", uploadFailed, false)
-        xhr.addEventListener("abort", uploadCanceled, false)
-        xhr.open("POST", "/up")
-        scope.progressVisible = true
-        xhr.send(fd)
+        xhr.addEventListener("load", uploadComplete, false);
+        xhr.open("POST", "/up");
+        xhr.setRequestHeader('Content-Type','multipart/form-data');
+        scope.progressVisible = true;
+        xhr.send(fd);
     }
 
-    function uploadProgress(evt) {
-        scope.$apply(function(){
-            if (evt.lengthComputable) {
-                scope.progress = Math.round(evt.loaded * 100 / evt.total)
-            } else {
-                scope.progress = 'unable to compute'
-            }
-        })
-    }
-
-    function uploadComplete(evt) {
+    function uploadComplete() {
         alert("Файл завантажено успішно!");
         location.reload();
-    }
-
-    function uploadFailed(evt) {
-        alert("There was an error attempting to upload the file.");
-    }
-
-    function uploadCanceled(evt) {
-        scope.$apply(function(){
-            scope.progressVisible = false
-        })
-        alert("The upload has been canceled by the user or the browser dropped the connection.");
     }
 }
