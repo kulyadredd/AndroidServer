@@ -35,10 +35,6 @@
 	            <font color="white" size="5"> <i class="glyphicon glyphicon-user"></i> Hello $name </font>
 	            <a href="/" class = "btn btn-info">Back</a>
 	        </font>
-	        <form class="form-search navbar-form navbar-right" method="post">
-            	<font color="white" size="5"> <i class="glyphicon glyphicon-user"></i> Hello $name </font>
-            	<input type="submit" name="btn_e" value="Exit" class="btn btn-info">
-          	</form>
 	      </div>
 	    </div>
 	  </div>
