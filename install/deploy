@@ -1,4 +1,8 @@
 #!/bin/bash
+cd /home/arsen/Builds/AndroidServer
 
-mvn clean package && cd target && ln -svf AndroidServer*uberjar.jar server-uberjar.jar
+git pull && \
+mvn clean package && \
+cd target && \
+ln -svf AndroidServer*uberjar.jar server-uberjar.jar
 

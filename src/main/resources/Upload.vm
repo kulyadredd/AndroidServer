@@ -17,7 +17,7 @@
 			}
 		</style>
 	</head>
-	<body ng-controller="FileUploadCtrl" ng-init=init()>
+	<body ng-controller="FileUploadCtrl">
 	    <div class="navbar navbar-inverse">
 	      <div class="navbar-inner">
 	        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
@@ -35,12 +35,15 @@
 	            <font color="white" size="5"> <i class="glyphicon glyphicon-user"></i> Hello $name </font>
 	            <a href="/" class = "btn btn-info">Back</a>
 	        </font>
+	        <form class="form-search navbar-form navbar-right" method="post">
+            	<font color="white" size="5"> <i class="glyphicon glyphicon-user"></i> Hello $name </font>
+            	<input type="submit" name="btn_e" value="Exit" class="btn btn-info">
+          	</form>
 	      </div>
 	    </div>
 	  </div>
 	  <div class="row">
 	  	<div class="col-md-6">
-	  		</br>
 	  		<h1 class="text-center">Завантажувач файлів</h1>
 	  		<h4 class = "text-center">По замовчуванні завантаження буде відбуватися в "cats", і завантажені файли відображаються також звітам.</h4>
 	  		<div class="row">      

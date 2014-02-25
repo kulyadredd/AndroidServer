@@ -10,7 +10,8 @@ function ServerCategory($scope,$http) {
 }
 
 app.controller('ServerFileI', 
-            ['$scope','$http', function ($scope, $http) {        
+            ['$scope','$http', function ($scope, $http) {
+                $http.get("info/images/cats").success(function(data){$scope.fileNameI=data;})    
                 setInterval(function(){
                     var catName = document.getElementById("categoryName").innerHTML;
                     if (catName =="") catName = "cats";
@@ -20,7 +21,8 @@ app.controller('ServerFileI',
         );
 
 app.controller('ServerFileS', 
-            ['$scope','$http', function ($scope, $http) {        
+            ['$scope','$http', function ($scope, $http) {
+                $http.get("info/sounds/cats").success(function(data){$scope.fileNameS=data;})         
                 setInterval(function(){
                     var catName = document.getElementById("categoryName").innerHTML;
                     if (catName =="") catName = "cats";
@@ -30,7 +32,8 @@ app.controller('ServerFileS',
         ); 
 
 app.controller('ServerFileT', 
-            ['$scope','$http', function ($scope, $http) {        
+            ['$scope','$http', function ($scope, $http) {
+                $http.get("info/text/cats").success(function(data){$scope.fileNameT=data;})         
                 setInterval(function(){
                     var catName = document.getElementById("categoryName").innerHTML;
                     if (catName =="") catName = "cats";
