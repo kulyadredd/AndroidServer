@@ -32,7 +32,7 @@ public class WebServer {
         initVelocity();
         
         AuthService auth = new AuthService();
-        String[] excludes = { "/images/*", "/sounds/*",
+        String[] excludes = { "/info/*", "/info/images/*", "/info/sounds/*", "/info/text/*", "/images/*", "/sounds/*",
                 "/text/*", "/resources/*", "/favicon.ico", LoginFilter.LOGIN_URI };
         server.addFilter(new LoginFilter(auth, config, Arrays.asList(excludes)));
         
