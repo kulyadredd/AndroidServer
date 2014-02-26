@@ -32,7 +32,7 @@ public class WebServer {
         initVelocity();
         
         AuthService auth = new AuthService();
-        String[] excludes = { "/info/*", "/info/images/*", "/info/sounds/*", "/info/text/*", "/images/*", "/sounds/*",
+        String[] excludes = { "/info/images", "/info/images/*", "/info/sounds/*", "/info/text/*", "/images/*", "/sounds/*",
                 "/text/*", "/resources/*", "/favicon.ico", LoginFilter.LOGIN_URI };
         server.addFilter(new LoginFilter(auth, config, Arrays.asList(excludes)));
         
@@ -42,7 +42,7 @@ public class WebServer {
 	    server.add("/text/*", new StaticFiles(config.getStaticRoot()));
 	    server.add("/info/*", new DataInfo(config.getStaticRoot()));
 	    server.add("/", new UpLoadFile());
-	    server.add("/login", new Login(auth) );
+	    server.add("/login", new Login(auth));
         System.out.println("Init completed.");
     }
 
