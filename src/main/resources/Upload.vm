@@ -8,16 +8,21 @@
 		<script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
 		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.12/angular.min.js"></script>
 		<script src="resources/js/upload.js"></script>
-		<link rel="stylesheet" type="text/css" href="resources/css/upload.css">
 		<title> Upload page </title>
 		<style type="text/css">
 			.bs{
 			    margin: 10px auto; 
 				width:285px;
 			}
+			.category {
+				position:relative;
+				display: inline-block;
+				float:left;
+				padding:10px;
+			}
 		</style>
 	</head>
-	<body ng-controller="FileUploadCtrl">
+	<body>
 	    <div class="navbar navbar-inverse">
 	      <div class="navbar-inner">
 	        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
@@ -25,73 +30,31 @@
 	          <span class="icon-bar"></span>
 	          <span class="icon-bar"></span>
 	        </button>
-	        <a href="/" class="navbar-brand">Android server</a>
-	      </div>
-	      <div class="collapse navbar-collapse navbar-ex1-collapse">
-	      	<div class="nav navbar-nav">
-	          <li><a href="/up"><i class="glyphicon glyphicon-upload"></i> Upload file </a></li>
-	        </div>
-	        <form class="form-search navbar-form navbar-right">
-	            <font color="white" size="5"> <i class="glyphicon glyphicon-user"></i> Hello $name </font>
-	            <a href="/" class = "btn btn-info">Back</a>
-	        </font>
+	        <font color="white" size="5"> <i class="glyphicon glyphicon-user"></i> Hello $name </font>
 	      </div>
 	    </div>
-	  </div>
-	  <div class="row">
-	  	<div class="col-md-6">
-	  		<h1 class="text-center">Завантажувач файлів</h1>
-	  		<h4 class = "text-center">По замовчуванні завантаження буде відбуватися в "cats", і завантажені файли відображаються також звітам.</h4>
-	  		<div class="row">      
-	      		<div class="col-md-6">
-		      		</br>
-		      		</br>
-	          		<input type="file" ng-model-instant id="fileToUpload" multiple onchange="angular.element(this).scope().setFiles(this)" class = "btn btn-info"/>
-	          		<div ng-show="files.length">
-	              		<div ng-repeat="file in files">
-	                		<span>{{file.webkitRelativePath || file.name}}</span>
-	                		(<span ng-switch="file.size > 1024*1024">
-			                <span ng-switch-when="true">{{file.size / 1024 / 1024 | number:2}} MB</span>
-			                <span ng-switch-default>{{file.size / 1024 | number:2}} kB</span>
-	                		</span>)
-	              		</div>
-	              		</br>
-	              		<div align="center">
-	            			<input type="button" ng-click="uploadFile()" value="Upload" class = "btn btn-info"/>
-	          			</div>
-	          		</div>
-	    	   </div>
-	    	   <div class="col-md-6"  ng-controller="ServerCategory">
-	    	   		<h4 class="text-center">Оберіть категорію!</h4>
-					<select class="form-control"  ng-model="ncateg" ng-options="ncateg for ncateg in category">
-   					</select>
-   					<span style="visibility: hidden" id="categoryName">{{ncateg}}</span>
-	      		</div>
-	      </div>
-	    </div>
-	    <div class="col-md-6">
-	      	<h1 class="text-center">Завантажені файли</h1>
-	      	<div class="row">
-		        <div class="col-md-4">
-		        	<h3 class="text-center">Зображення</h3>
-					<ul ng-controller="ServerFileI">
-						<li ng-repeat="name in fileNameI">{{name}}</li>
-					</ul>
-				</div>
-				<div class="col-md-4">
-					<h3 class="text-center">Звукові файли</h3>
-					<ul ng-controller="ServerFileS">
-						<li ng-repeat="name in fileNameS">{{name}}</li>
-					</ul>
-				</div>
-				<div class="col-md-4">
-					<h3 class="text-center">Текстові файли</h3>
-					<ul ng-controller="ServerFileT">
-						<li ng-repeat="name in fileNameT">{{name}}</li>
-					</ul>				
-		   		</div>
-	        </div>
-	      </div>
-	  </div>    	        
+		<div class="row">
+			<div class="col-md-3">
+					<div ng-controller="ServerCategory" class="bs">
+						<select class="form-control"  ng-model="ncateg" ng-options="ncateg for ncateg in category">
+						</select>
+						<span style="visibility: hidden" id="categoryName">{{ncateg}}</span>
+			  		</div>
+			  		</br> 
+			  		<div ng-controller = "myCtrl"class="bs"> 
+					    <input class = "btn btn-info" type="file" file-model="myFile"/>
+					    </br>
+					    <div class="text-center" class="bs">
+					    	<button class = "btn btn-info" ng-click="uploadFile()">Upload</button>
+					    </div>
+			      	</div>
+			</div>
+			<div class="col-md-9" ng-controller="ServerFile">
+					<div ng-repeat="IMGN in fullpathIMG" class="category">
+						<img ng-src={{IMGN}} width="176" height="220"/>
+					</div> 
+				</div>  
+			</div>
+		</div>   
 	</body>
 </html>

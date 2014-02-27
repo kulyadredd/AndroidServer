@@ -1,78 +1,77 @@
 ﻿var app = angular.module('testApp', [], function() {})
 
+app.directive('fileModel', ['$parse', function ($parse) {
+    return {
+        restrict: 'A',
+        link: function(scope, element, attrs) {
+            var model = $parse(attrs.fileModel);
+            var modelSetter = model.assign;
+            
+            element.bind('change', function(){
+                scope.$apply(function(){
+                    modelSetter(scope, element[0].files[0]);
+                });
+            });
+        }
+    };
+}]);
+
+app.service('$fileUpload', ['$http', function ($http) {
+    this.uploadFileToUrl = function(file, uploadUrl){
+        var catName = document.getElementById("categoryName").innerHTML;
+        if (catName =="") catName = "cats";
+        var fd = new FormData();
+        fd.append(catName, file);
+        $http.post(uploadUrl, fd, {
+            transformRequest: angular.identity,
+            headers: {'Content-Type': undefined}
+        })
+        .success(alert ("Файл завантажено успішно!"))
+    }
+}]);
+
+app.controller('ServerFile', 
+            ['$scope','$http', function ($scope, $http) {
+                var pathi="http://localhost:8080/images/cats/";
+                $http.get("info/images/cats").success(function(data){
+                    $scope.fileNameI=data;
+                    var fullpath=new Array();
+                    for (var i=0; $scope.fileNameI[i]; i++)
+                        fullpath[i]=pathi+$scope.fileNameI[i];
+                    $scope.fullpathIMG=fullpath;
+                });  
+                setInterval(function(){
+                    var catName = document.getElementById("categoryName").innerHTML;
+                    if (catName =="") catName = "cats";
+                    pathi="http://localhost:8080/images/"+catName+"/";
+                    $http.get("info/images/"+catName).success(
+                        function (data){
+                            $scope.fileNameI = data;
+                            var fullpath=new Array();
+                            for (var i=0; $scope.fileNameI[i]; i++)
+                                fullpath[i]=pathi+$scope.fileNameI[i];
+                            $scope.fullpathIMG=fullpath;
+                        });
+                },1000);
+            }]
+        );
+ 
+app.controller('myCtrl', ['$scope', '$fileUpload', function($scope, $fileUpload){
+    
+    $scope.uploadFile = function(){
+        var file = $scope.myFile;
+        var uploadUrl = "/";
+        if (file==null) alert("Файл не обрано!");
+        else $fileUpload.uploadFileToUrl(file, uploadUrl);
+    };
+    
+}]);
+
 function ServerCategory($scope,$http) {
     $http.get("info").success(
         function(data){
             $scope.category=data;
-            $scope.ncateg=category[0];
+            $scope.ncateg=category[1];
         }
     )
-}
-
-app.controller('ServerFileI', 
-            ['$scope','$http', function ($scope, $http) {
-                $http.get("info/images/cats").success(function(data){$scope.fileNameI=data;})    
-                setInterval(function(){
-                    var catName = document.getElementById("categoryName").innerHTML;
-                    if (catName =="") catName = "cats";
-                    $http.get("info/images/"+catName).success(
-                        function (data){$scope.fileNameI = data;});},1000);
-            }]
-        );
-
-app.controller('ServerFileS', 
-            ['$scope','$http', function ($scope, $http) {
-                $http.get("info/sounds/cats").success(function(data){$scope.fileNameS=data;})         
-                setInterval(function(){
-                    var catName = document.getElementById("categoryName").innerHTML;
-                    if (catName =="") catName = "cats";
-                    $http.get("info/sounds/"+catName).success(
-                        function (data){$scope.fileNameS = data;});},1000);
-            }]
-        ); 
-
-app.controller('ServerFileT', 
-            ['$scope','$http', function ($scope, $http) {
-                $http.get("info/text/cats").success(function(data){$scope.fileNameT=data;})         
-                setInterval(function(){
-                    var catName = document.getElementById("categoryName").innerHTML;
-                    if (catName =="") catName = "cats";
-                    $http.get("info/text/"+catName).success(
-                        function (data){$scope.fileNameT = data;});},1000);
-            }]
-        );   
- 
-FileUploadCtrl.$inject = ['$scope']
-
-function FileUploadCtrl(scope) {
-
-    scope.setFiles = function(element) {
-    scope.$apply(function(scope) {
-        scope.files = []
-        for (var i = 0; i < element.files.length; i++) {
-          scope.files.push(element.files[i])
-        }
-      scope.progressVisible = false
-      });
-    };
-
-    scope.uploadFile = function() {
-        var catName = document.getElementById("categoryName").innerHTML;
-        if (catName =="") catName = "cats";
-        var fd = new FormData();
-        for (var i in scope.files) {
-            fd.append( catName , scope.files[i]);
-        }
-        var xhr = new XMLHttpRequest()
-        xhr.addEventListener("load", uploadComplete, false);
-        xhr.open("POST", "/up");
-        xhr.setRequestHeader('Content-Type','multipart/form-data');
-        scope.progressVisible = true;
-        xhr.send(fd);
-    }
-
-    function uploadComplete() {
-        alert("Файл завантажено успішно!");
-        location.reload();
-    }
 }
