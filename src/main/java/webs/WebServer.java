@@ -38,7 +38,7 @@ public class WebServer {
         
 	    server.add("/images/*", new StaticFiles(config.getStaticRoot()) );
 	    server.add("/sounds/*", new StaticFiles(config.getStaticRoot()) );
-	    server.add("/resources/*", new StaticFiles(config.getStaticRoot()) );
+	    server.add("/js/*", new StaticFiles(config.getStaticRoot()) );
 	    server.add("/text/*", new StaticFiles(config.getStaticRoot()));
 	    server.add("/info/*", new DataInfo(config.getStaticRoot()));
 	    server.add("/", new UpLoadFile());
