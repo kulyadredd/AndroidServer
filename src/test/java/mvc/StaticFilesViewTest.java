@@ -12,13 +12,14 @@ import org.junit.Test;
 public class StaticFilesViewTest {
 
     @Test
-    public void test() throws IOException {
-        InputStream in = this.getClass().getResourceAsStream("/js/upload.js");
+    public void testResourceReading() throws IOException {
+        InputStream in = this.getClass().getResourceAsStream("/static/js/upload.js");
         Assert.assertNotNull("input stream is null", in);
+        int z = 0;
         try {
             int ch = 0;
             while ((ch = in.read()) != -1) {
-                System.out.print((char) ch);
+                z &= ch;
             }
         } finally {
             if (in != null)

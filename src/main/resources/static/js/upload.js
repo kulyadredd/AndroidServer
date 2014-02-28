@@ -60,7 +60,6 @@ app.controller('ServerFile', ['$scope','$http', '$fileUpload', function ($scope,
     }  
     
     $scope.uploadFile = function(){
-    	console.log("file: "+$scope.myFile);
         if ($scope.myFile == null) 
         	console.log("Файл не обрано!");
         else 
