@@ -42,37 +42,12 @@ public class Login extends Controller{
         } else {
             return new Redirect("/login?error=blank&email=" + email);
         }
-        
-//	    HashMap<String, Object> map = new HashMap<String, Object>();
-//		session = request.getSession();
-//		if(request.getParameter("btn_e") != null && request.getParameter("btn_e").equals("Exit")){
-//			session.removeAttribute(session_tag);
-//			map.clear();
-//			map.put("incorrect", "");
-//			return new TemplateView("login.vm", map);
-//		}
-//		
-//		if(checkUser(request.getParameter("log_name"), request.getParameter("log_pass")))			
-//			session.setAttribute(session_tag, request.getParameter("log_name"));
-//		
-//		if(session.getAttribute(session_tag) != null){
-//			map.put("name", request.getParameter("log_name"));	
-//			map.put("link", upload_url);
-//			return new TemplateView("Access.vm", map);
-//		}
-//		
-//		return new TemplateView("login.vm", map);
 	}
 	
 	
 	@Override
 	public View get(HttpServletRequest request, PathParser pathInfo)
 			throws Exception {
-//		session = request.getSession();
-//		if(session.getAttribute(session_tag)!=null)			
-//			return new TemplateView("Access.vm", map);
-		
-//		return new TemplateView("login.vm", map);
 	    HashMap<String, Object> context = new HashMap<String, Object>();
 	    String err = String.valueOf(request.getAttribute("error"));
 	    context.put("err", err);

@@ -4,23 +4,26 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.io.PrintWriter;
+import java.util.Arrays;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class StaticFilesView implements View {
+public class DataFilesView implements View {
 
     private String path;
 
-    public StaticFilesView(String path) {
+    public DataFilesView(String path) {
         this.path = path;
     }
 
     @Override
     public void view(HttpServletRequest request, HttpServletResponse response) throws IOException {
+
         if (path.endsWith(".js"))
-            response.setContentType("application/javascript");
+            response.setContentType("text/plain");
         else if (path.endsWith(".css"))
             response.setContentType("text/css");
         else if (path.endsWith(".html"))
@@ -33,17 +36,17 @@ public class StaticFilesView implements View {
             response.setContentType("audio/mpeg");
         else if (path.endsWith(".txt"))
             response.setContentType("text/plain");
-
-        writeFile(response.getWriter(), path);
+        writeFile(response.getOutputStream(), path);
     }
 
-    private void writeFile(PrintWriter out, String path) throws IOException {
-        InputStream in = this.getClass().getResourceAsStream(path);
-        
+    private void writeFile(OutputStream out, String path) throws IOException {
+        InputStream in = new FileInputStream(new File(path));
         try {
             int ch = 0;
-            while ((ch = in.read()) != -1) {
-                out.print((char) ch);
+            byte[] buffer = new byte[4096];
+            while ((ch = in.read(buffer)) != -1) {
+                out.write(buffer, 0, ch);
+                Arrays.fill(buffer, (byte) 0);
             }
         } finally {
             if (in != null)

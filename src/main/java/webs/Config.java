@@ -24,7 +24,8 @@ public class Config {
 
 	private File configFile;
 	private int port = 8080;
-	public String staticRoot = ".";
+	public String staticRoot = "/static";
+	public String dataRoot = ".";
 	public static final int DB_PORT = 27017;
 	public static final String IP_DB = "127.0.0.1";
 	private static final String IMAGES_PATH = "images";
@@ -57,6 +58,7 @@ public class Config {
         Config cfg = new Config();
         cfg.port = getProperty(config, "port", cfg.port);
         cfg.staticRoot = config.getProperty("static.root", cfg.staticRoot);
+        cfg.dataRoot = config.getProperty("data.root", cfg.dataRoot);
         
         return cfg;
     }
@@ -107,8 +109,4 @@ public class Config {
 			return Config.TEXT_PATH+category;			
 		else return Config.AUDIO_PATH+category;
 	}
-
-    public String getStaticRoot() {
-        return this.staticRoot;
-    }
 }

@@ -1,60 +1,53 @@
 <!DOCTYPE html>
 <html ng-app="testApp">
-	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-		<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css">
-		<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap-theme.min.css">
-		<script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
-		<script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
-		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.12/angular.min.js"></script>
-		<script src="js/upload.js"></script>
-		<title> Upload page </title>
-		<style type="text/css">
-			.bs{
-			    margin: 10px auto; 
-				width:285px;
-			}
-			.category {
-				position:relative;
-				display: inline-block;
-				float:left;
-				padding:10px;
-			}
-		</style>
-	</head>
-	<body>
-	    <div class="navbar navbar-inverse">
-	      <div class="navbar-inner">
-	        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
-	          <span class="icon-bar"></span>
-	          <span class="icon-bar"></span>
-	          <span class="icon-bar"></span>
-	        </button>
-	        <font color="white" size="5"> <i class="glyphicon glyphicon-user"></i> Hello $name </font>
-	      </div>
-	    </div>
-		<div class="row">
-			<div class="col-md-3">
-					<div ng-controller="ServerCategory" class="bs">
-						<select class="form-control"  ng-model="ncateg" ng-options="ncateg for ncateg in category">
-						</select>
-						<span style="visibility: hidden" id="categoryName">{{ncateg}}</span>
-			  		</div>
-			  		</br> 
-			  		<div ng-controller = "myCtrl"class="bs"> 
-					    <input class = "btn btn-info" type="file" file-model="myFile"/>
-					    </br>
-					    <div class="text-center" class="bs">
-					    	<button class = "btn btn-info" ng-click="uploadFile()">Upload</button>
-					    </div>
-			      	</div>
-			</div>
-			<div class="col-md-9" ng-controller="ServerFile">
-					<div ng-repeat="IMGN in fullpathIMG" class="category">
-						<img ng-src={{IMGN}} width="176" height="220"/>
-					</div> 
-				</div>  
-			</div>
-		</div>   
-	</body>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css">
+        <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap-theme.min.css">
+        <script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
+        <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.12/angular.min.js"></script>
+        <script src="js/upload.js"></script>
+        <title> Upload page </title>
+        <style type="text/css">
+            .bs{
+                margin: 10px auto; 
+                width:285px;
+            }
+            .category {
+                position:relative;
+                display: inline-block;
+                float:left;
+                padding:10px;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="navbar navbar-inverse">
+          <div class="navbar-inner">
+
+            <font color="white" size="5"> <i class="glyphicon glyphicon-user"></i> Hello $name </font>
+          </div>
+        </div>
+        <div ng-controller="ServerFile" class="row">
+            <div class="col-md-3">
+                <div class="bs">
+                    <select id="categoryName" class="form-control" ng-change="getImages()" ng-model="ncateg" ng-options="aCategory for aCategory in categories"></select>
+                </div>
+                  </br> 
+                <div class="bs"> 
+                    <input class="btn btn-info" type="file" file-model="myFile"/>
+                    <div class="text-center bs">
+                        <button class="btn btn-info" ng-click="uploadFile()">Upload</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-9">
+                    <div ng-repeat="IMGN in fullpathIMG" class="category">
+                        <img ng-src={{IMGN}} width="176" height="220"/>
+                    </div> 
+                </div>  
+            </div>
+        </div>   
+    </body>
 </html>

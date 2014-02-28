@@ -32,15 +32,16 @@ public class WebServer {
         initVelocity();
         
         AuthService auth = new AuthService();
-        String[] excludes = { "/info/*", "/images/*", "/sounds/*",
-                "/text/*", "/resources/*", "/favicon.ico", LoginFilter.LOGIN_URI };
+        String[] excludes = { "/info/*", "/info", "/images/*", "/sounds/*",
+                "/text/*", "/js/*", "/favicon.ico", LoginFilter.LOGIN_URI };
         server.addFilter(new LoginFilter(auth, config, Arrays.asList(excludes)));
         
-	    server.add("/images/*", new StaticFiles(config.getStaticRoot()) );
-	    server.add("/sounds/*", new StaticFiles(config.getStaticRoot()) );
-	    server.add("/js/*", new StaticFiles(config.getStaticRoot()) );
-	    server.add("/text/*", new StaticFiles(config.getStaticRoot()));
-	    server.add("/info/*", new DataInfo(config.getStaticRoot()));
+	    server.add("/images/*", new DataFiles(config.dataRoot) );
+	    server.add("/sounds/*", new DataFiles(config.dataRoot) );
+	    server.add("/text/*", new DataFiles(config.dataRoot));
+	    server.add("/info/*", new DataInfo(config.dataRoot));
+	    
+	    server.add("/js/*", new StaticFiles(config.staticRoot) );
 	    server.add("/", new UpLoadFile());
 	    server.add("/login", new Login(auth));
         System.out.println("v"+Version.version()+" init completed.");
