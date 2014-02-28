@@ -6,7 +6,7 @@
 	<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap-theme.min.css">
 	<script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
 	<script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
-		<title> Log in page. </title>
+	<title> Kittns v$v</title>
 		<style type="text/css">
     		.bs{
 			    margin: 10px auto; 
@@ -29,6 +29,10 @@
 		        <button type="submit" name="Ok" class="btn btn-info">Login</button>
 		        </div>
 		    </form>
+            <div>
+                <br>
+                <div class="footer_content" style="color: #999; font-size: 12; width: 400px">Version: $v</div>
+            </div>
 		</div>
 		#if ( $err )
 		  #if ( "$err" == "email")
