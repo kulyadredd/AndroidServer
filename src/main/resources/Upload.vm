@@ -4,34 +4,25 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css">
         <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap-theme.min.css">
+        <link rel="stylesheet" href="css/dev.css">
         <script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
         <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.12/angular.min.js"></script>
-        <script src="js/upload.js"></script>
+		<script src="js/upload.js"></script>
         <title> Upload page </title>
-        <style type="text/css">
-            .bs{
-                margin: 10px auto; 
-                width:285px;
-            }
-            .category {
-                position:relative;
-                display: inline-block;
-                float:left;
-            }
-            audio { 
-	            width: 176px; 
-	            display: block; 
-	            margin:10px; 
-            }
-        </style>
     </head>
     <body>
-        <div class="navbar navbar-inverse">
-          <div class="navbar-inner">
-
-            <font color="white" size="5"> <i class="glyphicon glyphicon-user"></i> Hello $name </font>
-          </div>
+        <div class="navbar navbar-inverse">	                
+	    	<div class="navbar-inner"> 
+	          <div class="container">
+	          		<span class="user-logo glyphicon glyphicon-user"> Hello $name</span>		                    
+		          	<ul class="pull-right">
+		          		<li>
+		          			<a class="btn btn-link glyphicon glyphicon-log-out quit-btn" href="/logout">Exit </a>
+		          		</li>
+		          	</ul>		         
+	          </div>          
+	        </div>
         </div>
         <div ng-controller="ServerFile" class="row">
             <div class="col-md-3">

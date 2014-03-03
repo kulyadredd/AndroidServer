@@ -42,8 +42,11 @@ public class WebServer {
 	    server.add("/info/*", new DataInfo(config.dataRoot));
 	    
 	    server.add("/js/*", new StaticFiles(config.staticRoot) );
+	    server.add("/css/*", new StaticFiles(config.staticRoot) );
 	    server.add("/", new UpLoadFile());
 	    server.add("/login", new Login(auth));
+	    server.add("/logout", new Logout(auth));
+	    
         System.out.println("v"+Version.version()+" init completed.");
     }
 

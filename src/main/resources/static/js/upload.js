@@ -113,3 +113,4 @@ app.controller('ServerFile', ['$scope','$http', '$fileUpload', function ($scope,
         	$fileUpload.uploadFileToUrl($scope.myFile, "/", $scope.ncateg);
     };
 }]);
+

@@ -1,0 +1,27 @@
+@CHARSET "UTF-8";
+
+.quit-btn {
+	color : orange;
+	font-size: 25px;	
+}
+.user-logo {
+	color: orange;
+	word-spacing: -20px;
+	font-size: 25px;
+	margin-top: 7px;
+}
+.bs{
+    margin: 10px auto; 
+    width:285px;
+}
+.category {
+    position:relative;
+    display: inline-block;
+    float:left;
+    padding:10px;
+}
+audio { 
+width: 176px; 
+display: block; 
+margin:10px; 
+}
