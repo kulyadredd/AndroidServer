@@ -26,19 +26,19 @@ public class UserDB {
 	}
 	
 	public static User getUser(String name, String pass) {
-//	    BasicDBObject querry = new BasicDBObject();
-//        querry.put("username", name );
-//        querry.put("password", pass);
-//        DBCollection coll = db.getCollection("Users");
-//        DBCursor cursor = coll.find(querry);
-//        
-//        if( cursor.hasNext() ) {
-//             DBObject obj =  cursor.next();
-//             return new User(String.valueOf(obj.get("username")));
-//        }
-//        
-//        return null;
-		return new User("test");
+	    BasicDBObject querry = new BasicDBObject();
+        querry.put("username", name );
+        querry.put("password", pass);
+        DBCollection coll = db.getCollection("Users");
+        DBCursor cursor = coll.find(querry);
+        
+        if( cursor.hasNext() ) {
+             DBObject obj =  cursor.next();
+             return new User(String.valueOf(obj.get("username")));
+        }
+        
+        return null;
+		
 	}
 	
 	public static boolean isUser (String name, String pass) {
