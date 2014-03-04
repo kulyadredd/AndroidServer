@@ -38,10 +38,10 @@
                 </div>
             </div>
             <div class="col-md-9">
-                    <div ng-repeat="allValues in allValue" class="category">
-                        <h4 class="text-center">{{allValues.TXT}}</h4>
-                        <img ng-src={{allValues.IMG}} title={{allValues.TXT}} width="176" height="220"/>
-                        <audio controls ng-src={{allValues.SOUND}} loop="loop"></audio>
+                    <div ng-repeat="aValue in allValues" class="category">
+                        <h4 class="text-center">{{aValue.TXT}}</h4>
+                        <img ng-src={{aValue.IMG}} title={{aValue.TXT}} width="176" height="220"/>
+                        <audio controls ng-src={{aValue.SOUND}} loop="loop"></audio>
                     </div> 
                 </div>  
             </div>

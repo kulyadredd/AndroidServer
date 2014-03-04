@@ -26,10 +26,10 @@ app.service('$fileUpload', ['$http', function ($http) {
             headers: {'Content-Type': undefined}
         })
         .success(function(){
-        	alert ("Файл завантажено успішно!");
+            alert ("Файл завантажено успішно!");
         })
         .error(function(e){
-        	console.log('Error while uploading file: '+e);
+            console.log('Error while uploading file: '+e);
         });
     }
 }]);
@@ -41,76 +41,64 @@ app.controller('ServerFile', ['$scope','$http', '$fileUpload', function ($scope,
             $scope.ncateg = data[0];
         }
     );
+    
+    $scope.allValues = {};
 
     $scope.$watch('ncateg', function() {
-    	if ($scope.ncateg)
-            $scope.allValue.length = 0;
-    		$scope.getImages();
+        if ($scope.ncateg) {
+        	$scope.allValues = {};
+            $scope.getImages();
             $scope.getSounds();
             $scope.getPathTxt();
+        }
     });
     
-    $scope.fullpathIMG = new Array();
-    $scope.fullpathSOUNDS = new Array();
-    $scope.txtpath = new Array();
-    $scope.valueFile = new Array();
-    $scope.allValue = new Array();
-    
     $scope.getImages = function(){
-        $http.get("info/images/"+$scope.ncateg).success(
-            function (data){
-                $scope.fullpathIMG.length = 0;    
-                for (var i=0; i < data.length ; i++)
-                    $scope.fullpathIMG[i]="/images/"+$scope.ncateg+"/"+data[i];
+        $http.get("info/images/"+$scope.ncateg).success(function (data){
+            for (var i=0; i < data.length ; i++){
+            	var key = "/"+$scope.ncateg+"/"+data[i].replace('.png','');
+
+            	if (typeof $scope.allValues[key] !== 'object')
+            		$scope.allValues[key] = {};
+            	
+                $scope.allValues[key].IMG = "/images/"+$scope.ncateg+"/"+data[i];
             }
-        );
+        });
     }
 
     $scope.getSounds = function(){
-        $http.get("info/sounds/"+$scope.ncateg).success(
-            function(data){
-                $scope.fullpathSOUNDS.length = 0;
-                for (var i=0; i<data.length; i++)
-                    $scope.fullpathSOUNDS[i]="/sounds/"+$scope.ncateg+"/"+data[i];
+        $http.get("info/sounds/"+$scope.ncateg).success(function(data){
+            for (var i=0; i<data.length; i++){
+            	var key = "/"+$scope.ncateg+"/"+data[i].replace('.mp3','');
+
+            	if (typeof $scope.allValues[key] !== 'object')
+            		$scope.allValues[key] = {};
+            	
+            	$scope.allValues[key].SOUND = "/sounds/"+$scope.ncateg+"/"+data[i];
             }
-        );
+        });
     }
 
     $scope.getPathTxt = function(){
-       $http.get("info/text/"+$scope.ncateg).success(
-            function (data){ 
-                if (data!="null") {
-                $scope.txtpath.length = 0;    
-                for (var i=0; i < data.length ; i++)
-                    $scope.txtpath[i]="/text/"+$scope.ncateg+"/"+data[i];
-                $scope.getValueTxt($scope.txtpath);
-            }
-        }
-        );
-    }
+       $http.get("info/text/"+$scope.ncateg).success(function (data){                
+            for (var i=0; i < data.length ; i++){
+                $http.get("/text/"+$scope.ncateg+"/"+data[i]).success(function(data, code, f, status){
+                	var key = status.url.replace('/text', '').replace('.txt','');
 
-    $scope.getValueTxt = function(txtpath){
-        $scope.valueFile.length=0;
-        var c=0;
-            for(var i=0; i<txtpath.length;i++){
-            $http.get(txtpath[i]).success(
-                function(data){
-                    $scope.valueFile[c] = data;
-                    c++;
-                    if (c==txtpath.length){
-                        for (var i=0; i<$scope.fullpathIMG.length; i++) 
-                            $scope.allValue.push({IMG : $scope.fullpathIMG[i],  SOUND : $scope.fullpathSOUNDS[i], TXT : $scope.valueFile[i]})
-                    }
-                 }
-            )
-        }
-    }  
+                	if (typeof $scope.allValues[key] !== 'object')
+                		$scope.allValues[key] = {};
+                	
+                	$scope.allValues[key].TXT = data;
+                });
+            }
+        });
+    }
     
     $scope.uploadFile = function(){
         if ($scope.myFile == null) 
-        	console.log("Файл не обрано!");
+            console.log("Файл не обрано!");
         else 
-        	$fileUpload.uploadFileToUrl($scope.myFile, "/", $scope.ncateg);
+            $fileUpload.uploadFileToUrl($scope.myFile, "/", $scope.ncateg);
     };
 }]);
 
