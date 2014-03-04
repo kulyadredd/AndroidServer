@@ -51,7 +51,7 @@ app.controller('ServerFile', ['$scope','$http', '$fileUpload', function ($scope,
     });
     
     $scope.fullpathIMG = new Array();
-    $scope.fullpathMID = new Array();
+    $scope.fullpathSOUNDS = new Array();
     $scope.txtpath = new Array();
     $scope.valueFile = new Array();
     $scope.allValue = new Array();
@@ -69,9 +69,9 @@ app.controller('ServerFile', ['$scope','$http', '$fileUpload', function ($scope,
     $scope.getSounds = function(){
         $http.get("info/sounds/"+$scope.ncateg).success(
             function(data){
-                $scope.fullpathMID.length = 0;
+                $scope.fullpathSOUNDS.length = 0;
                 for (var i=0; i<data.length; i++)
-                    $scope.fullpathMID[i]="/sounds/"+$scope.ncateg+"/"+data[i];
+                    $scope.fullpathSOUNDS[i]="/sounds/"+$scope.ncateg+"/"+data[i];
             }
         );
     }
@@ -99,7 +99,7 @@ app.controller('ServerFile', ['$scope','$http', '$fileUpload', function ($scope,
                     c++;
                     if (c==txtpath.length){
                         for (var i=0; i<$scope.fullpathIMG.length; i++) 
-                            $scope.allValue.push({IMG : $scope.fullpathIMG[i],  MID : $scope.fullpathMID[i], TXT : $scope.valueFile[i]})
+                            $scope.allValue.push({IMG : $scope.fullpathIMG[i],  SOUND : $scope.fullpathSOUNDS[i], TXT : $scope.valueFile[i]})
                     }
                  }
             )
