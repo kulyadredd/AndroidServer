@@ -39,11 +39,11 @@ public class WebServer {
 	    server.add("/images/*", new DataFiles(config.dataRoot) );
 	    server.add("/sounds/*", new DataFiles(config.dataRoot) );
 	    server.add("/text/*", new DataFiles(config.dataRoot));
-	    server.add("/info/*", new DataInfo(config.dataRoot));
-	    
+	    server.add("/info/*", new DataInfo(config.dataRoot));	    
 	    server.add("/js/*", new StaticFiles(config.staticRoot) );
 	    server.add("/css/*", new StaticFiles(config.staticRoot) );
 	    server.add("/", new UpLoadFile());
+	    server.add("/addcat", new AddCategory());
 	    server.add("/login", new Login(auth));
 	    server.add("/logout", new Logout(auth));
 	    

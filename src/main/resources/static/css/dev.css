@@ -21,7 +21,10 @@
     padding:10px;
 }
 audio { 
-width: 176px; 
-display: block; 
-margin:10px; 
+    width: 176px; 
+    display: block;
+}
+.inputlist {
+    margin: 10px; 
+    width: 220px;
 }
