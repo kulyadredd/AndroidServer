@@ -1,40 +1,6 @@
-﻿var app = angular.module('testApp', [], function() {})
+﻿var app = angular.module('testApp', ['drag_and_drop_upload'], function() {})
 
-app.directive('fileModel', ['$parse', function ($parse) {
-    return {
-        restrict: 'A',
-        link: function(scope, element, attrs) {
-            var model = $parse(attrs.fileModel);
-            var modelSetter = model.assign;
-            
-            element.bind('change', function(){
-                scope.$apply(function(){
-                    modelSetter(scope, element[0].files[0]);
-                });
-            });
-        }
-    };
-}]);
-
-
-app.service('$fileUpload', ['$http', function ($http) {
-    this.uploadFileToUrl = function(file, uploadUrl, catName){
-        var fd = new FormData();
-        fd.append(catName, file);
-        $http.post(uploadUrl, fd, {
-            transformRequest: angular.identity,
-            headers: {'Content-Type': undefined}
-        })
-        .success(function(){
-            alert ("Файл завантажено успішно!");
-        })
-        .error(function(e){
-            console.log('Error while uploading file: '+e);
-        });
-    }
-}]);
-
-app.controller('ServerFile', ['$scope','$http', '$fileUpload', function ($scope, $http, $fileUpload) {
+app.controller('ServerFile', ['$scope','$http', function ($scope, $http) {
     $http.get("info").success(
         function(data){
             $scope.categories=data;
@@ -42,8 +8,7 @@ app.controller('ServerFile', ['$scope','$http', '$fileUpload', function ($scope,
         }
     );
     
-    $scope.allValues = {};
-
+    $scope.allValues = {};   
     $scope.$watch('ncateg', function() {
         if ($scope.ncateg) {
         	$scope.allValues = {};
@@ -92,13 +57,7 @@ app.controller('ServerFile', ['$scope','$http', '$fileUpload', function ($scope,
                 });
             }
         });
-    }
-    
-    $scope.uploadFile = function(){
-        if ($scope.myFile == null) 
-            console.log("Файл не обрано!");
-        else 
-            $fileUpload.uploadFileToUrl($scope.myFile, "/", $scope.ncateg);
-    };
+    }    
+
 }]);
 

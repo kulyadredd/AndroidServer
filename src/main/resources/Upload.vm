@@ -8,10 +8,11 @@
         <script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
         <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.12/angular.min.js"></script>
+		<script src="js/dataUpload.js"></script>
 		<script src="js/upload.js"></script>
         <title> Upload page </title>
     </head>
-    <body>
+    <body >
         <div class="navbar navbar-inverse">	                
 	    	<div class="navbar-inner"> 
 	          <div class="container">
@@ -24,20 +25,14 @@
 	          </div>          
 	        </div>
         </div>
-        <div ng-controller="ServerFile" class="row">
+        <div ng-controller="ServerFile" class="row">       
             <div class="col-md-3">
-                <div class="bs">
+                <div class="bs">                
                     <select id="categoryName" class="form-control" ng-change="getImages()" ng-model="ncateg" ng-options="aCategory for aCategory in categories"></select>
                 </div>
-                  </br> 
-                <div class="bs"> 
-                    <input class="btn btn-info" type="file" file-model="myFile"/>
-                    <div class="text-center bs">
-                        <button class="btn btn-info" ng-click="uploadFile()">Upload</button>
-                    </div>
-                </div>
+                  </br>                 
             </div>
-            <div class="col-md-9">
+            <div id="view" ng-controller="FileUpload"  class="col-md-9">             
                     <div ng-repeat="aValue in allValues" class="category">
                         <h4 class="text-center">{{aValue.TXT}}</h4>
                         <img ng-src={{aValue.IMG}} title={{aValue.TXT}} width="176" height="220"/>

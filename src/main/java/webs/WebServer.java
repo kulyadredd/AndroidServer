@@ -28,7 +28,7 @@ public class WebServer {
         ErrorHandler errorHandler = new ErrorHandler();
         errorHandler.setShowStacks(true);
 
-        UserDB.initDB();
+        //UserDB.initDB();
         initVelocity();
         
         AuthService auth = new AuthService();
