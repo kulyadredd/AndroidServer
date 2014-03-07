@@ -1,14 +1,14 @@
 <!DOCTYPE html>
-<html ng-app="mgcrea.ngStrapDocs">
+<html ng-app="MyAngularApp">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css">
         <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap-theme.min.css">
+		<link rel="stylesheet" href="//mgcrea.github.io/angular-strap/static/styles/angular-motion.css">
         <link rel="stylesheet" href="css/dev.css">
         <script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
         <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.12/angular.min.js"></script>
-		<script src="http://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.10.0.js"></script>
         <script src="//code.angularjs.org/1.2.13/angular-animate.min.js"></script>
         <script src="//code.angularjs.org/1.2.13/angular-sanitize.min.js"></script>
         <script src="//mgcrea.github.io/angular-strap/dist/angular-strap.js"></script>
@@ -31,9 +31,8 @@
         </div>
         <div ng-controller="ServerFile" class="row">
             <div class="col-md-3">    
-                <div style="padding-bottom: 24px;" class="form-inline">
-                    <input name="selectName" id="categoryName" type="text" class="form-control inputlist" 
-                    ng-model="ncateg" data-min-length="0" data-html="1" data-animation="am-flip-x" 
+                <div class="form-inline bs">
+                    <input type="text" class="form-control catlist" ng-model="ncateg" data-min-length="0" data-animation="am-flip-x" 
                     ng-options="aCategory for aCategory in categories | filter: nameFilter" bs-typeahead>
                     <button ng-model="ncateg" class="btn btn-info" ng-show="visible" ng-click="addcat()">add</button>
                 </div>
