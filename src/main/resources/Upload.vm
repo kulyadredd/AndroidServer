@@ -32,9 +32,9 @@
         <div ng-controller="ServerFile" class="row">
             <div class="col-md-3">    
                 <div class="form-inline bs">
-                    <input type="text" class="form-control catlist" ng-model="ncateg" data-min-length="0" data-animation="am-flip-x" 
-                    ng-options="aCategory for aCategory in categories | filter: nameFilter" bs-typeahead>
-                    <button ng-model="ncateg" class="btn btn-info" ng-show="visible" ng-click="addcat()">add</button>
+                    <input type="text" class="form-control catlist" ng-model="incat" data-min-length="0" data-animation="am-flip-x" 
+                    ng-options="aCategory for aCategory in categories | filter: catName" bs-typeahead/>
+                    <button class="btn btn-info" ng-show="visible" ng-click="addcat()">add</button>
                 </div>
             </div>
             <div class="col-md-9">
