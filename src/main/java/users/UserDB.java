@@ -7,12 +7,12 @@ import webs.Config;
 import com.mongodb.*;
 
 public class UserDB {
-	
+
 	private static MongoClient mongo;
 	private static DB db;
-	
+
 	public static void initDB() throws UnknownHostException{
-		
+
 		mongo = new MongoClient(Config.IP_DB, Config.DB_PORT);
 		db = mongo.getDB("AndroidServer");
 		DBCollection coll = db.getCollection("Users");
@@ -24,7 +24,7 @@ public class UserDB {
 			System.out.println("Database was created successfully, username test");
 		} else System.out.println("The database already exists");
 	}
-	
+
 	public static User getUser(String name, String pass) {
 	    BasicDBObject querry = new BasicDBObject();
         querry.put("username", name );
@@ -38,11 +38,10 @@ public class UserDB {
         }
         
         return null;
-		
+
 	}
-	
+
 	public static boolean isUser (String name, String pass) {
 	    return getUser(name, pass) != null;
 	}
 }
-

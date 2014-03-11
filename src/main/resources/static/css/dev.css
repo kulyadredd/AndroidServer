@@ -1,18 +1,24 @@
-@CHARSET "UTF-8";
-
 .quit-btn {
 	color : orange;
-	font-size: 25px;	
+	font-size: 25px;
+	margin-right: 50px	
 }
 .user-logo {
 	color: orange;
 	word-spacing: -20px;
 	font-size: 25px;
 	margin-top: 7px;
+	margin-left: 50px;
 }
-.bs{
-    margin: 10px auto; 
-    width:285px;
+.version{
+	font-size: 14,5px;
+	color : orange;
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+.form-inline{
+    margin-top: 10px;
+    margin-left: -20px;
 }
 .category {
     position:relative;
@@ -20,10 +26,36 @@
     float:left;
     padding:10px;
 }
+.catlist {
+    width: 160px;
+}
+.container {
+  width: auto;
+  max-width: 100%;
+}
+.addbnt{
+	margin-left: -35px;	
+}
+.inputclear{
+  position: relative;
+  left: -35px;
+}
+html {
+	position: relative;
+	min-height: 100%;
+}
+body {
+	margin-top: 60px; 
+	margin-bottom: 40px;
+}
 audio { 
     width: 176px; 
-    display: block;
+    display: block;  
 }
-.catlist {
-    width: 220px;
+#footer {
+	position: absolute;
+	bottom: 0;
+	width: 100%;
+	height: 30px;
+	background-color: #2c2c2c;
 }

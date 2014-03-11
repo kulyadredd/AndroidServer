@@ -2,6 +2,7 @@
 
 app.controller('ServerFile', ['$scope','$http', function ($scope, $http) {
 		
+	$scope.listclear="false";
 	
 	$http.get("info").success(
         function(data){
@@ -9,7 +10,14 @@ app.controller('ServerFile', ['$scope','$http', function ($scope, $http) {
             $scope.incat = '';
         }
     );
-
+	
+	$scope.clear = function() {
+		$scope.incat='';
+		$scope.ncateg = $scope.incat;
+		$("#view div" ).remove();
+		
+	}
+	
     $scope.addcat = function() {
         $scope.categories.push($scope.incat);
         $http.get("/addcat?newcategory="+$scope.incat).success(function(data){
@@ -27,15 +35,18 @@ app.controller('ServerFile', ['$scope','$http', function ($scope, $http) {
     $scope.$watch('incat', function() {
     	    if(!$scope.categories)
     	        return;
+    	 	$scope.listclear="true";
     	    for (var i = 0; i<$scope.categories.length; i++) 
     	        if($scope.incat==$scope.categories[i]){
     	            $scope.ncateg = $scope.incat;
     	            break;
     	        } else $scope.visible="true";
-    	 	if($scope.incat == '')
+    	 	if($scope.incat == ''){
     	 		$scope.visible="false";
+    	 		$scope.listclear="false";
+    	 	}
     	 });
-
+    
     	$scope.$watch('ncateg', function(){
     		if($scope.ncateg){
 	    	    $scope.allValues = {};
