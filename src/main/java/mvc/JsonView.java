@@ -20,6 +20,7 @@ public class JsonView implements View {
     public void view(HttpServletRequest request, HttpServletResponse response)
                     throws IOException {
             response.setContentType("application/json");
+            response.setCharacterEncoding("UTF-8");
             response.getWriter().print(jsonParam);      
     }
    

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html ng-app="testApp">
+<html ng-app="mgcrea.ngStrapDocs">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css">
@@ -8,11 +8,16 @@
         <script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
         <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.12/angular.min.js"></script>
-		<script src="js/dataUpload.js"></script>
+		<script src="http://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.10.0.js"></script>
+        <script src="//code.angularjs.org/1.2.13/angular-animate.min.js"></script>
+        <script src="//code.angularjs.org/1.2.13/angular-sanitize.min.js"></script>
+        <script src="//mgcrea.github.io/angular-strap/dist/angular-strap.js"></script>
+        <script src="//mgcrea.github.io/angular-strap/dist/angular-strap.tpl.js"></script>
 		<script src="js/upload.js"></script>
+		<script src="js/dataUpload.js"></script>
         <title> Upload page </title>
     </head>
-    <body >
+    <body ng-controller="FileUpload">
         <div class="navbar navbar-inverse">	                
 	    	<div class="navbar-inner"> 
 	          <div class="container">
@@ -25,21 +30,28 @@
 	          </div>          
 	        </div>
         </div>
-        <div ng-controller="ServerFile" class="row">       
-            <div class="col-md-3">
-                <div class="bs">                
-                    <select id="categoryName" class="form-control" ng-change="getImages()" ng-model="ncateg" ng-options="aCategory for aCategory in categories"></select>
+        <div ng-controller="ServerFile" class="container row">
+            <div class="col-md-3">         
+                <div style="padding-bottom: 24px;" class="form-inline">
+                    <input name="selectName" id="categoryName" type="text" class="form-control inputlist" 
+                    ng-model="ncateg" value="{{ncateg}}" data-min-length="0" data-html="1" data-animation="am-flip-x" 
+                    ng-options="aCategory for aCategory in categories | filter: nameFilter" bs-typeahead>
+                    <button ng-model="ncateg" class="btn btn-info" ng-show="visible" ng-click="addcat()">add</button>
                 </div>
-                  </br>                 
             </div>
-            <div id="view" ng-controller="FileUpload"  class="col-md-9">             
-                    <div ng-repeat="aValue in allValues" class="category">
-                        <h4 class="text-center">{{aValue.TXT}}</h4>
-                        <img ng-src={{aValue.IMG}} title={{aValue.TXT}} width="176" height="220"/>
-                        <audio controls ng-src={{aValue.SOUND}} loop="loop"></audio>
+
+            <div id="view" class="col-md-9" >
+                    <div id="{{aValue.id}}" ng-Mouseover="over($event)" ng-Mouseout="out($event)" ng-repeat="aValue in allValues" class="category" correct-repeat-directive>
+						<button  ng-click="del($event)" class="close">&times</button>	
+						<h4 class="text-center">{{aValue.TXT}}</h4>
+						<button  ng-click="del($event)" class="close">&times</button>												
+                        <img  ng-src={{aValue.IMG}} title={{aValue.TXT}} width="176" height="220"/>
+                        <button  ng-click="del($event)" class="close">&times</button>                        
+                        <audio   controls ng-src={{aValue.SOUND}} loop="loop"></audio>
+                                                
                     </div> 
-                </div>  
-            </div>
-        </div>
+               </div >  
+            </div>            
+        </div >
     </body>
 </html>

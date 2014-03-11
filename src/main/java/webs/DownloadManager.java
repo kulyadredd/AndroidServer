@@ -1,61 +1,118 @@
 package webs;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Random;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.FileUploadException;
+import org.apache.commons.fileupload.disk.DiskFileItemFactory;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import org.apache.commons.io.FilenameUtils;
+import org.apache.commons.lang.StringUtils;
+
 
 public class DownloadManager {
-	private InputStream in;
-	private String fileName;
+	
+	private HttpServletRequest request;
+	private String id;
 	private String category;
-	private LinkedList<Byte> nameLine = new LinkedList<>();
+	private String fileName;
+	private InputStream in;
+	private byte[] file;	
+	private String path;
+	private boolean isNew;
 	
-	public DownloadManager(InputStream in){
-		this.in = in;
+	public DownloadManager(HttpServletRequest request){
+		this.request = request;
 	}
 	
 	
-	public void upload() throws IOException {
+	private void prepare() throws IOException {		
 		
-		FileOutputStream out = null;
-		LinkedList<Byte> list = new LinkedList<Byte>();
-		int b = 0;
-		while ((b = in.read()) != -1) list.add((byte) b);		
-		clearWrap(list);
-		File f = new File(Config.getPath(fileName.toLowerCase(), category)+fileName);
-		out = new FileOutputStream(f);
-		for (Byte bt : list) out.write(bt);
-		in.close();
-		out.close();
+		try {
+			List<FileItem> items = new ServletFileUpload(new DiskFileItemFactory()).parseRequest(request);
+			for (FileItem fileItem : items) {
+				String fieldName = fileItem.getFieldName();
+				if(fieldName.equalsIgnoreCase("id")){
+					InputStream id_stream = fileItem.getInputStream();
+					ByteArrayOutputStream baos = new ByteArrayOutputStream();
+					int b = 0;
+					while((b = id_stream.read())!=-1)
+						baos.write(b);
+					id = new String(baos.toByteArray());
+					if(id_stream!=null)
+						id_stream.close();
+				}else{					
+					fileName = FilenameUtils.getName(fileItem.getName());
+					category = fieldName;
+					in = fileItem.getInputStream();
+				}
+			}
+		} catch (FileUploadException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 	}
 	
-	private void clearWrap(List<Byte> l){
-		int count = 0;
-		while (count < 4) {
-			if (l.get(0) == 10)
-				count++;
-			if(count==1)
-				nameLine.add(l.get(0));					
-			l.remove(0);
-		}
-		setName();
-		count = 0;
-		while (count < 2) {
-			if (l.get(l.size() - 1) == 13)
-				count++;
-			l.remove(l.size() - 1);
+	private String getCorrectName(){
+		if(StringUtils.isNotBlank(id))
+			return id + fileName.substring(fileName.lastIndexOf("."), fileName.length());
+		else{
+			isNew = true;
+			return id = String.valueOf(new Random(System.currentTimeMillis()).nextInt(10000))
+					+ ((char)(new Random(System.currentTimeMillis()).nextInt(26)+98))
+					+ fileName.substring(fileName.lastIndexOf("."), fileName.length());
 		}
 	}
 	
-	private void setName(){		
-		byte[] array = new byte[nameLine.size()];
-		int index = 0;
-		for (Byte b : nameLine) array[index++]=b;	
-		String line = new String(array);
-		this.fileName = "/"+line.substring(line.lastIndexOf("=")+2,line.length()-2);
-		this.category = "/"+line.substring(line.indexOf("=")+2,line.lastIndexOf(";")-1);
-	}	
+	private byte[] file() throws IOException{
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		byte[] buffer = new byte[1024];
+		int current = 0;
+		while((current = in.read(buffer))!=-1){
+			baos.write(buffer, 0, current);
+			Arrays.fill(buffer, (byte)0);
+		}
+		file = baos.toByteArray();
+		return file;
+			
+	}
+	
+	public void upload() throws IOException{
+		
+		prepare();
+		path = Config.getPath(fileName, category)+getCorrectName();
+		System.out.println(path);
+		File f = new File(path);
+		FileOutputStream out = new FileOutputStream(f);		
+		out.write(file());
+		if(in!=null)
+			in.close();
+		if(out!=null)
+			out.close();		
+		
+	}
+	
+	public List<String> getAnswer(){
+		List<String> answer = new LinkedList<String>();		
+		if(path.toLowerCase().endsWith("txt"))
+			answer.add(new String(file));
+		else
+			answer.add(path.replace((char) 92, '/'));
+		if(isNew)
+			answer.add(id.substring(0, id.lastIndexOf(".")));
+		return answer;
+		
+	}
+		
 }

@@ -104,9 +104,18 @@ public class Config {
 	
 	public static String getPath(String file,String category){
 		if(file.endsWith(".png")||file.endsWith(".jpg"))
-			return Config.IMAGES_PATH+category;
+			return Config.IMAGES_PATH + 
+					File.separator + 
+					category + 
+					File.separator;
 		else if (file.endsWith(".txt"))
-			return Config.TEXT_PATH+category;			
-		else return Config.AUDIO_PATH+category;
+			return Config.TEXT_PATH + 
+					File.separator + 
+					category + 
+					File.separator;			
+		else return Config.AUDIO_PATH + 
+				File.separator + 
+				category + 
+				File.separator;
 	}
 }
