@@ -1,7 +1,7 @@
 var DDU =  angular.module('drag_and_drop_upload', [], function() {});
 
-DDU.controller("FileUpload", ["$scope","$http", function ($scope, $http) {	
-	initPlaceHolder();
+DDU.controller("FileUpload", ["$scope","$http", function ($scope, $http) {
+	
 	$("#view button").css("display","none");
 	$scope.del = function($event){
 		$http.get("/remove?id="+$($event.target).parent().attr("id")+"&path="+$($event.target).next().attr("src")+"&category="+ $("#categoryName").val()
@@ -15,25 +15,16 @@ DDU.controller("FileUpload", ["$scope","$http", function ($scope, $http) {
 			if($($placeHolder).parent().find("img, h4, audio").length == 0)
 				$($placeHolder).parent().remove();
 		});
-//		console.log($($event.target).attr("src"));
-//		console.log($($event.target).parent().attr("id"));
-//		console.log($($event.target).prop('tagName'));
-//		console.log($($($event.target).parent().find("img, h4, audio")).length);
 	}
 	
 	$scope.over = function($event){
-		//
-		
-		console.log("over "+$event.target);
 		if($($event.target).prop('tagName')!='DIV' && $($event.target).prop('tagName')!='BUTTON'){
 			$($event.target).parent().parent().find("button").css("display", "none");
 			$($event.target).prev().css("display","block");
 		}
 	}
 	$scope.out = function($event){
-		console.log("out "+$event.target);
-		//if($($event.target).prop('tagName')=='DIV')
-			//$($event.target).find("button").css("display", "none");
+		// TO DO
 	}
 	
     $scope.uploadFile = function() {    	
@@ -53,7 +44,7 @@ DDU.controller("FileUpload", ["$scope","$http", function ($scope, $http) {
         	        		 $currentElement.parent().attr("class", "category")
         	        		 $currentElement.parent().on("mouseover", $scope.over);
         	        		 $currentElement.parent().on("mouseout", $scope.out);
-        	        		 initPlaceHolder();        	        		 
+        	        		 $scope.initPlaceHolder();        	        		 
         	        	 }
     	        		 $newElement.insertBefore($currentElement);
     	        		 getCloseButton().insertBefore($newElement);
@@ -146,7 +137,7 @@ DDU.controller("FileUpload", ["$scope","$http", function ($scope, $http) {
     }
 
 	
-	function initPlaceHolder(){	
+	$scope.initPlaceHolder = function (){	
 		var $placeHolder = $("<div id=\"placeHolder\" class=\"category\"></div>");
 		var $viewDiv = $("#view");			
 		var $textDropDiv = $("<div id=\"textDrop\" ng-class=\"dropClass\" class=\"dropElement textPlaceHolder\"><span>Drop text file here...</span></div>");

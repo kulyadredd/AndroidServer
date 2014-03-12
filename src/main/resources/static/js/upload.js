@@ -1,44 +1,67 @@
-var app = angular.module('mgcrea.ngStrapDocs', ['ngAnimate', 'ngSanitize', 'mgcrea.ngStrap', 'drag_and_drop_upload'], function() {})
+var app = angular.module('MyAngularApp', ['ngSanitize', 'mgcrea.ngStrap', 'drag_and_drop_upload'], function() {})
 
-angular.module('mgcrea.ngStrapDocs')
-
-app.controller('ServerFile', ['$scope','$http', function ($scope, $http) {
+app.controller('ServerFile', ['$scope','$http', function ($scope, $http) {	  
 	
-    $scope.nameFilter = '';
-    $http.get("info").success(
+	$scope.addcateg = true;
+	$scope.listclear = true;
+	
+	$http.get("info").success(
         function(data){
             $scope.categories=data;
-            $scope.ncateg = data[0];
+            $scope.incat = '';
         }
     );
-
+	
+	$scope.clear = function() {
+		$scope.incat='';
+		$scope.ncateg = $scope.incat;
+		$("#view div" ).remove();
+		$scope.listclear = true;
+		
+	}
+	
     $scope.addcat = function() {
-        $scope.categories.push($scope.ncateg);
-        $http.get("/addcat?newcategory="+$scope.ncateg);
+        $scope.categories.push($scope.incat);
+        $http.get("/addcat?newcategory="+$scope.incat).success(function(data){
+		    $scope.ncateg = $scope.incat;
+		    $scope.allValues = {};
+		    $scope.getImages();
+		    $scope.getSounds();
+		    $scope.getPathTxt();
+        });
+        $scope.visible=false;
     };
 
     $scope.allValues = {};
-
-    $scope.$watch('ncateg', function() {
-    	 $scope.allValues = {};
-    	if($scope.categories)
-        for (var i = 0; i<$scope.categories.length; i++) {
-            if($scope.ncateg==$scope.categories[i]){
-                $scope.getImages();
-                $scope.getSounds();
-                $scope.getPathTxt();
-                $scope.visible="false";
-                break;
-            }else $scope.visible="true";
-        };
-        if ($scope.ncateg=='')
-        	$scope.visible="false";
-    });
     
+    $scope.$watch('incat', function() {
+    	if(!$scope.categories)
+    		return;
+    	$scope.listclear=false;
+    	for (var i = 0; i<$scope.categories.length; i++) 
+    		if($scope.incat==$scope.categories[i]){
+    			$scope.ncateg = $scope.incat;
+    			break;
+    		} else $scope.addcateg = false;
+    	if($scope.incat == ''){
+    		$scope.addcateg = true;
+    		$scope.listclear = true;
+    	}
+    });
+    $scope.$watch('ncateg', function(){
+    	if($scope.ncateg){
+    		$("#view div").remove();
+    		$scope.allValues = {};
+    		$scope.getImages();
+    		$scope.getSounds();
+    		$scope.getPathTxt();    		
+    		$scope.initPlaceHolder();
+    		$scope.addcateg = true;
+    	}
+    });   
     
     $scope.getImages = function(){
-        $http.get("info/images/"+$scope.ncateg).success(function (data){
-           // if (data!=null) {
+        $http.get("info/images/"+$scope.ncateg).success(function (data){           
                 for (var i=0; i < data.length ; i++){
                 	var key = "/"+$scope.ncateg+"/"+data[i].replace('.png','');
 
@@ -47,33 +70,26 @@ app.controller('ServerFile', ['$scope','$http', function ($scope, $http) {
                 	
                     $scope.allValues[key].IMG = "/images/"+$scope.ncateg+"/"+data[i];
                     if(!$scope.allValues[key].id)
-                    	$scope.allValues[key].id = data[i].substring(0, data[i].lastIndexOf("."));
-                    
-                }
-            //};
+                    	$scope.allValues[key].id = data[i].substring(0, data[i].lastIndexOf("."));                    
+                }            
         });
     }
 
     $scope.getSounds = function(){
-        $http.get("info/sounds/"+$scope.ncateg).success(function(data){
-            //if (data!=null) {
+        $http.get("info/sounds/"+$scope.ncateg).success(function(data){            
                 for (var i=0; i<data.length; i++){
                 	var key = "/"+$scope.ncateg+"/"+data[i].replace('.mp3','');
-
                 	if (typeof $scope.allValues[key] !== 'object')
-                		$scope.allValues[key] = {};
-                	
+                		$scope.allValues[key] = {};                	
                 	$scope.allValues[key].SOUND = "/sounds/"+$scope.ncateg+"/"+data[i];
                 	if(!$scope.allValues[key].id)
-                		$scope.allValues[key].id = data[i].substring(0, data[i].lastIndexOf("."));
+                		$scope.allValues[key].id = data[i].substring(0, data[i].lastIndexOf("."));                	
                 }
-            //};
         });
     }
 
     $scope.getPathTxt = function(){
-       $http.get("info/text/"+$scope.ncateg).success(function (data){
-           //if (data!=null) {
+       $http.get("info/text/"+$scope.ncateg).success(function (data){ 
     	   var length = data.length;
                 for (var i=0; i < data.length ; i++){
                 	var id = data[i].substring(0, data[i].lastIndexOf("."));
@@ -90,6 +106,7 @@ app.controller('ServerFile', ['$scope','$http', function ($scope, $http) {
                     		$scope.allValues[key].id = id;
                     	
                         if(index==length){
+                        	console.log($("#view").find("div"));
                     		var allValues = $scope.allValues;
                     		for(var i in allValues){
                     			if(!allValues[i].TXT){
@@ -114,19 +131,12 @@ app.controller('ServerFile', ['$scope','$http', function ($scope, $http) {
                     	}
                     });
                 }
-
-            //};
         });
     }
 }]);
 
 app.directive("correctRepeatDirective", function(){	
 	return function(scope, element, attrs){
-		$(element).find("button").css("display", "none");
-//		console.log(scope.allValues['/cats/3'].SOUND);
-//		for(var item in scope.allValues)
-//			console.log(scope.allValues[item]);
-			//console.log(scope.$parent.allValues[scope.$parent.$index].TXT);
-			
+		$(element).find("button").css("display", "none");			
 	}	
 });

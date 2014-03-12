@@ -10,13 +10,13 @@ import mvc.View;
 
 public class AddCategory extends Controller {
 
-	private static final String[] typeFile = { "images\\", "sounds\\", "text\\" };
+	private static final String[] TYPE_FILE = { "images", "sounds", "text" };
 
 	public View get(HttpServletRequest request, PathParser pathInfo)
 			throws Exception {
 		String newcategory = request.getParameter("newcategory");
-		for (int i = 0; i < typeFile.length; i++) {
-			File cat = new File(typeFile[i] + newcategory);
+		for (int i = 0; i < TYPE_FILE.length; i++) {
+			File cat = new File(TYPE_FILE[i] + File.separator + newcategory);
 			cat.mkdir();
 		}
 		return null;

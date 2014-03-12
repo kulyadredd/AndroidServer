@@ -22,19 +22,16 @@ public class RemoveData extends Controller {
 				File removeFile;
 				if(path.toLowerCase().equals("undefined")){
 					String category = request.getParameter("category");
-					if(StringUtils.isNotBlank(category)){
-						System.out.println("text\\"+category+"\\"+id+".txt");
-						removeFile = new File("text\\"+category+"\\"+id+".txt");
+					if(StringUtils.isNotBlank(category)){						
+						removeFile = new File("text"+File.separator+category+File.separator+id+".txt");
 						if(removeFile.exists())
 							removeFile.delete();
 					}
-				}else{
-					System.out.println(path.substring(1));
+				}else{					
 					removeFile = new File(path.substring(1));
 					if(removeFile.exists())
 						removeFile.delete();
-				}
-					
+				}					
 			}
 		}
 		return super.get(request, pathInfo);

@@ -28,6 +28,7 @@ public class UpLoadFile extends Controller {
     public View get(HttpServletRequest request, PathParser pathInfo) throws Exception {
         HashMap<String, Object> map = new HashMap<String, Object>();
         map.put("name", AuthService.getLoggerUser(request.getSession()).getUsername());
+        map.put("v", Version.version());
         return new TemplateView("Upload.vm", map);
     }
 

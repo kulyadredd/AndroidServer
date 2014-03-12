@@ -70,7 +70,7 @@ public class DownloadManager {
 		else{
 			isNew = true;
 			return id = String.valueOf(new Random(System.currentTimeMillis()).nextInt(10000))
-					+ ((char)(new Random(System.currentTimeMillis()).nextInt(26)+98))
+					+ ((char)(new Random(System.currentTimeMillis()).nextInt(25)+97))
 					+ fileName.substring(fileName.lastIndexOf("."), fileName.length());
 		}
 	}
