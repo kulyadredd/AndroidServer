@@ -87,13 +87,13 @@ public class DownloadManager {
 		return file;
 			
 	}
-	
+
 	public void upload() throws IOException{
 		
 		prepare();
 		path = Config.getPath(fileName, category)+getCorrectName();
 		System.out.println(path);
-		File f = new File(path);
+		File f = new File(new Config().dataRoot+File.separator + path);		
 		FileOutputStream out = new FileOutputStream(f);		
 		out.write(file());
 		if(in!=null)
