@@ -7,6 +7,7 @@ import mvc.PathParser;
 import mvc.StaticFilesView;
 import mvc.View;
 
+@SuppressWarnings("serial")
 public class StaticFiles extends Controller {
 
     private String root;

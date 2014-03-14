@@ -10,7 +10,14 @@ import mvc.Controller;
 import mvc.PathParser;
 import mvc.View;
 
+@SuppressWarnings("serial")
 public class RemoveData extends Controller {
+	
+	private String dataRoot;
+	
+	public RemoveData(String dataRoot){
+		this.dataRoot = dataRoot;
+	}
 
 	@Override
 	public View get(HttpServletRequest request, PathParser pathInfo)
@@ -23,13 +30,13 @@ public class RemoveData extends Controller {
 				if(path.toLowerCase().equals("undefined")){
 					String category = request.getParameter("category");
 					if(StringUtils.isNotBlank(category)){						
-						removeFile = new File(new Config().dataRoot+File.separator+"text"+File.separator+category+File.separator+id+".txt");
+						removeFile = new File(dataRoot+File.separator+"text"+File.separator+category+File.separator+id+".txt");
 						if(removeFile.exists())
 							removeFile.delete();
 					}
 				}else{
 					
-					removeFile = new File(new Config().dataRoot + path);
+					removeFile = new File(dataRoot + path);
 					if(removeFile.exists())
 						removeFile.delete();
 				}					

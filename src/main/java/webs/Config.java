@@ -11,7 +11,7 @@ import java.util.Properties;
 public class Config {
 
     public static Config parseDefault() throws IOException {
-        File f = new File("test.conf");
+        File f = new File("test.conf");        
         if (!f.exists())
             f = tildeExpand("~/etc/test.conf");
         if (!f.exists())
@@ -46,7 +46,7 @@ public class Config {
             Properties props = new Properties();
             if (file.exists()) {
                 reader = new BufferedReader(new FileReader(file));
-                props.load(reader);
+                props.load(reader);                
             }
             return props;
         } finally {

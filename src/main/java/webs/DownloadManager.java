@@ -23,6 +23,7 @@ import org.apache.commons.lang.StringUtils;
 public class DownloadManager {
 	
 	private HttpServletRequest request;
+	private String dataRoot;
 	private String id;
 	private String category;
 	private String fileName;
@@ -31,8 +32,9 @@ public class DownloadManager {
 	private String path;
 	private boolean isNew;
 	
-	public DownloadManager(HttpServletRequest request){
+	public DownloadManager(HttpServletRequest request, String dataRoot){
 		this.request = request;
+		this.dataRoot = dataRoot;
 	}
 	
 	
@@ -93,7 +95,7 @@ public class DownloadManager {
 		prepare();
 		path = Config.getPath(fileName, category)+getCorrectName();
 		System.out.println(path);
-		File f = new File(new Config().dataRoot+File.separator + path);		
+		File f = new File(dataRoot+File.separator + path);		
 		FileOutputStream out = new FileOutputStream(f);		
 		out.write(file());
 		if(in!=null)
