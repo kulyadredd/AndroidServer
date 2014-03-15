@@ -3,7 +3,7 @@ var app = angular.module('MyAngularApp', ['ngSanitize', 'mgcrea.ngStrap', 'drag_
 app.controller('ServerFile', ['$scope','$http', function ($scope, $http) {	  
 	
 	$scope.addcateg = true;
-	$scope.listclear = true;
+	$scope.listclear = true;	
 	
 	$http.get("info").success(
         function(data){
@@ -111,6 +111,12 @@ app.controller('ServerFile', ['$scope','$http', function ($scope, $http) {
                     		for(var i in allValues){
                     			if(!allValues[i].TXT){
                     				var $h4 = $("#"+i.substring(i.lastIndexOf("/")+1, i.length)).find("h4");
+                    	    		var $slide = $scope.getSlidePanel();
+                    	    		$slide.on("click", $scope.drop);
+                    	    		var $slideButton = $scope.getSlideButton();
+                    	    		$slideButton.on("click",$scope.btnslide);
+                    	    		$slide.insertBefore($h4);
+                    	    		$slideButton.insertBefore($h4);
                     				$scope.getCorrectPlaceHolder("H4").insertBefore($h4);                    				
                     				$h4.remove();
                     			}

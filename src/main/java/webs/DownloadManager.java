@@ -69,9 +69,10 @@ public class DownloadManager {
 			return id + fileName.substring(fileName.lastIndexOf("."), fileName.length());
 		else{
 			isNew = true;
+			fileName=fileName!=null?fileName.substring(fileName.lastIndexOf("."), fileName.length()):".txt";			
 			return id = String.valueOf(new Random(System.currentTimeMillis()).nextInt(10000))
 					+ ((char)(new Random(System.currentTimeMillis()).nextInt(25)+97))
-					+ fileName.substring(fileName.lastIndexOf("."), fileName.length());
+					+ fileName;
 		}
 	}
 	
@@ -91,7 +92,7 @@ public class DownloadManager {
 	public void upload() throws IOException{
 		
 		prepare();
-		path = Config.getPath(fileName, category)+getCorrectName();
+		path = Config.getPath(fileName!=null?fileName:".txt", category)+getCorrectName();
 		System.out.println(path);
 		File f = new File(path);
 		FileOutputStream out = new FileOutputStream(f);		

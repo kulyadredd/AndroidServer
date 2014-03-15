@@ -33,9 +33,13 @@ public class LoginFilter implements Filter {
 
         if (isUnsecured(request.getRequestURI())) {
             chain.doFilter(req, resp);
-        } else {
-            if (auth.isLogged(request.getSession())) {
-                chain.doFilter(req, resp);
+        } else {        	
+    		if (auth.isLogged(request.getSession())) {
+    			try{
+    				chain.doFilter(req, resp);
+    			}catch(Exception e){
+    				e.printStackTrace();
+    			}    		        		        		
             } else {
                 String fullUri = request.getRequestURI()
                         + ((request.getQueryString() == null) ? "" : "?" + request.getQueryString());
@@ -44,8 +48,7 @@ public class LoginFilter implements Filter {
             }
         }
     }
-    
-    
+     
     private boolean isUnsecured(String requestURI) {
         for (String template : this.exceptionList)
             if (template.endsWith("*")){
