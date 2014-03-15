@@ -104,18 +104,16 @@ audio {
 #panel {
     background: #FEFFEC;
     height: 50px;
-    display: none;
+    display: block;
 }
 .btn-slide {
+	background: url(/img/white-arrow.jpg) no-repeat right -50px;
     text-align: center;
-    width: 15px;
+    width: 176px;
 	height: 15px;
-	padding-right: 0px;
-	padding-top: 0px;
-	padding-left: 0px;
-	padding-bottom: 0px;
-	margin-left: 80px;
 	display: block;
-	font: bold 120%/100% Arial, Helvetica, sans-serif;
-	text-decoration: none;
 }
+.active {
+	background-position: right 5px;
+}
+

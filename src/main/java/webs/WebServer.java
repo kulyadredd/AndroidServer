@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Arrays;
+import java.util.Properties;
 
 import org.apache.velocity.app.Velocity;
 import org.eclipse.jetty.server.handler.ErrorHandler;
@@ -28,9 +29,8 @@ public class WebServer {
         ErrorHandler errorHandler = new ErrorHandler();
         errorHandler.setShowStacks(true);
 
-//        UserDB.initDB();
-        initVelocity();
-        
+        UserDB.initDB();
+        initVelocity();        
         AuthService auth = new AuthService();
         String[] excludes = { "/info/*", "/info", "/images/*", "/sounds/*",
                 "/text/*", "/js/*", "/favicon.ico", LoginFilter.LOGIN_URI };
@@ -39,14 +39,16 @@ public class WebServer {
 	    server.add("/images/*", new DataFiles(config.dataRoot) );
 	    server.add("/sounds/*", new DataFiles(config.dataRoot) );
 	    server.add("/text/*", new DataFiles(config.dataRoot));
-	    server.add("/info/*", new DataInfo(config.dataRoot));	    
+	    server.add("/info/*", new DataInfo(config.dataRoot));
+	    server.add("/img/*", new StaticFiles(config.staticRoot));
 	    server.add("/js/*", new StaticFiles(config.staticRoot) );
 	    server.add("/css/*", new StaticFiles(config.staticRoot) );
-	    server.add("/", new UpLoadFile());
-	    server.add("/addcat", new AddCategory());
+	    server.add("/", new UpLoadFile(config.dataRoot));
+	    server.add("/remove", new RemoveData(config.dataRoot));
+	    server.add("/addcat", new AddCategory(config.dataRoot));
 	    server.add("/login", new Login(auth));
 	    server.add("/logout", new Logout(auth));
-	    server.add("/remove", new RemoveData());
+	    
 	    
         System.out.println("v"+Version.version()+" init completed.");
     }

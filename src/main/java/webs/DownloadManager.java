@@ -23,6 +23,7 @@ import org.apache.commons.lang.StringUtils;
 public class DownloadManager {
 	
 	private HttpServletRequest request;
+	private String dataRoot;
 	private String id;
 	private String category;
 	private String fileName;
@@ -31,8 +32,9 @@ public class DownloadManager {
 	private String path;
 	private boolean isNew;
 	
-	public DownloadManager(HttpServletRequest request){
+	public DownloadManager(HttpServletRequest request, String dataRoot){
 		this.request = request;
+		this.dataRoot = dataRoot;
 	}
 	
 	
@@ -65,9 +67,10 @@ public class DownloadManager {
 	}
 	
 	private String getCorrectName(){
-		if(StringUtils.isNotBlank(id))
-			return id + fileName.substring(fileName.lastIndexOf("."), fileName.length());
-		else{
+		if(StringUtils.isNotBlank(id)){
+			fileName=fileName!=null?fileName.substring(fileName.lastIndexOf("."), fileName.length()):".txt";
+			return id + fileName;
+		}else{
 			isNew = true;
 			fileName=fileName!=null?fileName.substring(fileName.lastIndexOf("."), fileName.length()):".txt";			
 			return id = String.valueOf(new Random(System.currentTimeMillis()).nextInt(10000))
@@ -88,13 +91,13 @@ public class DownloadManager {
 		return file;
 			
 	}
-	
+
 	public void upload() throws IOException{
 		
 		prepare();
 		path = Config.getPath(fileName!=null?fileName:".txt", category)+getCorrectName();
 		System.out.println(path);
-		File f = new File(path);
+		File f = new File(dataRoot+File.separator + path);		
 		FileOutputStream out = new FileOutputStream(f);		
 		out.write(file());
 		if(in!=null)

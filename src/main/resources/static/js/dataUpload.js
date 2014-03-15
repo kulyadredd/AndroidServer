@@ -2,12 +2,18 @@ var DDU =  angular.module('drag_and_drop_upload', [], function() {});
 
 DDU.controller("FileUpload", ["$scope","$http", function ($scope, $http) {
 	
-	$scope.checkbox = true;
-	
 	$("#view button").css("display","none");
 	$scope.del = function($event){
 		$http.get("/remove?id="+$($event.target).parent().attr("id")+"&path="+$($event.target).next().attr("src")+"&category="+ $("#categoryName").val()
 				).success(function(){
+			if($($event.target).next().prop('tagName')=="H4"){
+				var $slide = $scope.getSlidePanel();
+	    		$slide.find("span").on("click", $scope.drop);
+	    		var $slideButton = $scope.getSlideButton();
+	    		$slideButton.on("click",$scope.btnslide);
+	    		$slide.insertBefore($($event.target));
+	    		$slideButton.insertBefore($($event.target));
+			}
 			var $placeHolder = $scope.getCorrectPlaceHolder($($event.target).next().prop('tagName'));
 			$placeHolder.insertBefore($($event.target));
 			$($event.target).next().remove();
@@ -55,7 +61,7 @@ DDU.controller("FileUpload", ["$scope","$http", function ($scope, $http) {
         	        		 $currentElement.remove();
         	        		 $("#panel").remove();
         	        		 $("#slide").remove();
-        	        		 }
+    	        		 }else $currentElement.remove();
         	             console.log(data);
         	             console.log($currentElement);
         	             console.log($newElement);
@@ -118,13 +124,15 @@ DDU.controller("FileUpload", ["$scope","$http", function ($scope, $http) {
     		$placeHolder = $("<div id=\"imageDrop\" ng-class=\"dropClass\" class=\"dropElement imagesPlaceHolder\"><span>Drop image file here...</span></div>");
     		break;
     	case "H4":
-    		$placeHolder = $("<div id=\"textDrop\" ng-class=\"dropClass\" class=\"dropElement textPlaceHolder\"><span>Drop text file here...</span></div>");
+    		$placeHolder = $("<div style=\"display: none;\" id=\"textDrop\" ng-class=\"dropClass\" class=\"dropElement textPlaceHolder\"><span>Drop text file here...</span></div>");
     		break;
     	case "AUDIO": 
     		$placeHolder = $("<div id=\"soundDrop\" ng-class=\"dropClass\" class=\"dropElement soundsPlaceHolder\"><span>Drop sound file here...</span></div>");
     		break;
     	}
-
+    	$placeHolder.on("dragenter", $scope.dragEnterLeave);
+        $placeHolder.on("dragleave", $scope.dragEnterLeave);
+        $placeHolder.on("dragover", $scope.dragover);
 	    $placeHolder.on("drop", $scope.drop);
 	    return $placeHolder;
     }
@@ -147,8 +155,8 @@ DDU.controller("FileUpload", ["$scope","$http", function ($scope, $http) {
     
 	$scope.btnslide = function (){
         
-		$(this).prev().animate({width: 'toggle'});
-		$(this).siblings("#textDrop").animate({width: 'toggle'});
+		$(this).prev().animate({height: 'toggle'});
+		$(this).siblings("#textDrop").animate({height: 'toggle'});
         $(this).toggleClass("active"); return false;
 	}
     
@@ -156,8 +164,8 @@ DDU.controller("FileUpload", ["$scope","$http", function ($scope, $http) {
 		var $placeHolder = $("<div id=\"placeHolder\" class=\"category\"></div>");
 		var $viewDiv = $("#view");
 		var $slidepanel = $("<div id=\"panel\"><div class=\"panelgreet input-group inTXT\"><input id=\"intext\" class=\"form-control\" type=\"text\"/><span id=\"slider\" class=\"btn btn-info input-group-addon ownbtn\">+</span></div></div>");
-		var $btslide = $("<span id=\"slide\" class=\"btn btn-slide\">></span>");
-		var $textDropDiv = $("<div id=\"textDrop\" style=\"display:block;\" ng-class=\"dropClass\" class=\"dropElement textPlaceHolder \"><span>Drop text file here...</span></div>");
+		var $btslide = $("<span id=\"slide\" class=\"btn-slide\"></span>");
+		var $textDropDiv = $("<div style=\"display: none;\" id=\"textDrop\" style=\"display:block;\" ng-class=\"dropClass\" class=\"dropElement textPlaceHolder \"><span>Drop text file here...</span></div>");
 		var $imageDropDiv = $("<div id=\"imageDrop\" ng-class=\"dropClass\" class=\"dropElement imagesPlaceHolder\"><span>Drop image file here...</span></div>");
 		var $soundDropDiv = $("<div id=\"soundDrop\" ng-class=\"dropClass\" class=\"dropElement soundsPlaceHolder\"><span>Drop sound file here...</span></div>");
 		$placeHolder.append($slidepanel);

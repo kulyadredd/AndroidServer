@@ -106,13 +106,12 @@ app.controller('ServerFile', ['$scope','$http', function ($scope, $http) {
                     		$scope.allValues[key].id = id;
                     	
                         if(index==length){
-                        	console.log($("#view").find("div"));
                     		var allValues = $scope.allValues;
                     		for(var i in allValues){
                     			if(!allValues[i].TXT){
                     				var $h4 = $("#"+i.substring(i.lastIndexOf("/")+1, i.length)).find("h4");
                     	    		var $slide = $scope.getSlidePanel();
-                    	    		$slide.on("click", $scope.drop);
+                    	    		$slide.find("span").on("click", $scope.drop);
                     	    		var $slideButton = $scope.getSlideButton();
                     	    		$slideButton.on("click",$scope.btnslide);
                     	    		$slide.insertBefore($h4);
@@ -125,11 +124,8 @@ app.controller('ServerFile', ['$scope','$http', function ($scope, $http) {
                     				$scope.getCorrectPlaceHolder("IMG").insertBefore($img);                    				
                     				$img.remove();
                     			}
-                      			if(!allValues[i].SOUND){
-                      				
+                      			if(!allValues[i].SOUND){                      				
                     				var $sound = $("#"+i.substring(i.lastIndexOf("/")+1, i.length)).find("audio");
-                    				console.log($sound);
-                    				console.log($sound.parent());
                     				$scope.getCorrectPlaceHolder("AUDIO").insertBefore($sound);                    				
                     				$sound.remove();
                     			} 
