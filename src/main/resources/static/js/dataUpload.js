@@ -9,6 +9,14 @@ DDU.controller("FileUpload", ["$scope","$http", function ($scope, $http) {
 			if($($event.target).next().prop('tagName')=="H4"){
 				var $slide = $scope.getSlidePanel();
 	    		$slide.find("span").on("click", $scope.drop);
+	    		$slide.find("input").keypress(function (e) {
+	    			var key = e.which;
+		   			 if(key == 13) 
+		   			  {
+		   				 $slide.find("span").trigger("click");
+		   				 return false;
+		   			  };
+		   		}); 
 	    		var $slideButton = $scope.getSlideButton();
 	    		$slideButton.on("click",$scope.btnslide);
 	    		$slide.insertBefore($($event.target));
@@ -18,8 +26,6 @@ DDU.controller("FileUpload", ["$scope","$http", function ($scope, $http) {
 			$placeHolder.insertBefore($($event.target));
 			$($event.target).next().remove();
 			$($event.target).remove();
-			console.log($($placeHolder).parent().find("img, h4, audio").length);
-			console.log($($placeHolder).parent().attr("id"));
 			if($($placeHolder).parent().find("img, h4, audio").length == 0)
 				$($placeHolder).parent().remove();
 		});
@@ -80,7 +86,7 @@ DDU.controller("FileUpload", ["$scope","$http", function ($scope, $http) {
     }
     
     $scope.getSlideButton = function() {
-    	return $("<span id=\"slide\" class=\"btn btn-slide\">></span>");
+    	return $("<span id=\"slide\" class=\"btn btn-slide\"></span>");
     }
     
     function getCorrectId(){
@@ -121,19 +127,20 @@ DDU.controller("FileUpload", ["$scope","$http", function ($scope, $http) {
     	var $placeHolder;
     	switch(value){
     	case "IMG":
-    		$placeHolder = $("<div id=\"imageDrop\" ng-class=\"dropClass\" class=\"dropElement imagesPlaceHolder\"><span>Drop image file here...</span></div>");
+    		$placeHolder = $("<div id=\"imageDrop\" ng-class=\"dropClass\" class=\"dropElement imagesPlaceHolder\"><span>Drop image file here or click on me</span></div>");
     		break;
-    	case "H4":
-    		$placeHolder = $("<div style=\"display: none;\" id=\"textDrop\" ng-class=\"dropClass\" class=\"dropElement textPlaceHolder\"><span>Drop text file here...</span></div>");
+    	case "H4": 
+    		$placeHolder = $("<div id=\"textDrop\" ng-class=\"dropClass\" class=\"dropElement textPlaceHolder\"><span>Drop text file here or click on me</span></div>");
     		break;
     	case "AUDIO": 
-    		$placeHolder = $("<div id=\"soundDrop\" ng-class=\"dropClass\" class=\"dropElement soundsPlaceHolder\"><span>Drop sound file here...</span></div>");
+    		$placeHolder = $("<div id=\"soundDrop\" ng-class=\"dropClass\" class=\"dropElement soundsPlaceHolder\"><span>Drop sound file here or click on me</span></div>");
     		break;
     	}
     	$placeHolder.on("dragenter", $scope.dragEnterLeave);
         $placeHolder.on("dragleave", $scope.dragEnterLeave);
         $placeHolder.on("dragover", $scope.dragover);
 	    $placeHolder.on("drop", $scope.drop);
+	    $placeHolder.on("click", $scope.clickUpload);
 	    return $placeHolder;
     }
 
@@ -160,14 +167,16 @@ DDU.controller("FileUpload", ["$scope","$http", function ($scope, $http) {
         $(this).toggleClass("active"); return false;
 	}
     
-	$scope.initPlaceHolder = function (){	
+	$scope.initPlaceHolder = function (){
+		
 		var $placeHolder = $("<div id=\"placeHolder\" class=\"category\"></div>");
 		var $viewDiv = $("#view");
 		var $slidepanel = $("<div id=\"panel\"><div class=\"panelgreet input-group inTXT\"><input id=\"intext\" class=\"form-control\" type=\"text\"/><span id=\"slider\" class=\"btn btn-info input-group-addon ownbtn\">+</span></div></div>");
 		var $btslide = $("<span id=\"slide\" class=\"btn-slide\"></span>");
-		var $textDropDiv = $("<div style=\"display: none;\" id=\"textDrop\" style=\"display:block;\" ng-class=\"dropClass\" class=\"dropElement textPlaceHolder \"><span>Drop text file here...</span></div>");
-		var $imageDropDiv = $("<div id=\"imageDrop\" ng-class=\"dropClass\" class=\"dropElement imagesPlaceHolder\"><span>Drop image file here...</span></div>");
-		var $soundDropDiv = $("<div id=\"soundDrop\" ng-class=\"dropClass\" class=\"dropElement soundsPlaceHolder\"><span>Drop sound file here...</span></div>");
+		var $textDropDiv = $("<div id=\"textDrop\" ng-class=\"dropClass\" class=\"dropElement textPlaceHolder\"><span>Drop text file here or click on me.</span></div>");
+		var $imageDropDiv = $("<div id=\"imageDrop\" ng-class=\"dropClass\" class=\"dropElement imagesPlaceHolder\"><span>Drop image file here or click on me</span></div>");
+		var $soundDropDiv = $("<div id=\"soundDrop\" ng-class=\"dropClass\" class=\"dropElement soundsPlaceHolder\"><span>Drop sound file here or click on me</span></div>");
+		
 		$placeHolder.append($slidepanel);
 		$placeHolder.append($btslide);
 		$placeHolder.append($textDropDiv);
@@ -180,17 +189,28 @@ DDU.controller("FileUpload", ["$scope","$http", function ($scope, $http) {
 	    $scope.dragEnterLeave = function (evt) {
 	        evt.stopPropagation();
 	        evt.preventDefault();
-	        $(this).removeAttr("style");
+	        $(this).css("background-color", $scope.acceptType ? "#bfb" : "#F88");
 	    }
 	    $scope.dragover = function(evt) {
 	        evt.stopPropagation();
 	        evt.preventDefault();
-	        var clazz = 'not-available';
-	        var ok = evt.dataTransfer && evt.dataTransfer.types && evt.dataTransfer.types.indexOf('Files') >= 0;
-	       
-	        $(this).css("background-color", ok ? "#bfb" : "#F88");
+	        $scope.acceptType = $scope.checkFileType.call(this, evt.dataTransfer.items[0]?evt.dataTransfer.items[0].type:evt.dataTransfer.files[0].type);
+	        $(this).css("background-color", $scope.acceptType ? "#bfb" : "#F88");
 	        
 	    }
+	    
+	    $scope.checkFileType = function(type){
+	    	var $id = $(this).attr("id");
+	    	switch($id){
+	    	case "imageDrop":
+	    		return ["image/jpeg", "image/png"].indexOf(type) > -1;
+	    	case "textDrop":
+	    		return ["text/plain"].indexOf(type) > -1;
+	    	case "soundDrop":
+	    		return ["audio/mp3"].indexOf(type) > -1;
+	    	}
+	    }
+	    
 	    jQuery.event.props.push( "dataTransfer" );
 	    $dropElement.on("dragenter", $scope.dragEnterLeave);
 	    $dropElement.on("dragleave", $scope.dragEnterLeave);
@@ -202,13 +222,13 @@ DDU.controller("FileUpload", ["$scope","$http", function ($scope, $http) {
 	        evt.preventDefault();
 	        var file;
 	        if(this.id=="slider"){
-	        	var input = document.getElementById('intext');
-	        	file = input.value;
+	        	file = $("#intext").val();
+	        	$scope.acceptType = true;
 	        }else{
 	        $(this).removeAttr("style");	        
 	        file = evt.dataTransfer.files[0];
 	        }
-	        if (file != null){	        	
+	        if (file && $scope.acceptType){	        	
 	        	$scope.file = file;
 	        	$scope.classes = $(this).attr("class");
 	        	if(this.id=="slider")
@@ -221,5 +241,32 @@ DDU.controller("FileUpload", ["$scope","$http", function ($scope, $http) {
 	    $dropElement.on("drop", $scope.drop);
 		$btslide.on("click", $scope.btnslide);
 		$slidepanel.find("span").on("click", $scope.drop);
+		$slidepanel.find("input").keypress(function (e) {
+			 var key = e.which;
+			 if(key == 13) 
+			  {
+				 $slidepanel.find("span").trigger("click");
+				 return false;
+			  };
+		}); 
+	    $scope.clickUpload = function(evt){
+	    	evt.stopImmediatePropagation();
+	    	$scope.callElement = this;
+	    	$("#file").click();
+	    }
+	    $dropElement.on("click", $scope.clickUpload);
 	}
+	
+	$scope.$watch("wfile", function(){
+		var $inputFile = $("#file")[0];
+		
+		if($inputFile.files[0] && $scope.checkFileType.call($scope.callElement, $inputFile.files[0].type)){
+			$scope.file = $inputFile.files[0];			
+			$scope.uploadFile.call($scope.callElement);
+		}else{			
+			$($scope.callElement).css("background-color","#F88");
+			setTimeout(function(){$($scope.callElement).css("background-color","#FEFFEC");}, 500);
+		}
+	});
 }]);
+

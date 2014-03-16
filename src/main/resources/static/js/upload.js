@@ -35,6 +35,7 @@ app.controller('ServerFile', ['$scope','$http', function ($scope, $http) {
     $scope.allValues = {};
     
     $scope.$watch('incat', function() {
+    	//$scope.wfile = $scope.incat;
     	if(!$scope.categories)
     		return;
     	$scope.listclear=false;
@@ -58,7 +59,7 @@ app.controller('ServerFile', ['$scope','$http', function ($scope, $http) {
     		$scope.initPlaceHolder();
     		$scope.addcateg = true;
     	}
-    });   
+    });
     
     $scope.getImages = function(){
         $http.get("info/images/"+$scope.ncateg).success(function (data){           
@@ -112,6 +113,14 @@ app.controller('ServerFile', ['$scope','$http', function ($scope, $http) {
                     				var $h4 = $("#"+i.substring(i.lastIndexOf("/")+1, i.length)).find("h4");
                     	    		var $slide = $scope.getSlidePanel();
                     	    		$slide.find("span").on("click", $scope.drop);
+                    	    		$slide.find("input").keypress(function (e) {
+                    	    			var key = e.which;
+                    		   			 if(key == 13) 
+                    		   			  {
+                    		   				 $slide.find("span").trigger("click");
+                    		   				 return false;
+                    		   			  };
+                    		   		});
                     	    		var $slideButton = $scope.getSlideButton();
                     	    		$slideButton.on("click",$scope.btnslide);
                     	    		$slide.insertBefore($h4);

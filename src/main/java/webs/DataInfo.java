@@ -31,6 +31,7 @@ public class DataInfo extends Controller{
 	}
 
     private String[] getCategoryList() {
+    	
         String dirName = dataRoot + File.separator + "images" + File.separator;
         File checkDir = new File(dirName);
         return checkDir.list();

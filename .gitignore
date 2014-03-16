@@ -17,5 +17,5 @@
 *.swp
 *.swo
 
-test.conf
+*.conf
 /org.eclipse.*.prefs
