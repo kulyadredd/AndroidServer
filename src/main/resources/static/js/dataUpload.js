@@ -189,7 +189,7 @@ DDU.controller("FileUpload", ["$scope","$http", function ($scope, $http) {
 	    $scope.dragEnterLeave = function (evt) {
 	        evt.stopPropagation();
 	        evt.preventDefault();
-	        $(this).css("background-color", $scope.acceptType ? "#bfb" : "#F88");
+	        $(this).css("background-color", "#FEFFEC");
 	    }
 	    $scope.dragover = function(evt) {
 	        evt.stopPropagation();
