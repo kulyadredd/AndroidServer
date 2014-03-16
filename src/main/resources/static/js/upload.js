@@ -35,6 +35,7 @@ app.controller('ServerFile', ['$scope','$http', function ($scope, $http) {
     $scope.allValues = {};
     
     $scope.$watch('incat', function() {
+    	//$scope.wfile = $scope.incat;
     	if(!$scope.categories)
     		return;
     	$scope.listclear=false;
@@ -58,7 +59,7 @@ app.controller('ServerFile', ['$scope','$http', function ($scope, $http) {
     		$scope.initPlaceHolder();
     		$scope.addcateg = true;
     	}
-    });   
+    });
     
     $scope.getImages = function(){
         $http.get("info/images/"+$scope.ncateg).success(function (data){           
@@ -122,8 +123,6 @@ app.controller('ServerFile', ['$scope','$http', function ($scope, $http) {
                       			if(!allValues[i].SOUND){
                       				
                     				var $sound = $("#"+i.substring(i.lastIndexOf("/")+1, i.length)).find("audio");
-                    				console.log($sound);
-                    				console.log($sound.parent());
                     				$scope.getCorrectPlaceHolder("AUDIO").insertBefore($sound);                    				
                     				$sound.remove();
                     			} 

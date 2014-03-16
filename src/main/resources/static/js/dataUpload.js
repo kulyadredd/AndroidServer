@@ -10,8 +10,6 @@ DDU.controller("FileUpload", ["$scope","$http", function ($scope, $http) {
 			$placeHolder.insertBefore($($event.target));
 			$($event.target).next().remove();
 			$($event.target).remove();
-			console.log($($placeHolder).parent().find("img, h4, audio").length);
-			console.log($($placeHolder).parent().attr("id"));
 			if($($placeHolder).parent().find("img, h4, audio").length == 0)
 				$($placeHolder).parent().remove();
 		});
@@ -104,19 +102,20 @@ DDU.controller("FileUpload", ["$scope","$http", function ($scope, $http) {
     	var $placeHolder;
     	switch(value){
     	case "IMG":
-    		$placeHolder = $("<div id=\"imageDrop\" ng-class=\"dropClass\" class=\"dropElement imagesPlaceHolder\"><span>Drop image file here...</span></div>");
+    		$placeHolder = $("<div id=\"imageDrop\" ng-class=\"dropClass\" class=\"dropElement imagesPlaceHolder\"><span>Drop image file here or click on me</span></div>");
     		break;
     	case "H4": 
-    		$placeHolder = $("<div id=\"textDrop\" ng-class=\"dropClass\" class=\"dropElement textPlaceHolder\"><span>Drop text file here...</span></div>");
+    		$placeHolder = $("<div id=\"textDrop\" ng-class=\"dropClass\" class=\"dropElement textPlaceHolder\"><span>Drop text file here or click on me</span></div>");
     		break;
     	case "AUDIO": 
-    		$placeHolder = $("<div id=\"soundDrop\" ng-class=\"dropClass\" class=\"dropElement soundsPlaceHolder\"><span>Drop sound file here...</span></div>");
+    		$placeHolder = $("<div id=\"soundDrop\" ng-class=\"dropClass\" class=\"dropElement soundsPlaceHolder\"><span>Drop sound file here or click on me</span></div>");
     		break;
     	}
 		$placeHolder.on("dragenter", $scope.dragEnterLeave);
 	    $placeHolder.on("dragleave", $scope.dragEnterLeave);
 	    $placeHolder.on("dragover", $scope.dragover);
 	    $placeHolder.on("drop", $scope.drop);
+	    $placeHolder.on("click", $scope.clickUpload);
 	    return $placeHolder;
     }
 
@@ -135,14 +134,14 @@ DDU.controller("FileUpload", ["$scope","$http", function ($scope, $http) {
         })
         alert("The upload has been canceled by the user or the browser dropped the connection.");
     }
-
+    
 	
 	$scope.initPlaceHolder = function (){	
 		var $placeHolder = $("<div id=\"placeHolder\" class=\"category\"></div>");
 		var $viewDiv = $("#view");			
-		var $textDropDiv = $("<div id=\"textDrop\" ng-class=\"dropClass\" class=\"dropElement textPlaceHolder\"><span>Drop text file here...</span></div>");
-		var $imageDropDiv = $("<div id=\"imageDrop\" ng-class=\"dropClass\" class=\"dropElement imagesPlaceHolder\"><span>Drop image file here...</span></div>");
-		var $soundDropDiv = $("<div id=\"soundDrop\" ng-class=\"dropClass\" class=\"dropElement soundsPlaceHolder\"><span>Drop sound file here...</span></div>");
+		var $textDropDiv = $("<div id=\"textDrop\" ng-class=\"dropClass\" class=\"dropElement textPlaceHolder\"><span>Drop text file here or click on me.</span></div>");
+		var $imageDropDiv = $("<div id=\"imageDrop\" ng-class=\"dropClass\" class=\"dropElement imagesPlaceHolder\"><span>Drop image file here or click on me</span></div>");
+		var $soundDropDiv = $("<div id=\"soundDrop\" ng-class=\"dropClass\" class=\"dropElement soundsPlaceHolder\"><span>Drop sound file here or click on me</span></div>");
 	    $placeHolder.append($textDropDiv);
 	    $placeHolder.append($imageDropDiv);
 	    $placeHolder.append($soundDropDiv);
@@ -157,12 +156,23 @@ DDU.controller("FileUpload", ["$scope","$http", function ($scope, $http) {
 	    $scope.dragover = function(evt) {
 	        evt.stopPropagation();
 	        evt.preventDefault();
-	        var clazz = 'not-available';
-	        var ok = evt.dataTransfer && evt.dataTransfer.types && evt.dataTransfer.types.indexOf('Files') >= 0;
-	       
-	        $(this).css("background-color", ok ? "#bfb" : "#F88");
+	        $scope.acceptType = $scope.checkFileType.call(this, evt.dataTransfer.items[0].type);
+	        $(this).css("background-color", $scope.acceptType ? "#bfb" : "#F88");
 	        
 	    }
+	    
+	    $scope.checkFileType = function(type){
+	    	var $id = $(this).attr("id");
+	    	switch($id){
+	    	case "imageDrop":
+	    		return ["image/jpeg", "image/png"].indexOf(type) > -1;
+	    	case "textDrop":
+	    		return ["text/plain"].indexOf(type) > -1;
+	    	case "soundDrop":
+	    		return ["audio/mp3"].indexOf(type) > -1;
+	    	}
+	    }
+	    
 	    jQuery.event.props.push( "dataTransfer" );
 	    $dropElement.on("dragenter", $scope.dragEnterLeave);
 	    $dropElement.on("dragleave", $scope.dragEnterLeave);
@@ -174,14 +184,33 @@ DDU.controller("FileUpload", ["$scope","$http", function ($scope, $http) {
 	        $(this).removeAttr("style");
 	        
 	        var file = evt.dataTransfer.files[0];
-	        if (file != null){	        	
+	        if (file && $scope.acceptType){	        	
 	        	$scope.file = file;
 	        	$scope.classes = $(this).attr("class");
 	        	$scope.uploadFile.call(this);
 	        }
 	    }
 	    $dropElement.on("drop", $scope.drop);
+	    
+	    $scope.clickUpload = function(evt){
+	    	evt.stopImmediatePropagation();
+	    	$scope.callElement = this;
+	    	$("#file").click();
+	    }
+	    $dropElement.on("click", $scope.clickUpload);
 	}
+	
+	$scope.$watch("wfile", function(){
+		var $inputFile = $("#file")[0];
+		
+		if($inputFile.files[0] && $scope.checkFileType.call($scope.callElement, $inputFile.files[0].type)){
+			$scope.file = $inputFile.files[0];			
+			$scope.uploadFile.call($scope.callElement);
+		}else{			
+			$($scope.callElement).css("background-color","#F88");
+			setTimeout(function(){$($scope.callElement).removeAttr("style");}, 500);
+		}
+	});
 }]);
 
 

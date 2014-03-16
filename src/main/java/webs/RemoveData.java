@@ -29,14 +29,14 @@ public class RemoveData extends Controller {
 				File removeFile;
 				if(path.toLowerCase().equals("undefined")){
 					String category = request.getParameter("category");
-					if(StringUtils.isNotBlank(category)){						
+					if(StringUtils.isNotBlank(category)){
+						
 						removeFile = new File(dataRoot+File.separator+"text"+File.separator+category+File.separator+id+".txt");
 						if(removeFile.exists())
 							removeFile.delete();
 					}
-				}else{
-					
-					removeFile = new File(dataRoot + path);
+				}else{					
+					removeFile = new File(dataRoot + (path.startsWith(File.separator)?path:File.separator+path));
 					if(removeFile.exists())
 						removeFile.delete();
 				}					
