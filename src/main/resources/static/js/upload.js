@@ -93,7 +93,6 @@ app.controller('ServerFile', ['$scope','$http', function ($scope, $http) {
        $http.get("info/text/"+$scope.ncateg).success(function (data){ 
     	   var length = data.length;
                 for (var i=0; i < data.length ; i++){
-                	var id = data[i].substring(0, data[i].lastIndexOf("."));
                 	var index = 0;                	
                     $http.get("/text/"+$scope.ncateg+"/"+data[i]).success(function(data, code, f, status){
                     	index++;
@@ -104,27 +103,15 @@ app.controller('ServerFile', ['$scope','$http', function ($scope, $http) {
                     	
                     	$scope.allValues[key].TXT = data;
                     	if(!$scope.allValues[key].id)
-                    		$scope.allValues[key].id = id;
+                    		$scope.allValues[key].id = key.substring(key.lastIndexOf("/"), key.length);
                     	
                         if(index==length){
                     		var allValues = $scope.allValues;
                     		for(var i in allValues){
                     			if(!allValues[i].TXT){
                     				var $h4 = $("#"+i.substring(i.lastIndexOf("/")+1, i.length)).find("h4");
-                    	    		var $slide = $scope.getSlidePanel();
-                    	    		$slide.find("span").on("click", $scope.drop);
-                    	    		$slide.find("input").keypress(function (e) {
-                    	    			var key = e.which;
-                    		   			 if(key == 13) 
-                    		   			  {
-                    		   				 $slide.find("span").trigger("click");
-                    		   				 return false;
-                    		   			  };
-                    		   		});
-                    	    		var $slideButton = $scope.getSlideButton();
-                    	    		$slideButton.on("click",$scope.btnslide);
-                    	    		$slide.insertBefore($h4);
-                    	    		$slideButton.insertBefore($h4);
+                    	    		$scope.getSlidePanel().insertBefore($h4);
+                    	    		$scope.getSlideButton().insertBefore($h4);
                     				$scope.getCorrectPlaceHolder("H4").insertBefore($h4);                    				
                     				$h4.remove();
                     			}
