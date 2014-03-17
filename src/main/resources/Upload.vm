@@ -30,7 +30,7 @@
 	          </div>          
 	        </div>
         </div>
-        <input type="file" id="file" ng-model="wfile">
+        <input type="file" id="file" onchange="angular.element(this).scope().checkFile(this)">
         <div ng-controller="ServerFile" class="container">
 	    	<div class="row">
 	            <div class="col-md-2">      

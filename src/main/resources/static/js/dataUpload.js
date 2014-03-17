@@ -255,9 +255,8 @@ DDU.controller("FileUpload", ["$scope","$http", function ($scope, $http) {
 	    $dropElement.on("click", $scope.clickUpload);
 	}
 	
-	$scope.$watch("wfile", function(){
-		var $inputFile = $("#file")[0];
-		
+	$scope.checkFile = function(element){
+		var $inputFile = element;		
 		if($inputFile.files[0] && $scope.checkFileType.call($scope.callElement, $inputFile.files[0].type)){
 			$scope.file = $inputFile.files[0];			
 			$scope.uploadFile.call($scope.callElement);
@@ -265,6 +264,7 @@ DDU.controller("FileUpload", ["$scope","$http", function ($scope, $http) {
 			$($scope.callElement).css("background-color","#F88");
 			setTimeout(function(){$($scope.callElement).css("background-color","#FEFFEC");}, 500);
 		}
-	});
+		$inputFile.value = '';
+	}
 }]);
 
