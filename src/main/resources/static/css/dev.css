@@ -63,6 +63,7 @@
 }
 .catlist {
     width: 200px;
+    margin: auto; 
 }
 .inTXT{
 	width: 170px;
@@ -97,7 +98,10 @@ audio {
     width: 176px; 
     display: block;  
 }
-
+.close{
+	position: fixed;
+	margin-left: 176px;
+}
 #footer {
 	position: absolute;
 	bottom: 0;
@@ -121,4 +125,3 @@ audio {
 .active {
 	background-position: right 5px;
 }
-
