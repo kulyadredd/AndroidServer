@@ -11,11 +11,11 @@ import java.util.Properties;
 public class Config {
 
     public static Config parseDefault() throws IOException {
-        File f = new File("test.conf");        
+        File f = new File("kittns.conf");        
         if (!f.exists())
-            f = tildeExpand("~/etc/test.conf");
+            f = tildeExpand("~/etc/kittns.conf");
         if (!f.exists())
-            f = new File("/etc/test/test.conf");
+            f = new File("/etc/kittns/kittns.conf");
         if (!f.exists())
             return new Config();
         
@@ -33,20 +33,20 @@ public class Config {
 	private static final String TEXT_PATH = "text";
     
     public static Config parse(File configFile) throws IOException {
-        System.err.println("Reading config file: " + configFile.getAbsolutePath());
-        
         Config cfg = parse(loadProperties(configFile));
-        cfg.configFile = configFile;
+
         return cfg;
     }
     
     public static Properties loadProperties(File file) throws IOException {
         Reader reader = null;
+        Properties props = new Properties();
         try {
-            Properties props = new Properties();
             if (file.exists()) {
+                System.err.println("Reading config file: " + file.getAbsolutePath());
                 reader = new BufferedReader(new FileReader(file));
-                props.load(reader);                
+                props.load(reader);
+                props.setProperty("config.file", file.getAbsolutePath());
             }
             return props;
         } finally {
@@ -58,7 +58,8 @@ public class Config {
         Config cfg = new Config();
         cfg.port = getProperty(config, "port", cfg.port);
         cfg.staticRoot = config.getProperty("static.root", cfg.staticRoot);
-        cfg.dataRoot = config.getProperty("data.root", cfg.dataRoot);    
+        cfg.dataRoot = config.getProperty("data.root", cfg.dataRoot);
+        cfg.configFile = new File(config.getProperty("config.file"));
         return cfg;
     }
     

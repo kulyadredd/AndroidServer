@@ -106,6 +106,7 @@ app.controller('ServerFile', ['$scope','$http', function ($scope, $http) {
                     		$scope.allValues[key].id = key.substring(key.lastIndexOf("/"), key.length);
                     	
                         if(index==length){
+
                     		var allValues = $scope.allValues;
                     		for(var i in allValues){
                     			if(!allValues[i].TXT){
@@ -127,6 +128,7 @@ app.controller('ServerFile', ['$scope','$http', function ($scope, $http) {
                     			} 
                     		}
                     	}
+                        console.log(JSON.stringify($scope.allValues));
                     });
                 }
         });

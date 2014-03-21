@@ -5,14 +5,14 @@ import java.io.File;
 import javax.servlet.http.HttpServletRequest;
 
 import mvc.Controller;
+import mvc.ErrorView;
+import mvc.JsonView;
 import mvc.PathParser;
 import mvc.View;
 
 @SuppressWarnings("serial")
 public class AddCategory extends Controller {
 
-	
-	private static final String[] TYPE_FILE = { "images", "sounds", "text" };
 	private String dataRoot;
 	
 	public AddCategory(String dataRoot){
@@ -22,11 +22,20 @@ public class AddCategory extends Controller {
 	public View get(HttpServletRequest request, PathParser pathInfo)
 			throws Exception {
 		String newcategory = request.getParameter("newcategory");
-		for (int i = 0; i < TYPE_FILE.length; i++) {
-			File cat = new File(dataRoot + File.separator + TYPE_FILE[i] + File.separator + newcategory);
-			cat.mkdir();
-		}
-		return null;
+		
+		File images = new File(dataRoot + File.separator + "images" + File.separator + newcategory);
+		boolean imageCategoryCreated = images.mkdir();
+		
+		File sounds = new File(dataRoot + File.separator + "sounds" + File.separator + newcategory);
+        boolean soundsCategoryCreated = sounds.mkdir();
+        
+        File texts = new File(dataRoot + File.separator + "text" + File.separator + newcategory);
+        boolean textsCategoryCreated = texts.mkdir();
+		
+        if (!imageCategoryCreated || !soundsCategoryCreated || !textsCategoryCreated)
+            return ErrorView.SERVER_ERROR_GENERIC;
+        
+		return new JsonView(newcategory);
 	}
 
 }

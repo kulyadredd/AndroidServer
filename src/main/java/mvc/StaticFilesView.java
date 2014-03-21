@@ -9,6 +9,10 @@ import java.io.PrintWriter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.io.FilenameUtils;
+
+import util.MimeType;
+
 public class StaticFilesView implements View {
 
     private String path;
@@ -19,21 +23,8 @@ public class StaticFilesView implements View {
 
     @Override
     public void view(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        if (path.endsWith(".js"))
-            response.setContentType("application/javascript");
-        else if (path.endsWith(".css"))
-            response.setContentType("text/css");
-        else if (path.endsWith(".html"))
-            response.setContentType("text/html");
-        else if (path.endsWith(".png") || path.endsWith(".jpg"))
-            response.setContentType("image/png");
-        else if (path.endsWith(".mid"))
-            response.setContentType("audio/midi");
-        else if (path.endsWith(".mp3"))
-            response.setContentType("audio/mpeg");
-        else if (path.endsWith(".txt"))
-            response.setContentType("text/plain");
-
+        String ext = FilenameUtils.getExtension(path);
+        response.setContentType(MimeType.getByFileExtension(ext).getMimeType());
         writeFile(response.getWriter(), path);
     }
 

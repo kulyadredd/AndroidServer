@@ -11,6 +11,7 @@ import org.eclipse.jetty.server.handler.ErrorHandler;
 
 import auth.AuthService;
 import users.UserDB;
+import webs.filters.LogFilter;
 import webs.filters.LoginFilter;
 
 
@@ -34,6 +35,8 @@ public class WebServer {
         AuthService auth = new AuthService();
         String[] excludes = { "/info/*", "/info", "/images/*", "/sounds/*",
                 "/text/*", "/js/*", "/favicon.ico", LoginFilter.LOGIN_URI };
+        
+        server.addFilter(new LogFilter());
         server.addFilter(new LoginFilter(auth, config, Arrays.asList(excludes)));
         
 	    server.add("/images/*", new DataFiles(config.dataRoot) );
@@ -42,6 +45,7 @@ public class WebServer {
 	    server.add("/info/*", new DataInfo(config.dataRoot));
 	    server.add("/img/*", new StaticFiles(config.staticRoot));
 	    server.add("/js/*", new StaticFiles(config.staticRoot) );
+	    server.add("/html/*", new StaticFiles(config.staticRoot) );
 	    server.add("/css/*", new StaticFiles(config.staticRoot) );
 	    server.add("/", new UpLoadFile(config.dataRoot));
 	    server.add("/remove", new RemoveData(config.dataRoot));
@@ -67,7 +71,7 @@ public class WebServer {
     public static void main(String[] args) throws Exception {
     	Config opts = null;
     	if (args.length > 0)
-    		opts = Config.parse(new File(args[0]));
+    		opts = Config.parse(Config.tildeExpand(args[0]));
     	else
     		opts = Config.parseDefault();
     	

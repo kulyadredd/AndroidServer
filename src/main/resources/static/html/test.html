@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html ng-app="KittnsApp">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css">
+        <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap-theme.min.css">
+		<link rel="stylesheet" href="//mgcrea.github.io/angular-strap/static/styles/angular-motion.css">
+        <link rel="stylesheet" href="/css/dev.css">
+        <script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
+        <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.12/angular.min.js"></script>
+        <script src="//code.angularjs.org/1.2.13/angular-animate.min.js"></script>
+        <script src="//code.angularjs.org/1.2.13/angular-sanitize.min.js"></script>
+        <script src="//mgcrea.github.io/angular-strap/dist/angular-strap.js"></script>
+        <script src="//mgcrea.github.io/angular-strap/dist/angular-strap.tpl.js"></script>
+        <script src="/js/dnd.js"></script>
+		<script src="/js/categoryRead.js"></script>
+        <title> Upload page </title>
+    </head>
+    <body ng-controller="RenderControls">
+        <div class="navbar navbar-inverse navbar-fixed-top">	                
+	    	<div class="navbar-inner"> 
+	          <div class="container">
+	          		<span class="user-logo glyphicon glyphicon-user"> Hello test</span>		                    
+		          	<ul class="pull-right">
+		          		<li>
+		          			<a class="btn btn-link glyphicon glyphicon-log-out quit-btn" href="/logout">Exit </a>
+		          		</li>
+		          	</ul>		         
+	          </div>          
+	        </div>
+        </div>
+        <input type="file" id="file" onchange="angular.element(this).scope().checkFile(this)">
+        <div class="container">
+	    	<div class="row">
+	            <div class="col-md-2">      
+	                <div class="input-group catlist">
+	                    <span class="btn btn-success input-group-addon ownbtn" ng-disabled="addcateg" ng-click="addcat()">add</span>
+	  					<input id="categoryName" type="text" class="form-control" value="{{ncateg}}" ng-model="incat" data-min-length="0" data-animation="am-flip-x" 
+	 					 ng-options="aCategory for aCategory in categories | filter: catName" bs-typeahead/>
+	     				<span class="btn btn-danger input-group-addon ownbtn" ng-disabled="listclear" ng-click="clear()">x</span>	     				
+	                </div>	                
+	            </div>
+	            <div class="col-md-10" >
+                    <div ng-repeat="aValue in allValues" class="category">
+                        <button  ng-if="aValue.TXT" ng-click="del('/text'+aValue.id+'.txt')" class="close">&times;</button> 
+                        <h4   ng-if="aValue.TXT" class="text-center">{{aValue.TXT}}</h4>
+                        <input ng-if="!aValue.TXT"   class="soundsPlaceHolder" filedrop on-file-drop="fileDropped('text', aValue.id)" type="text" placeholder="Add text or drop txt file"/>
+                        
+                        <button ng-if="aValue.IMG" ng-click="del(aValue.IMG)" class="close">&times;</button>                                              
+                        <img ng-if="aValue.IMG" ng-src={{aValue.IMG}} title={{aValue.TXT}} width="176" height="220"/>
+                        <div ng-if="!aValue.IMG" class="imagesPlaceHolder" id="{{aValue.id}}.image" filedrop on-file-drop="fileDropped('images', aValue.id)">Drop image file here</div>
+                        
+                        <button ng-if="aValue.SOUND" ng-click="del(aValue.SOUND)" class="close">&times;</button>                        
+                        <audio  ng-if="aValue.SOUND" controls ng-src={{aValue.SOUND}} ></audio>
+                        <div    ng-if="!aValue.SOUND" class="soundsPlaceHolder" filedrop on-file-drop="fileDropped('sounds', aValue.id)">Drop sound file here</div>
+                    </div> 
+                    <div class="category">
+                        <input id="textDrop" class="soundsPlaceHolder" filedrop on-file-drop="fileDropped('text', '/'+ncateg)" type="text" placeholder="Add text or drop txt file"/>
+                        <div id="imageDrop" class="imagesPlaceHolder" filedrop on-file-drop="fileDropped('images', '/'+ncateg)">Drop image file here</div>
+                        <div id="soundDrop" class="soundsPlaceHolder" filedrop on-file-drop="fileDropped('sounds', '/'+ncateg)">Drop sound file here</div>
+                    </div>
+                </div>  
+            </div>         	          
+        </div >
+    	<div id="footer">
+        	<p class="version text-center">© Company 2014 Version: test</p>
+    	</div>	
+    </body>
+</html>

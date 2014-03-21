@@ -35,11 +35,7 @@ public class LoginFilter implements Filter {
             chain.doFilter(req, resp);
         } else {        	
     		if (auth.isLogged(request.getSession())) {
-    			try{
-    				chain.doFilter(req, resp);
-    			}catch(Exception e){
-    				e.printStackTrace();
-    			}    		        		        		
+				chain.doFilter(req, resp);    		        		        		
             } else {
                 String fullUri = request.getRequestURI()
                         + ((request.getQueryString() == null) ? "" : "?" + request.getQueryString());
