@@ -5,3 +5,10 @@ TODO:
 * warning should appear to confirm the deletion of an element.
 * make build-server lazy
 * fix layout: elements of same witdth, spaces and paddings for each element.
+* enable non-latin values for category name and bundle title
+* make variable names consistent
+
+DONE:
+
+* ~~placehoders for empty bundle elements~~
+* ~~input and text file drop for title~~
