@@ -23,14 +23,5 @@ public class JsonView implements View {
             response.setCharacterEncoding("UTF-8");
             response.getWriter().print(jsonParam);      
     }
-   
-    static class Weapon{                
-            String name;
-            String type;
-            Weapon(String name, String type){                
-                    this.name = name;
-                    this.type = type;
-            }
-    }
 
 }

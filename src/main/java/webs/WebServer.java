@@ -1,18 +1,16 @@
 package webs;
 
-import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Arrays;
-import java.util.Properties;
 
 import org.apache.velocity.app.Velocity;
 import org.eclipse.jetty.server.handler.ErrorHandler;
 
-import auth.AuthService;
 import users.UserDB;
 import webs.filters.LogFilter;
 import webs.filters.LoginFilter;
+import auth.AuthService;
 
 
 public class WebServer {	
@@ -41,13 +39,17 @@ public class WebServer {
         
 	    server.add("/images/*", new DataFiles(config.dataRoot) );
 	    server.add("/sounds/*", new DataFiles(config.dataRoot) );
-	    server.add("/text/*", new DataFiles(config.dataRoot));
+	    server.add("/text/*", new TextFiles(config.dataRoot));
+	    
 	    server.add("/info/*", new DataInfo(config.dataRoot));
+	    
 	    server.add("/img/*", new StaticFiles(config.staticRoot));
 	    server.add("/js/*", new StaticFiles(config.staticRoot) );
 	    server.add("/html/*", new StaticFiles(config.staticRoot) );
 	    server.add("/css/*", new StaticFiles(config.staticRoot) );
+	    
 	    server.add("/", new UpLoadFile(config.dataRoot));
+	    
 	    server.add("/remove", new RemoveData(config.dataRoot));
 	    server.add("/addcat", new AddCategory(config.dataRoot));
 	    server.add("/login", new Login(auth));

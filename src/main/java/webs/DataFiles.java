@@ -22,12 +22,12 @@ import org.apache.commons.lang.StringUtils;
 
 public class DataFiles extends Controller {
 
-    private String root;
+    public final String root;
 
     public DataFiles(String root) {
         this.root = root;
     }
-
+    
     @Override
     public View get(HttpServletRequest request, PathParser pathInfo) throws Exception {
         return new DataFilesView(root+request.getRequestURI());
@@ -35,18 +35,24 @@ public class DataFiles extends Controller {
 
     public View post(HttpServletRequest request, PathParser pathInfo) throws IOException, ServletException, FileUploadException {
         String category = pathInfo.cutNext();
-        String id = pathInfo.cutNext();
-        
-        String base = request.getServletPath().substring(1);
-        File outputDir = new File(root+File.separator+base+File.separator+category);
-
-        if (!outputDir.exists())
+        if (StringUtils.isBlank(category))
             return ErrorView.FORBIDDEN_GENERIC;
         
+        String id = pathInfo.cutNext();
         // Keep in mind, this is non-atomi, non-threadsafe
         if (StringUtils.isBlank(id))
             id = UUID.randomUUID().toString();
         
+        String base = request.getServletPath().substring(1);
+        File outputDir = new File(root+File.separator+base+File.separator+category);
+        
+        if (!outputDir.exists())
+            return ErrorView.FORBIDDEN_GENERIC;
+
+        return saveUploadedFile(request, category, id, base, outputDir);
+    }
+
+    protected View saveUploadedFile(HttpServletRequest request, String category, String id, String base, File outputDir) throws FileUploadException, IOException {
         SaveOneFileManager fileManager = new SaveOneFileManager(request, outputDir , id);
         File newFile = fileManager.getNewFile();
         
@@ -55,7 +61,10 @@ public class DataFiles extends Controller {
         
         fileManager.save();       
         
-        
+        return new JsonView(composeUpdateObject(category, id, base, newFile));
+    }
+
+    protected Map<String, Map<String, String>> composeUpdateObject(String category, String id, String base, File newFile) throws IOException {
         Map<String, String> vals = new HashMap<String, String>();
         String uri = "/"+base+"/"+category+"/"+newFile.getName();
         if ("images".equals(base)){
@@ -68,8 +77,7 @@ public class DataFiles extends Controller {
         
         Map<String, Map<String, String>> responseStub = new HashMap<String, Map<String, String>>();
         responseStub.put("/"+category+"/"+id, vals);
-        
-        return new JsonView(responseStub);
+        return responseStub;
     }
 
     @Override
