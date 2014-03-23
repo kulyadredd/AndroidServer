@@ -34,6 +34,7 @@
 .image {
     margin-bottom: 5px;
     border: 2px solid #DDD;
+    border-radius: 8px;
 }
 .sound {
     margin-bottom: 5px;
