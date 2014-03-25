@@ -170,7 +170,7 @@ app.controller('RenderControls', ['$scope','$http', 'fileUpload', function ($sco
     	error(logErrorHandler);
     }
     
-    $scope.setNewTitle = function(t){
+    $scope.setNewTitle = function(){
     	uri = "/text/"+$scope.ncateg;
     	var config = {headers: {'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8'}};
     	var data = $.param({'title': $scope.newBundle.title});
