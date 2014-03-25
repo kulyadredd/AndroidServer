@@ -37,7 +37,7 @@ public class WebServer {
         server.addFilter(new LogFilter());
         server.addFilter(new LoginFilter(auth, config, Arrays.asList(excludes)));
         
-	    server.add("/images/*", new DataFiles(config.dataRoot) );
+	    server.add("/images/*", new ImageFiles(config.dataRoot) );
 	    server.add("/sounds/*", new DataFiles(config.dataRoot) );
 	    server.add("/text/*", new TextFiles(config.dataRoot));
 	    
