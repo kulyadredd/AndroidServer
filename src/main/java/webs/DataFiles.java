@@ -2,6 +2,7 @@ package webs;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URLDecoder;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -19,6 +20,7 @@ import mvc.View;
 import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringUtils;
+import org.eclipse.jetty.util.UrlEncoded;
 
 public class DataFiles extends Controller {
 
@@ -30,7 +32,7 @@ public class DataFiles extends Controller {
     
     @Override
     public View get(HttpServletRequest request, PathParser pathInfo) throws Exception {
-        return new DataFilesView(root+request.getRequestURI());
+    	return new DataFilesView(root+UrlEncoded.decodeString(request.getRequestURI().toString(), 0, request.getRequestURI().toString().length(), "UTF-8"));
     }
 
     public View post(HttpServletRequest request, PathParser pathInfo) throws IOException, ServletException, FileUploadException {
@@ -82,7 +84,7 @@ public class DataFiles extends Controller {
 
     @Override
     public View delete(HttpServletRequest request) throws Exception {
-        File f = new File(this.root+request.getRequestURI());
+        File f = new File(this.root+UrlEncoded.decodeString(request.getRequestURI().toString(), 0, request.getRequestURI().toString().length(), "UTF-8"));
         
         if (!f.exists())
             return ErrorView.NOT_FOUND_GENERIC;

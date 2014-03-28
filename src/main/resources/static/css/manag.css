@@ -1,0 +1,18 @@
+.categ{
+	padding: 0px;
+	color : black;
+}
+.search-query {
+	width: 226px;
+}
+.list{
+	float: left;
+	padding: 25px;
+}
+.form-inline{
+	padding-top: 15px;
+}
+.selectcat{
+	font-size: 25px;
+	color: black;
+}

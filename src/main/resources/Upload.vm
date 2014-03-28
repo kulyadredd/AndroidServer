@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html ng-app="MyAngularApp">
+<html ng-app="KittnsApp">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css">
         <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap-theme.min.css">
 		<link rel="stylesheet" href="//mgcrea.github.io/angular-strap/static/styles/angular-motion.css">
-        <link rel="stylesheet" href="css/dev.css">
+        <link rel="stylesheet" href="/css/dev.css">
         <script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
         <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.12/angular.min.js"></script>
@@ -13,17 +13,20 @@
         <script src="//code.angularjs.org/1.2.13/angular-sanitize.min.js"></script>
         <script src="//mgcrea.github.io/angular-strap/dist/angular-strap.js"></script>
         <script src="//mgcrea.github.io/angular-strap/dist/angular-strap.tpl.js"></script>
-		<script src="js/upload.js"></script>
-		<script src="js/dataUpload.js"></script>	
+        <script src="//angular-ui.github.io/ui-router/release/angular-ui-router.js"></script>
+        <script src="/js/dnd.js"></script>
+		<script src="/js/kittnsApp.js"></script>
+		<script src="/js/popup.js"></script>
         <title> Upload page </title>
     </head>
-    <body ng-controller="FileUpload">
+    <body ng-controller="RenderControls">
         <div class="navbar navbar-inverse navbar-fixed-top">	                
 	    	<div class="navbar-inner"> 
 	          <div class="container">
 	          		<span class="user-logo glyphicon glyphicon-user"> Hello $name</span>		                    
 		          	<ul class="pull-right">
 		          		<li>
+		          			<a class="btn btn-link glyphicon glyphicon-wrench quit-btn" href="/categ">Category</a>
 		          			<a class="btn btn-link glyphicon glyphicon-log-out quit-btn" href="/logout">Exit </a>
 		          		</li>
 		          	</ul>		         
@@ -31,28 +34,47 @@
 	        </div>
         </div>
         <input type="file" id="file" onchange="angular.element(this).scope().checkFile(this)">
-        <div ng-controller="ServerFile" class="container">
+        <div class="container">
 	    	<div class="row">
 	            <div class="col-md-2">      
 	                <div class="input-group catlist">
 	                    <span class="btn btn-success input-group-addon ownbtn" ng-disabled="addcateg" ng-click="addcat()">add</span>
-	  					<input id="categoryName" type="text" class="form-control" value="{{ncateg}}" ng-model="incat" data-min-length="0" data-animation="am-flip-x" 
+	  					<input id="categoryName" type="text" class="form-control" ng-model="incat" data-min-length="0" data-animation="am-flip-x" 
 	 					 ng-options="aCategory for aCategory in categories | filter: catName" bs-typeahead/>
 	     				<span class="btn btn-danger input-group-addon ownbtn" ng-disabled="listclear" ng-click="clear()">x</span>	     				
-	                </div>	                
-	            </div>			
-        		<div id="view" class="col-md-10" >
-               	 	<div id="{{aValue.id}}" ng-Mouseover="over($event)" ng-Mouseout="out($event)" ng-repeat="aValue in allValues" class="category" correct-repeat-directive>
-						<button  ng-click="del($event)" class="close">&times</button>	
-						<h4 class="text-center">{{aValue.TXT}}</h4>
-						<button  ng-click="del($event)" class="close">&times</button>												
-                        <img  ng-src={{aValue.IMG}} title={{aValue.TXT}} width="176" height="220"/>
-                        <button  ng-click="del($event)" class="close">&times</button>                        
-                        <audio   controls ng-src={{aValue.SOUND}} ></audio>                                            
-                	</div> 
-           		</div>  
+	                </div>               
+	            </div>
+	            <div class="col-md-10" >
+                    <div ng-repeat="aValue in allValues" class="category">
+                        <button ng-if="aValue.TXT" ng-click="toggleModal('/text'+aValue.id+'.txt')" class="close">&times;</button> 
+                        <div ng-if="aValue.TXT" class="text-center imageTitle smallBox">{{aValue.TXT}}</div>
+                        <form ng-if="!aValue.TXT" ng-submit="setTitle(aValue.id, aValue.newTitle)"><input class="titlePlaceHolder smallBox" filedrop on-file-drop="fileDropped('text', aValue.id)" ng-model="aValue.newTitle" type="text" placeholder="Add text or drop txt file"/></form>
+                        
+                        <button ng-if="aValue.IMG" ng-click="toggleModal(aValue.IMG)" class="close">&times;</button>                                              
+                        <img ng-if="aValue.IMG" ng-src={{aValue.IMG}} title="{{aValue.TXT}}" class="image bigBox" width="176" height="220"/>
+                        <div ng-if="!aValue.IMG" class="imagesPlaceHolder bigBox text-center " id="{{aValue.id}}.image" filedrop on-file-drop="fileDropped('images', aValue.id)">Drop image file here</div>
+                        
+                        <button ng-if="aValue.SOUND" ng-click="toggleModal(aValue.SOUND)" class="close">&times;</button>                        
+                        <div ng-if="aValue.SOUND" class="sound smallBox"><audio style="width: 172px;"ng-if="aValue.SOUND" controls ng-src={{aValue.SOUND}}></audio></div>
+                        <div ng-if="!aValue.SOUND" class="soundsPlaceHolder  smallBox" filedrop on-file-drop="fileDropped('sounds', aValue.id)">Drop sound file here</div>
+                    </div> 
+                    <div class="category" ng-if="ncateg">
+                        <form ng-submit="setNewTitle()"><input ng-model="newBundle.title" type="text" filedrop on-file-drop="fileDropped('text', '/'+ncateg)"  class="titlePlaceHolder smallBox" placeholder="Add text or drop txt file"/></form>
+                        <div id="imageDrop" class="imagesPlaceHolder bigBox text-center" filedrop on-file-drop="fileDropped('images', '/'+ncateg)">Drop image file here</div>
+                        <div id="soundDrop" class="soundsPlaceHolder smallBox" filedrop on-file-drop="fileDropped('sounds', '/'+ncateg)">Drop sound file here</div>
+                    </div>
+                </div>  
             </div>         	          
-        </div >
+        </div>
+	    <modal-dialog show='modalShown' width="400px" height="150">
+		    </br>
+		    <p class="text-center">Ви дійсно бажаєте видалити цей об'єкт?</p>
+		    </br>
+		    <div align="center">
+			    <button class="btn btn-danger" ng-click="del('/text'+aValue.id+'.txt')">yes</button>
+			    <button class="btn btn-success" ng-click="toggleModal()">cancel</button>
+	    	</div>
+	    </modal-dialog>
     	<div id="footer">
         	<p class="version text-center">© Company 2014 Version: $v</p>
     	</div>	

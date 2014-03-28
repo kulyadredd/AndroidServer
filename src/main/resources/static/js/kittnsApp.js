@@ -1,10 +1,11 @@
-var app = angular.module('KittnsApp', ['ngSanitize', 'mgcrea.ngStrap', 'ui.dnd'], function() {})
+var app = angular.module('KittnsApp', ['ngSanitize', 'mgcrea.ngStrap', 'ui.dnd', 'ui.popup'], function() {})
 
 app.controller('RenderControls', ['$scope','$http', 'fileUpload', function ($scope, $http, fileUpload) {      
     
     $scope.addcateg = true;
     $scope.listclear = true; 
     $scope.newBundle = { 'title':''};
+    $scope.modalShown = false;
     
     $http.get("/info").
     success(function(data){
@@ -12,6 +13,11 @@ app.controller('RenderControls', ['$scope','$http', 'fileUpload', function ($sco
         $scope.incat = '';
     }).
     error(logErrorHandler);
+    
+    $scope.toggleModal = function(uri) {
+    	$scope.uri = uri;
+    	$scope.modalShown = !$scope.modalShown;
+    };
     
     $scope.clear = function() {
         $scope.incat='';
@@ -22,23 +28,22 @@ app.controller('RenderControls', ['$scope','$http', 'fileUpload', function ($sco
     $scope.changeScope = function(){
     	$scope.newBundle.title = new Date().getTime()+'';
     	console.log($scope.newBundle.title);
-    }
-    
-    $scope.addcat = function() {
+    }    
         
-        $http.get("/addcat?newcategory="+$scope.incat).
+    $scope.addcat = function() {
+        $http.get("/cat?newcategory="+$scope.incat).
         success(function(data, status, headers, config) {
-            $scope.categories.push(data);
-            $scope.ncateg = data;
+            $scope.categories.push($scope.incat);
+            $scope.ncateg = $scope.incat;
         }).
         error(logErrorHandler);
         $scope.visible=false;
     };
-
+    
     $scope.allValues = {};
     
     $scope.$watch('incat', function() {
-        //$scope.wfile = $scope.incat;
+        
         if($scope.incat == ''){
             $scope.addcateg = true;
             $scope.listclear = true;
@@ -141,7 +146,7 @@ app.controller('RenderControls', ['$scope','$http', 'fileUpload', function ($sco
     }
     
     $scope.del = function(uri){
-        $http.delete(uri).
+        $http.delete($scope.uri).
         success(function(data, status, headers, config) {
         	for (var id in data){
         		if ($scope.allValues[id]){
@@ -156,7 +161,8 @@ app.controller('RenderControls', ['$scope','$http', 'fileUpload', function ($sco
         			}
         				
         		}
-            }        	
+            }
+        	$scope.modalShown = !$scope.modalShown;
         }).
         error(logErrorHandler);
     }
