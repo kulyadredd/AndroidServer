@@ -13,7 +13,7 @@ public class StaticFilesViewTest {
 
     @Test
     public void testResourceReading() throws IOException {
-        InputStream in = this.getClass().getResourceAsStream("/static/js/upload.js");
+        InputStream in = this.getClass().getResourceAsStream("/static/js/kittnsApp.js");
         Assert.assertNotNull("input stream is null", in);
         int z = 0;
         try {
