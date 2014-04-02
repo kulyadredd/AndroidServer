@@ -9,7 +9,7 @@ import javax.servlet.Filter;
 import javax.servlet.http.HttpServlet;
 
 import org.eclipse.jetty.jmx.MBeanContainer;
-import org.eclipse.jetty.server.ConnectorStatistics;
+import org.eclipse.jetty.server.Connector;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.nio.SelectChannelConnector;
 import org.eclipse.jetty.servlet.FilterHolder;
@@ -22,20 +22,22 @@ public class HttpServer {
 
     public HttpServer(int port, String contextPath) {
         // Connector connector = new SocketConnector();
-    	SelectChannelConnector connector = new SelectChannelConnector();
-//    	ConnectorStatistics stats = new ConnectorStatistics();
-//    	stats.doStop();
-//      connector.addBean(stats);
-    	int lowResourceMaxIdleTime = connector.getLowResourcesMaxIdleTime();
+        Connector connector = new SelectChannelConnector();
+        connector.setPort(port);
+        connector.setStatsOn(true);
+
+        int lowResourceMaxIdleTime = connector.getLowResourceMaxIdleTime();
+
         System.err.println("http lowResourceMaxIdleTime: " + lowResourceMaxIdleTime);
         connector.setMaxIdleTime(Integer.MAX_VALUE);
-        int maxIdleTime = connector.getLowResourcesMaxIdleTime();
+        int maxIdleTime = connector.getMaxIdleTime();
+
         System.err.println("http maxIdleTime: " + maxIdleTime);
 
         // StdErrLog log = new StdErrLog();
         // log.setDebugEnabled(true);
         // org.mortbay.log.Log.setLog(log);
-        jetty = new Server(port);
+        jetty = new Server();
         jetty.addConnector(connector);
 
         context = new ServletContextHandler(jetty, "/", ServletContextHandler.SESSIONS);

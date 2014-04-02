@@ -4,17 +4,13 @@ TODO:
   * increased buffer?
   * advanced caching?
 * make variable names consistent
+* switch to Jetty v9
 * use category selector from v0.0.13
 * fix layout: elements of same witdth, spaces and paddings for each element.
 
 BUGS:
 
 * position 'x' button on scrolldown
-
-
-PAETIALLY PERFORMED:
-
-* ~~switch to Jetty v9~~
 
 DONE:
 
