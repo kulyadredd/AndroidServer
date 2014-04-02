@@ -7,6 +7,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URLDecoder;
 
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
@@ -38,7 +39,7 @@ public class ImageFiles extends DataFiles {
 		else {
 			int wigth = Integer.parseInt(name);
 			int heigth = Integer.parseInt(pathInfo.cutNext());
-			String filepath = root + "/images/" + UrlEncoded.decodeString(category, 0, category.length(), "UTF-8") + File.separator + pathInfo.cutNext();
+			String filepath = root + "/images/" + URLDecoder.decode(request.getRequestURI(), "UTF-8") + File.separator + pathInfo.cutNext();
 			originalImage = ImageIO.read(new File(filepath));
 			if (originalImage.getWidth() > originalImage.getHeight())
 				normalResolutionImage(wigth, heigth);

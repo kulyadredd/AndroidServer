@@ -1,11 +1,12 @@
 var app = angular.module('KittnsApp', ['ngSanitize', 'mgcrea.ngStrap', 'ui.dnd', 'ui.popup'], function() {})
 
-app.controller('RenderControls', ['$scope','$http', 'fileUpload', function ($scope, $http, fileUpload) {      
+app.controller('RenderControls', ['$scope', '$http', 'fileUpload', function ($scope, $http, fileUpload) {      
     
     $scope.addcateg = true;
     $scope.listclear = true; 
     $scope.newBundle = { 'title':''};
     $scope.modalShown = false;
+    $scope.allValues = {};
     
     $http.get("/info").
     success(function(data){
@@ -18,6 +19,12 @@ app.controller('RenderControls', ['$scope','$http', 'fileUpload', function ($sco
     	$scope.uri = uri;
     	$scope.modalShown = !$scope.modalShown;
     };
+        
+    $scope.openInput = function(type, categ){
+    	$scope.type = type;
+    	$scope.categ = categ;
+    	$('#inFile').click();
+    }
     
     $scope.clear = function() {
         $scope.incat='';
@@ -38,9 +45,7 @@ app.controller('RenderControls', ['$scope','$http', 'fileUpload', function ($sco
         }).
         error(logErrorHandler);
         $scope.visible=false;
-    };
-    
-    $scope.allValues = {};
+    };    
     
     $scope.$watch('incat', function() {
         
@@ -60,7 +65,8 @@ app.controller('RenderControls', ['$scope','$http', 'fileUpload', function ($sco
                 $scope.ncateg = $scope.incat;
                 break;
             } else {
-                $scope.addcateg = false;
+                $scope.addcateg = false;                
+                $scope.ncateg='';
             }
     });
     
@@ -71,7 +77,8 @@ app.controller('RenderControls', ['$scope','$http', 'fileUpload', function ($sco
             $scope.getSounds();
             $scope.getPathTxt();
             $scope.addcateg = true;
-        }
+        } else 
+        	$scope.allValues = '';
     });
     
     function addId(allValues, key){
@@ -128,6 +135,10 @@ app.controller('RenderControls', ['$scope','$http', 'fileUpload', function ($sco
         });
     }
     
+    $scope.fileFromInput = function(element){
+ 		fileUpload.uploadFileToUrl(element.files[0], $scope.type+$scope.categ , modelUpdateCallback);
+ 	}
+    
     $scope.uploadFile = function(){
         fileUpload.uploadFileToUrl($scope.myFile, "/", modelUpdateCallback);
     };
@@ -172,8 +183,7 @@ app.controller('RenderControls', ['$scope','$http', 'fileUpload', function ($sco
     	var config = {headers: {'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8'}};
     	var data = $.param({'title':title});
     	$http.post(uri, data, config).
-    	success(updateModel).
-    	error(logErrorHandler);
+    	success(updateModel);
     }
     
     $scope.setNewTitle = function(){
@@ -201,17 +211,20 @@ app.controller('RenderControls', ['$scope','$http', 'fileUpload', function ($sco
     }
     
     function updateModel(data){
+    	var tmpid = 'id';
     	for (var id in data){
             for (var elementType in data[id]){
-                if (!$scope.allValues[id])
+                if (!$scope.allValues[id]){
                     $scope.allValues[id] = {};
-                
+                    $scope.allValues[id][tmpid] = id;
+                }
                 $scope.allValues[id][elementType] = data[id][elementType];
             } 
         }
     }
     
 }]);
+
 
 app.service('fileUpload', ['$http', function ($http) {
     this.uploadFileToUrl = function(file, uploadUrl, callback){

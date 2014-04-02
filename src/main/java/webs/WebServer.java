@@ -45,11 +45,9 @@ public class WebServer {
 	    
 	    server.add("/img/*", new StaticFiles(config.staticRoot));
 	    server.add("/js/*", new StaticFiles(config.staticRoot) );
-//	    server.add("/html/*", new StaticFiles(config.staticRoot) );
 	    server.add("/css/*", new StaticFiles(config.staticRoot) );
 	    
-	    server.add("/", new UpLoadFile(config.dataRoot));
-	    server.add("/categ", new CategoryManager(config.dataRoot));
+	    server.add("/*", new CategoryManager(config.dataRoot));
 	    
 	    server.add("/remove", new RemoveData(config.dataRoot));
 	    server.add("/cat", new CategoryManipulation(config.dataRoot));

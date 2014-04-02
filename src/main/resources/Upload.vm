@@ -42,7 +42,8 @@
 	  					<input id="categoryName" type="text" class="form-control" ng-model="incat" data-min-length="0" data-animation="am-flip-x" 
 	 					 ng-options="aCategory for aCategory in categories | filter: catName" bs-typeahead/>
 	     				<span class="btn btn-danger input-group-addon ownbtn" ng-disabled="listclear" ng-click="clear()">x</span>	     				
-	                </div>               
+	                </div>
+	                <input id='inFile' type='file' onchange="angular.element(this).scope().fileFromInput(this)" style="display: none;"/>               
 	            </div>
 	            <div class="col-md-10" >
                     <div ng-repeat="aValue in allValues" class="category">
@@ -52,16 +53,16 @@
                         
                         <button ng-if="aValue.IMG" ng-click="toggleModal(aValue.IMG)" class="close">&times;</button>                                              
                         <img ng-if="aValue.IMG" ng-src={{aValue.IMG}} title="{{aValue.TXT}}" class="image bigBox" width="176" height="220"/>
-                        <div ng-if="!aValue.IMG" class="imagesPlaceHolder bigBox text-center " id="{{aValue.id}}.image" filedrop on-file-drop="fileDropped('images', aValue.id)">Drop image file here</div>
+                        <div ng-click="openInput('/images', aValue.id)" ng-if="!aValue.IMG" class="imagesPlaceHolder bigBox text-center " id="{{aValue.id}}.image" filedrop on-file-drop="fileDropped('images', aValue.id)">Drop image file here</div>
                         
                         <button ng-if="aValue.SOUND" ng-click="toggleModal(aValue.SOUND)" class="close">&times;</button>                        
                         <div ng-if="aValue.SOUND" class="sound smallBox"><audio style="width: 172px;"ng-if="aValue.SOUND" controls ng-src={{aValue.SOUND}}></audio></div>
-                        <div ng-if="!aValue.SOUND" class="soundsPlaceHolder  smallBox" filedrop on-file-drop="fileDropped('sounds', aValue.id)">Drop sound file here</div>
+                        <div ng-click="openInput('/sounds', aValue.id)" ng-if="!aValue.SOUND" class="soundsPlaceHolder  smallBox" filedrop on-file-drop="fileDropped('sounds', aValue.id)">Drop sound file here</div>
                     </div> 
                     <div class="category" ng-if="ncateg">
                         <form ng-submit="setNewTitle()"><input ng-model="newBundle.title" type="text" filedrop on-file-drop="fileDropped('text', '/'+ncateg)"  class="titlePlaceHolder smallBox" placeholder="Add text or drop txt file"/></form>
-                        <div id="imageDrop" class="imagesPlaceHolder bigBox text-center" filedrop on-file-drop="fileDropped('images', '/'+ncateg)">Drop image file here</div>
-                        <div id="soundDrop" class="soundsPlaceHolder smallBox" filedrop on-file-drop="fileDropped('sounds', '/'+ncateg)">Drop sound file here</div>
+                        <div ng-click="openInput('/images', '/'+ncateg)" id="imageDrop" class="imagesPlaceHolder bigBox text-center" filedrop on-file-drop="fileDropped('images', '/'+ncateg)">Drop image file here</div>
+                        <div ng-click="openInput('/sounds', '/'+ncateg)" id="soundDrop" class="soundsPlaceHolder smallBox" filedrop on-file-drop="fileDropped('sounds', '/'+ncateg)">Drop sound file here</div>
                     </div>
                 </div>  
             </div>         	          
