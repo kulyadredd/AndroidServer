@@ -23,7 +23,6 @@ public class ResizeImageView implements View {
 	public ResizeImageView(String path, InputStream in) {
 		this.path = Paths.get(path);
 		this.in = in;
-		// TODO Auto-generated constructor stub
 	}
 
 	public void view(HttpServletRequest request, HttpServletResponse response)

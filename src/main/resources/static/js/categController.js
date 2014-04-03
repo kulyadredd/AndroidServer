@@ -19,7 +19,7 @@ angular.module('KittnsApp').controller('CategoryManipulation', ['$scope','$http'
     };
 
 	$scope.renamecat = function(){
-    	$http.get("/cat?oldcategory="+$scope.categoryName+"&renamecategory="+$scope.incatmanip).
+    	$http.get("/category?oldcategory="+$scope.categoryName+"&renamecategory="+$scope.incatmanip).
     	success(function(data){
     		for(var i = 0; i<$scope.categories.length; i++)
     			if($scope.categories[i]==$scope.categoryName)
@@ -30,7 +30,7 @@ angular.module('KittnsApp').controller('CategoryManipulation', ['$scope','$http'
     }
     
     $scope.delcat = function(){
-    	$http.delete("/cat?delcategory="+$scope.categoryName).
+    	$http.delete("/category/"+$scope.categoryName).
     	success(function(data){
     		for(var i = 0; i<$scope.categories.length; i++)
     			if($scope.categories[i]==$scope.categoryName)

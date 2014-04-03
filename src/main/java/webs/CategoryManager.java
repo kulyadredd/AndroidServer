@@ -10,7 +10,6 @@ import mvc.PathParser;
 import mvc.TemplateView;
 import mvc.View;
 
-@SuppressWarnings("serial")
 public class CategoryManager extends Controller {
 
 	private String dataRoot;

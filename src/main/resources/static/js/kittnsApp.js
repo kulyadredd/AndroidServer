@@ -38,7 +38,7 @@ app.controller('RenderControls', ['$scope', '$http', 'fileUpload', function ($sc
     }    
         
     $scope.addcat = function() {
-        $http.get("/cat?newcategory="+$scope.incat).
+        $http.get("/category?newcategory="+$scope.incat).
         success(function(data, status, headers, config) {
             $scope.categories.push($scope.incat);
             $scope.ncateg = $scope.incat;

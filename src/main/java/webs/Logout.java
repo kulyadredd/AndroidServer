@@ -2,15 +2,12 @@ package webs;
 
 import javax.servlet.http.HttpServletRequest;
 
-import users.UserDB;
-
 import auth.AuthService;
 import mvc.Controller;
 import mvc.PathParser;
 import mvc.Redirect;
 import mvc.View;
 
-@SuppressWarnings("serial")
 public class Logout extends Controller {
 	
 	final private AuthService auth;

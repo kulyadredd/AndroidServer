@@ -10,7 +10,6 @@ import mvc.JsonView;
 import mvc.PathParser;
 import mvc.View;
 
-@SuppressWarnings("serial")
 public class CategoryManipulation extends Controller {
 
 	private String dataRoot;
@@ -70,7 +69,7 @@ public class CategoryManipulation extends Controller {
 	}
 	
 	public View delete(HttpServletRequest request) throws Exception {
-		String delcategory = request.getParameter("delcategory");
+		String delcategory = request.getPathInfo();
 
 		File images = new File(dataRoot + File.separator + "images" + File.separator + delcategory);
 		boolean imageCategoryDelete = deleteCategory(images);

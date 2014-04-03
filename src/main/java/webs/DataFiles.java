@@ -21,7 +21,6 @@ import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringUtils;
 
-@SuppressWarnings("serial")
 public class DataFiles extends Controller {
 
     public final String root;

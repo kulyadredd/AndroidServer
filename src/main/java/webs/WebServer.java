@@ -52,7 +52,7 @@ public class WebServer {
 	    server.add("/", new CategoryManager(config.dataRoot));
 	    server.add("/favicon.ico", new StaticFiles(config.staticRoot) );
 	    
-	    server.add("/cat", new CategoryManipulation(config.dataRoot));
+	    server.add("/category/*", new CategoryManipulation(config.dataRoot));
 	    server.add("/login", new Login(auth));
 	    server.add("/logout", new Logout(auth));
 	    

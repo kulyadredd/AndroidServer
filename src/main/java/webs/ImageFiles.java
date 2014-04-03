@@ -16,7 +16,6 @@ import mvc.PathParser;
 import mvc.ResizeImageView;
 import mvc.View;
 
-@SuppressWarnings("serial")
 public class ImageFiles extends DataFiles {
 
 	private int ratiowigth;
