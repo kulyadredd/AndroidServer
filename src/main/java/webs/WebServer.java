@@ -1,8 +1,11 @@
 package webs;
 
+import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Arrays;
+
+import javax.servlet.MultipartConfigElement;
 
 import org.apache.velocity.app.Velocity;
 import org.eclipse.jetty.server.handler.ErrorHandler;
@@ -38,9 +41,10 @@ public class WebServer {
         server.addFilter(new LogFilter());
         server.addFilter(new LoginFilter(auth, config, Arrays.asList(excludes)));
         
-	    server.add("/images/*", new ImageFiles(config.dataRoot) );
-	    server.add("/sounds/*", new DataFiles(config.dataRoot) );
-	    server.add("/text/*", new TextFiles(config.dataRoot));
+	    MultipartConfigElement mce = new MultipartConfigElement("/tmp", 1024*1024*50, 1024*1024*100, 1024*1024*10); // maxFileSize= 50 MB maxRequestSize=100 MB fileSizeThreshold= 10 MB
+        server.add("/images/*", new ImageFiles(config.dataRoot), mce);
+	    server.add("/sounds/*", new DataFiles(config.dataRoot), mce);
+	    server.add("/text/*", new TextFiles(config.dataRoot), new MultipartConfigElement("/tmp", 1048576, 1048576, 262144));
 	    
 	    server.add("/info/*", new DataInfo(config.dataRoot));
 	    

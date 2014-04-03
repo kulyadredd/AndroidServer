@@ -12,13 +12,10 @@ import java.net.URLDecoder;
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 
-import org.eclipse.jetty.util.UrlEncoded;
-
 import mvc.PathParser;
 import mvc.ResizeImageView;
 import mvc.View;
 
-@SuppressWarnings("serial")
 public class ImageFiles extends DataFiles {
 
 	private int ratiowigth;

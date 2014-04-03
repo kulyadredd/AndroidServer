@@ -4,6 +4,7 @@ import java.util.EnumSet;
 
 import javax.servlet.DispatcherType;
 import javax.servlet.Filter;
+import javax.servlet.MultipartConfigElement;
 import javax.servlet.http.HttpServlet;
 
 import org.eclipse.jetty.server.Server;
@@ -37,6 +38,12 @@ public class HttpServer {
 
     public void add(String path, HttpServlet servlet) {
         context.addServlet(new ServletHolder(servlet), path);
+    }
+    
+    public void add(String path, HttpServlet servlet, MultipartConfigElement mce) {
+        ServletHolder holder = new ServletHolder(servlet);
+        holder.getRegistration().setMultipartConfig(mce);
+        context.addServlet(holder, path);
     }
 
     public void addFilter(Filter filter) {

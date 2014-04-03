@@ -12,7 +12,6 @@ import mvc.View;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringUtils;
 
-
 public class TextFiles extends DataFiles {
 
     public TextFiles(String root) {
