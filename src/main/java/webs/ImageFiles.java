@@ -12,8 +12,6 @@ import java.net.URLDecoder;
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 
-import org.eclipse.jetty.util.UrlEncoded;
-
 import mvc.PathParser;
 import mvc.ResizeImageView;
 import mvc.View;
@@ -39,7 +37,7 @@ public class ImageFiles extends DataFiles {
 		else {
 			int wigth = Integer.parseInt(name);
 			int heigth = Integer.parseInt(pathInfo.cutNext());
-			String filepath = root + "/images/" + URLDecoder.decode(request.getRequestURI(), "UTF-8") + File.separator + pathInfo.cutNext();
+			String filepath = root + "/images/" + URLDecoder.decode(category, "UTF-8") + File.separator + pathInfo.cutNext();
 			originalImage = ImageIO.read(new File(filepath));
 			if (originalImage.getWidth() > originalImage.getHeight())
 				normalResolutionImage(wigth, heigth);

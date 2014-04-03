@@ -23,10 +23,7 @@ public class CategoryManager extends Controller {
         HashMap<String, Object> map = new HashMap<String, Object>();
         map.put("name", AuthService.getLoggerUser(request.getSession()).getUsername());
         map.put("v", Version.version());
-        if(request.getRequestURI().endsWith("categ"))
-        	return new TemplateView("CatManag.vm", map);
-        else 
-        	return new TemplateView("Upload.vm", map);
+        return new TemplateView("Upload.vm", map);
     }
 	
 }

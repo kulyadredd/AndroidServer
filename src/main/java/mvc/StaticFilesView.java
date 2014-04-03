@@ -25,6 +25,7 @@ public class StaticFilesView implements View {
     public void view(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String ext = FilenameUtils.getExtension(path);
         response.setContentType(MimeType.getByFileExtension(ext).getMimeType());
+        response.setCharacterEncoding("iso-8859-1");
         writeFile(response.getWriter(), path);
     }
 
