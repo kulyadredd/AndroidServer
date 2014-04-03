@@ -6,6 +6,10 @@ TODO:
 * make variable names consistent
 * use category selector from v0.0.13
 * fix layout: elements of same witdth, spaces and paddings for each element.
+* switch to Jetty v9
+* fixe serverside exceptions on cloud
+* fix layout: elements of same witdth, spaces and paddings for each element.
+* use category selector from v0.0.13
 
 BUGS:
 
@@ -31,3 +35,5 @@ DONE BUGS:
 
 * ~~new bundle placeholder is not removed if category name is cleared manually (using delete/backspace button).~~
 * ~~if category name is cleared using red &times; button - current category images stay, but new bundle placeholder disappears.~~
+* ~~delete &times; floating away form it's position. probably it should appear on top of * correspodning element.~~
+* ~~use category selector from v0.0.13~~

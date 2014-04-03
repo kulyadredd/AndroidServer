@@ -3,6 +3,8 @@ package webs;
 import java.io.File;
 import java.io.IOException;
 import java.net.URLDecoder;
+import java.net.URLEncoder;
+import java.nio.charset.Charset;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -53,7 +55,7 @@ public class DataFiles extends Controller {
         return saveUploadedFile(request, category, id, base, outputDir);
     }
 
-    protected View saveUploadedFile(HttpServletRequest request, String category, String id, String base, File outputDir) throws FileUploadException, IOException {
+    protected View saveUploadedFile(HttpServletRequest request, String category, String id, String base, File outputDir) throws IOException, ServletException {
         SaveOneFileManager fileManager = new SaveOneFileManager(request, outputDir , id);
         File newFile = fileManager.getNewFile();
         

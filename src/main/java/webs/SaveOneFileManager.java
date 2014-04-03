@@ -7,14 +7,12 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.List;
+import java.util.Collection;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.Part;
 
-import org.apache.commons.fileupload.FileItem;
-import org.apache.commons.fileupload.FileUploadException;
-import org.apache.commons.fileupload.disk.DiskFileItemFactory;
-import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 
@@ -23,17 +21,18 @@ public class SaveOneFileManager {
     private InputStream in = null;
     private final File output;
 
-    public SaveOneFileManager(HttpServletRequest request, File outputDir, String id) throws FileUploadException, IOException {
-        List<FileItem> items = new ServletFileUpload(new DiskFileItemFactory()).parseRequest(request);
-        FileItem theFileItem = null;
-        for (FileItem aFileItem : items)
-            if (StringUtils.isNotBlank(aFileItem.getName())){
-                theFileItem = aFileItem;  
+    public SaveOneFileManager(HttpServletRequest request, File outputDir, String id) throws ServletException, IOException {
+        Collection<Part> parts = request.getParts();
+        Part theFilePart = null;
+        
+        for (Part aPart : parts)
+            if (StringUtils.isNotBlank(aPart.getSubmittedFileName())){
+                theFilePart = aPart;  
                 break;
             }
             
-        String fileName = getName(theFileItem.getName());
-        in = theFileItem.getInputStream();
+        String fileName = getName(theFilePart.getSubmittedFileName());
+        in = theFilePart.getInputStream();
         output = new File(outputDir, id + "." + getExtension(fileName));       
     }
 

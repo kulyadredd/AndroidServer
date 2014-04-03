@@ -6,6 +6,7 @@ import java.util.Arrays;
 
 import org.apache.velocity.app.Velocity;
 import org.eclipse.jetty.server.handler.ErrorHandler;
+import org.eclipse.jetty.servlet.DefaultServlet;
 
 import users.UserDB;
 import webs.filters.LogFilter;
@@ -47,7 +48,8 @@ public class WebServer {
 	    server.add("/js/*", new StaticFiles(config.staticRoot) );
 	    server.add("/css/*", new StaticFiles(config.staticRoot) );
 	    
-	    server.add("/*", new CategoryManager(config.dataRoot));
+	    server.add("/", new CategoryManager(config.dataRoot));
+	    server.add("/favicon.ico", new StaticFiles(config.staticRoot) );
 	    
 	    server.add("/remove", new RemoveData(config.dataRoot));
 	    server.add("/cat", new CategoryManipulation(config.dataRoot));
