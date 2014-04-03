@@ -21,6 +21,7 @@ import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringUtils;
 
+@SuppressWarnings("serial")
 public class DataFiles extends Controller {
 
     public final String root;
@@ -53,7 +54,7 @@ public class DataFiles extends Controller {
         return saveUploadedFile(request, category, id, base, outputDir);
     }
 
-    protected View saveUploadedFile(HttpServletRequest request, String category, String id, String base, File outputDir) throws FileUploadException, IOException {
+    protected View saveUploadedFile(HttpServletRequest request, String category, String id, String base, File outputDir) throws IOException, ServletException {
         SaveOneFileManager fileManager = new SaveOneFileManager(request, outputDir , id);
         File newFile = fileManager.getNewFile();
         

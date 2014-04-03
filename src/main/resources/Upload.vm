@@ -17,6 +17,7 @@
         <script src="//angular-ui.github.io/ui-router/release/angular-ui-router.js"></script>
         <script src="/js/dnd.js"></script>
 		<script src="/js/kittnsApp.js"></script>
+		<script src="/js/categController.js"></script>
 		<script src="/js/popup.js"></script>
         <title> Upload page </title>
     </head>

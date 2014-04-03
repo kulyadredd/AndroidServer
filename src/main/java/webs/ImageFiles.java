@@ -25,7 +25,6 @@ public class ImageFiles extends DataFiles {
 
 	public ImageFiles(String root) {
 		super(root);
-		// TODO Auto-generated constructor stub
 	}
 
 	public View get(HttpServletRequest request, PathParser pathInfo)

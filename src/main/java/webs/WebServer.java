@@ -50,8 +50,8 @@ public class WebServer {
 	    server.add("/html/*", new StaticFiles(config.staticRoot) );
 	    
 	    server.add("/", new CategoryManager(config.dataRoot));
+	    server.add("/favicon.ico", new StaticFiles(config.staticRoot) );
 	    
-	    server.add("/remove", new RemoveData(config.dataRoot));
 	    server.add("/cat", new CategoryManipulation(config.dataRoot));
 	    server.add("/login", new Login(auth));
 	    server.add("/logout", new Logout(auth));

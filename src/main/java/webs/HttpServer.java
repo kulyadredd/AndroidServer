@@ -1,17 +1,12 @@
 package webs;
 
-import java.lang.management.ManagementFactory;
 import java.util.EnumSet;
 
-import javax.management.MBeanServer;
 import javax.servlet.DispatcherType;
 import javax.servlet.Filter;
 import javax.servlet.http.HttpServlet;
 
-import org.eclipse.jetty.jmx.MBeanContainer;
-import org.eclipse.jetty.server.Connector;
 import org.eclipse.jetty.server.Server;
-import org.eclipse.jetty.server.nio.SelectChannelConnector;
 import org.eclipse.jetty.servlet.FilterHolder;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
@@ -21,40 +16,12 @@ public class HttpServer {
     private ServletContextHandler context;
 
     public HttpServer(int port, String contextPath) {
-        // Connector connector = new SocketConnector();
-        Connector connector = new SelectChannelConnector();
-        connector.setPort(port);
-        connector.setStatsOn(true);
-
-        int lowResourceMaxIdleTime = connector.getLowResourceMaxIdleTime();
-
-        System.err.println("http lowResourceMaxIdleTime: " + lowResourceMaxIdleTime);
-        connector.setMaxIdleTime(Integer.MAX_VALUE);
-        int maxIdleTime = connector.getMaxIdleTime();
-
-        System.err.println("http maxIdleTime: " + maxIdleTime);
-
-        // StdErrLog log = new StdErrLog();
-        // log.setDebugEnabled(true);
-        // org.mortbay.log.Log.setLog(log);
-        jetty = new Server();
-        jetty.addConnector(connector);
-
+        jetty = new Server(port);
         context = new ServletContextHandler(jetty, "/", ServletContextHandler.SESSIONS);
         context.setContextPath(contextPath);
+        context.setInitParameter("org.eclipse.jetty.servlet.Default.dirAllowed", "false");
         jetty.setHandler(context);
     }
-
-//	private void enableMBeans() {
-//        MBeanServer mBeanServer = ManagementFactory.getPlatformMBeanServer();
-//        MBeanContainer mBeanContainer = new MBeanContainer(mBeanServer);
-//        jetty.addBean(mBeanContainer);
-//        try {
-//            jetty.start();
-//        } catch (Exception e) {
-//            throw new RuntimeException(e);
-//        }
-//    }
 
     public void join() throws InterruptedException {
         jetty.join();
