@@ -2,32 +2,36 @@
 	<div class="row">
 		<div class="col-md-9">
 			<div align="center">
-			<input  type="text" ng-model="search" class="search-query form-control" placeholder="Search category"/>
+				<input type="text" ng-model="search"
+					class="search-query form-control" placeholder="Search category" />
 			</div>
-			<div class="list" ng-repeat="categorie in categories | filter:search ">
-				<span class="btn btn-link categ" data-ng-click="openmanip(categorie)">{{categorie}}</span>
+			<div class="list"
+				ng-repeat="categorie in categories | filter:search ">
+				<span class="btn btn-link categ"
+					data-ng-click="openmanip(categorie)">{{categorie}}</span>
 			</div>
 		</div>
-  		<div class="col-md-3" ng-show="managmenu">
-  			<div>
-  				<button class="btn btn-danger" style="margin-right: 15px;" ng-click="toggleModal()">del</button>
-				<span class="selectcat">"{{categoryName}}"</span>		        		        	 	    									
+		<div class="col-md-3" ng-show="managmenu">
+			<div>
+				<button class="btn btn-danger" style="margin-right: 15px;"
+					ng-click="toggleModal()">del</button>
+				<span class="selectcat">"{{categoryName}}"</span>
 			</div>
 			<form class="form-inline" role="form">
 				<div class="form-group">
-					<input type="text" class="form-control" ng-model="incatmanip"/>
+					<input type="text" class="form-control" ng-model="incatmanip" />
 				</div>
 				<button class="btn btn-success" ng-click="renamecat()">ren</button>
-			</form>		       
-	    </div>
-	</div>	
+			</form>
+		</div>
+	</div>
 </div>
-	        <modal-dialog show='modalShown' width="400px" height="150">
-			</br>
-			<p class="text-center">Ви дійсно бажаєте видалити цю категорію?</p>
-			</br>
-			<div align="center">
-				<button class="btn btn-danger" ng-click="delcat()">yes</button>
-				<button class="btn btn-success" ng-click="toggleModal()">cancel</button>
-			</div>
-		</modal-dialog> 
+<modal-dialog show='modalShown' width="400px" height="150">
+</br>
+<p class="text-center">Ви дійсно бажаєте видалити цю категорію?</p>
+</br>
+<div align="center">
+	<button class="btn btn-danger" ng-click="delcat()">yes</button>
+	<button class="btn btn-success" ng-click="toggleModal()">cancel</button>
+</div>
+</modal-dialog>
