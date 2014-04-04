@@ -27,17 +27,14 @@
 	          <div class="container">
 	          		<span class="user-logo glyphicon glyphicon-user"> Hello $name</span>		                    
 		          	<ul class="pull-right">
-		          		<li>
-		          			<a class="btn btn-link glyphicon glyphicon-home quit-btn" ui-sref="main">Main</a>
-		          			<a class="btn btn-link glyphicon glyphicon-wrench quit-btn" ui-sref="manip">Category</a>
-		          			<a class="btn btn-link glyphicon glyphicon-log-out quit-btn" href="/logout">Exit </a>
-		          		</li>
+		          		<li><a class="btn btn-link glyphicon glyphicon-home quit-btn" ui-sref="main">Main</a></li>
+		          		<li><a class="btn btn-link glyphicon glyphicon-wrench quit-btn" ui-sref="manip">Category</a></li>
+		          		<li><a class="btn btn-link glyphicon glyphicon-log-out quit-btn" href="/logout">Exit </a></li>
 		          	</ul>		          			         
 	          </div>          
 	        </div>
         </div>       
-        <div ui-view>
-        </div>        
+        <div ui-view></div>        
     	<div id="footer">
         	<p class="version text-center">© Company  2014 Version: $v</p>
     	</div>	
