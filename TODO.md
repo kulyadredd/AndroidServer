@@ -8,7 +8,7 @@ TODO:
 
 * fix layout: elements of same witdth, spaces and paddings for each element.
 
-* Refactor packages. All packages should be nested in com.&lt;servicename&gt;.
+
 
 BUGS:
 
@@ -29,6 +29,7 @@ BUGS:
 
 DONE:
 
+* ~~Refactor packages. All packages should be nested in com.&lt;servicename&gt;.~~
 * ~~Categories page: edit should happen in-place. Click on category name, input box with category name, edit, hit enter to save.~~
 * ~~Categories page: delete should appear as &times; sign on the right of evey category.~~
 * ~~use category selector from v0.0.13~~
