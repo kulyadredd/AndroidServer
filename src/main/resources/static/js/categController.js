@@ -17,10 +17,11 @@ angular.module('KittnsApp').controller('CategoryManipulation', ['$scope','$http'
 	$scope.showinput = function(rencateg){
 		for(var i in $scope.categories)
 			if ($scope.categories[i].name==rencateg){
+				$scope.categories[i].newName = rencateg;
 				$scope.categories[i].visible = false;
 				break;
 			}
-		$scope.categoryName = rencateg;
+		$scope.categoryName = rencateg;		
 	};
 	
 	$scope.toggleModal = function(select) {

@@ -5,12 +5,17 @@
 				<input type="text" ng-model="search"
 					class="search-query form-control" placeholder="Search category" />
 			</div>
-			<div class="list" ng-repeat="category in categories | myFilter: search">
-				<button ng-if="category.visible" ng-click="toggleModal(category.name)" class="close">&times;</button>
-				<div ng-if="category.visible" ng-click="showinput(category.name)" class="text-center imageTitle smallBox">{{category.name}}</div>
-				<form ng-if="!category.visible" ng-submit="renamecat (category.newName)">
-				<input class="titlePlaceHolder smallBox" ng-model="category.newName" 
-				type="text" placeholder="Rename category" />
+			<div class="list"
+				ng-repeat="category in categories | myFilter: search">
+				<button ng-if="category.visible"
+					ng-click="toggleModal(category.name)" class="close">&times;</button>
+				<div ng-if="category.visible" ng-click="showinput(category.name)"
+					class="text-center imageTitle smallBox">{{category.name}}</div>
+				<form ng-if="!category.visible"
+					ng-submit="renamecat (category.newName)">
+					<input class="titlePlaceHolder smallBox"
+						ng-model="category.newName" type="text"
+						placeholder="Rename category" />
 			</div>
 		</div>
 	</div>
