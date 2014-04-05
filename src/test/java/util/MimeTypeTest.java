@@ -1,4 +1,4 @@
-package util;
+package com.util;
 
 import static org.junit.Assert.*;
 

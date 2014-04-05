@@ -2,8 +2,8 @@ var app = angular.module('KittnsApp', ['ngSanitize', 'mgcrea.ngStrap', 'ui.dnd',
 
 app.controller('RenderControls', ['$scope', '$http', 'fileUpload', function ($scope, $http, fileUpload) {      
     
-    $scope.addcateg = true;
-    $scope.listclear = true; 
+    $scope.addcateg = false;
+    $scope.listclear = false; 
     $scope.newBundle = { 'title':''};
     $scope.modalShown = false;
     $scope.allValues = {};
@@ -29,7 +29,7 @@ app.controller('RenderControls', ['$scope', '$http', 'fileUpload', function ($sc
     $scope.clear = function() {
         $scope.incat='';
         $scope.ncateg = '';
-        $scope.listclear = true;
+        $scope.listclear = false;
     }
     
     $scope.changeScope = function(){
@@ -50,22 +50,22 @@ app.controller('RenderControls', ['$scope', '$http', 'fileUpload', function ($sc
     $scope.$watch('incat', function() {
         
         if($scope.incat == ''){
-            $scope.addcateg = true;
-            $scope.listclear = true;
+            $scope.addcateg = false;
+            $scope.listclear = false;
             return;
         }
         
         if(!$scope.categories || $scope.categories.length == 0){
-            $scope.addcateg = false;
+            $scope.addcateg = true;
             return;
         }
-        $scope.listclear=false;
+        $scope.listclear=true;
         for (var i = 0; i<$scope.categories.length; i++) 
             if($scope.incat==$scope.categories[i]){
                 $scope.ncateg = $scope.incat;
                 break;
             } else {
-                $scope.addcateg = false;                
+                $scope.addcateg = true;                
                 $scope.ncateg='';
             }
     });
@@ -76,7 +76,7 @@ app.controller('RenderControls', ['$scope', '$http', 'fileUpload', function ($sc
             $scope.getImages();
             $scope.getSounds();
             $scope.getPathTxt();
-            $scope.addcateg = true;
+            $scope.addcateg = false;
         } else 
         	$scope.allValues = '';
     });
@@ -211,12 +211,11 @@ app.controller('RenderControls', ['$scope', '$http', 'fileUpload', function ($sc
     }
     
     function updateModel(data){
-    	var tmpid = 'id';
     	for (var id in data){
             for (var elementType in data[id]){
                 if (!$scope.allValues[id]){
                     $scope.allValues[id] = {};
-                    $scope.allValues[id][tmpid] = id;
+                    $scope.allValues[id]['id'] = id;
                 }
                 $scope.allValues[id][elementType] = data[id][elementType];
             } 

@@ -1,16 +1,12 @@
-п»ї<div class="container">
+<div class="container">
 	<div class="row">
 		<div class="col-md-2">
-			<div class="input-group catlist">
-				<span class="btn btn-success input-group-addon ownbtn"
-					ng-disabled="addcateg" ng-click="addcat()">add</span> <input
-					id="categoryName" type="text" class="form-control" ng-model="incat"
-					data-min-length="0" data-animation="am-flip-x"
-					ng-options="aCategory for aCategory in categories | filter: catName"
-					bs-typeahead /> <span
-					class="btn btn-danger input-group-addon ownbtn"
-					ng-disabled="listclear" ng-click="clear()">x</span>
-			</div>
+			<div class="form-inline" style=" padding-top: 0px;">
+	            <input type="text" class="form-control catlist" ng-model="incat" data-min-length="0" data-animation="am-flip-x" 
+	            ng-options="aCategory for aCategory in categories | filter: catName" bs-typeahead/>
+	            <span class="btn inputclear" ng-show="listclear" ng-click="clear()">x</span>
+	            <button class="btn btn-info addbnt" ng-show="addcateg" ng-click="addcat()">add</button>
+	        </div>
 			<input id='inFile' type='file'
 				onchange="angular.element(this).scope().fileFromInput(this)"
 				style="display: none;" />
@@ -70,7 +66,7 @@
 </div>
 <modal-dialog show='modalShown' width="400px" height="150">
 </br>
-<p class="text-center">Р’Рё РґС–Р№СЃРЅРѕ Р±Р°Р¶Р°С”С‚Рµ РІРёРґР°Р»РёС‚Рё С†РµР№ РѕР±'С”РєС‚?</p>
+<p class="text-center">Ви дійсно бажаєте видалити цей об'єкт?</p>
 </br>
 <div align="center">
 	<button class="btn btn-danger" ng-click="del('/text'+aValue.id+'.txt')">yes</button>

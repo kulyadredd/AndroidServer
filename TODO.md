@@ -5,10 +5,9 @@ TODO:
   * advanced caching?
 * make variable names consistent
 * switch to Jetty v9
-* use category selector from v0.0.13
+
 * fix layout: elements of same witdth, spaces and paddings for each element.
-* Categories page: edit should happen in-place. Click on category name, input box with category name, edit, hit enter to save.
-* Categories page: delete should appear as &times; sign on the right of evey category.
+
 * Refactor packages. All packages should be nested in com.&lt;servicename&gt;.
 
 BUGS:
@@ -30,6 +29,9 @@ BUGS:
 
 DONE:
 
+* ~~Categories page: edit should happen in-place. Click on category name, input box with category name, edit, hit enter to save.~~
+* ~~Categories page: delete should appear as &times; sign on the right of evey category.~~
+* ~~use category selector from v0.0.13~~
 * ~~more category manipulation: delete/rename~~
 * ~~enable non-latin values for category name and bundle title~~
 * ~~warning should appear to confirm the deletion of an element.~~

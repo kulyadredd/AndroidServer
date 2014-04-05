@@ -1,28 +1,17 @@
 ﻿<div class="container">
 	<div class="row">
-		<div class="col-md-9">
+		<div class="col-md-12">
 			<div align="center">
 				<input type="text" ng-model="search"
 					class="search-query form-control" placeholder="Search category" />
 			</div>
-			<div class="list"
-				ng-repeat="categorie in categories | filter:search ">
-				<span class="btn btn-link categ"
-					data-ng-click="openmanip(categorie)">{{categorie}}</span>
+			<div class="list" ng-repeat="category in categories | myFilter: search">
+				<button ng-if="category.visible" ng-click="toggleModal(category.name)" class="close">&times;</button>
+				<div ng-if="category.visible" ng-click="showinput(category.name)" class="text-center imageTitle smallBox">{{category.name}}</div>
+				<form ng-if="!category.visible" ng-submit="renamecat (category.newName)">
+				<input class="titlePlaceHolder smallBox" ng-model="category.newName" 
+				type="text" placeholder="Rename category" />
 			</div>
-		</div>
-		<div class="col-md-3" ng-show="managmenu">
-			<div>
-				<button class="btn btn-danger" style="margin-right: 15px;"
-					ng-click="toggleModal()">del</button>
-				<span class="selectcat">"{{categoryName}}"</span>
-			</div>
-			<form class="form-inline" role="form">
-				<div class="form-group">
-					<input type="text" class="form-control" ng-model="incatmanip" />
-				</div>
-				<button class="btn btn-success" ng-click="renamecat()">ren</button>
-			</form>
 		</div>
 	</div>
 </div>

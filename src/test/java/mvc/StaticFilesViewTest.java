@@ -1,4 +1,4 @@
-package mvc;
+package com.mvc;
 
 import static org.junit.Assert.*;
 

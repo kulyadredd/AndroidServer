@@ -22,18 +22,23 @@
         <title> Upload page </title>
     </head>
     <body>
-        <div class="navbar navbar-inverse navbar-fixed-top">	                
-	    	<div class="navbar-inner"> 
-	          <div class="container">
-	          		<span class="user-logo glyphicon glyphicon-user"> Hello $name</span>		                    
-		          	<ul class="pull-right">
-		          		<li><a class="btn btn-link glyphicon glyphicon-home quit-btn" ui-sref="main">Main</a></li>
-		          		<li><a class="btn btn-link glyphicon glyphicon-wrench quit-btn" ui-sref="manip">Category</a></li>
-		          		<li><a class="btn btn-link glyphicon glyphicon-log-out quit-btn" href="/logout">Exit </a></li>
-		          	</ul>		          			         
-	          </div>          
-	        </div>
-        </div>       
+<div div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <span class="navbar-brand user-logo glyphicon glyphicon-user">$name</span>
+      </div>
+      <div class="collapse navbar-collapse navbar-ex1-collapse">
+        <ul class="nav navbar-nav pull-right">
+	        <li><a class="btn btn-link glyphicon glyphicon-home quit-btn" ui-sref="main">Main</a></li>
+	        <li><a class="btn btn-link glyphicon glyphicon-wrench quit-btn" ui-sref="manip">Category</a></li>
+        	<li><a class="btn btn-link glyphicon glyphicon-log-out quit-btn" href="/logout">Exit </a></li>
+        </ul>
+      </div>
+    </div>     
         <div ui-view></div>        
     	<div id="footer">
         	<p class="version text-center">© Company  2014 Version: $v</p>

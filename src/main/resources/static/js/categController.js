@@ -1,43 +1,70 @@
-angular.module('KittnsApp').controller('CategoryManipulation', ['$scope','$http', function ($scope, $http, fileUpload) { 
+angular.module('KittnsApp').controller('CategoryManipulation', ['$scope','$http', function ($scope, $http) { 
 
 	$scope.managmenu = false;
 	$scope.modalShown = false;
-
-	$scope.openmanip = function (select){
-		$scope.managmenu = true;
-		$scope.categoryName = select;		
-	}
-
+	$scope.categories = {};
+	
 	$http.get("/info").
 	success(function(data){
-	    $scope.categories=data;
+		for(var i=0; i<data.length; i++){
+            $scope.categories[i] = {};
+			$scope.categories[i].name = data[i];
+			$scope.categories[i].visible = true;  
+		}
 	    $scope.incat = '';
-	})
-
-	$scope.toggleModal = function() {
+	});
+	
+	$scope.showinput = function(rencateg){
+		for(var i in $scope.categories)
+			if ($scope.categories[i].name==rencateg){
+				$scope.categories[i].visible = false;
+				break;
+			}
+		$scope.categoryName = rencateg;
+	};
+	
+	$scope.toggleModal = function(select) {
     	$scope.modalShown = !$scope.modalShown;
+    	$scope.categoryName = select;
+    	
     };
-
-	$scope.renamecat = function(){
-    	$http.get("/category?oldcategory="+$scope.categoryName+"&renamecategory="+$scope.incatmanip).
+    
+	$scope.renamecat = function (newName){
+    	$http.get("/category?oldcategory="+$scope.categoryName+"&renamecategory=" + newName).
     	success(function(data){
-    		for(var i = 0; i<$scope.categories.length; i++)
-    			if($scope.categories[i]==$scope.categoryName)
-    				$scope.categories[i] = $scope.incatmanip;
-    		$scope.categoryName = $scope.incatmanip;
-    		$scope.incatmanip='';
+    		for(var i in $scope.categories)
+    			if($scope.categories[i].name == $scope.categoryName){
+    				$scope.categories[i].name = newName;
+    				$scope.categories[i].visible = true;
+    				$scope.search = '';
+    				return;
+    			}   		
     	})
-    }
+    };
     
     $scope.delcat = function(){
     	$http.delete("/category/"+$scope.categoryName).
     	success(function(data){
-    		for(var i = 0; i<$scope.categories.length; i++)
-    			if($scope.categories[i]==$scope.categoryName)
-    				$scope.categories.splice(i, 1);
-    		$scope.categoryName = '';
-    		$scope.managmenu = false;
-    		$scope.modalShown = !$scope.modalShown;
+    		for(var i in $scope.categories)
+    			if($scope.categories[i].name == $scope.categoryName){
+    				delete $scope.categories[i];
+    				$scope.categoryName = '';
+    	    		$scope.modalShown = !$scope.modalShown;
+    	    		$scope.search = '';
+    	    		return;
+    			}
     	})
-    }
+    };
 }]);
+app.filter('myFilter', function() {
+	  return function(categories, search) {
+	    if (!search){
+	        return categories;
+	    }
+	    var result = [];
+	    for(var i in categories)
+	        if (categories[i].name.toString().toLowerCase().search(search) != -1)
+	        	result.push(categories[i]);
+	    return result;
+	  }
+	});

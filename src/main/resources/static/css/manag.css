@@ -7,7 +7,8 @@
 }
 .list{
 	float: left;
-	padding: 25px;
+	padding-top: 25px;
+	padding-right: 10px;
 }
 .form-inline{
 	padding-top: 15px;
@@ -15,4 +16,14 @@
 .selectcat{
 	font-size: 25px;
 	color: black;
+}
+.namecateg {
+	border: 2px solid #DDD;
+	border-radius: 8px;
+	font-size: 15px;
+	width: 176px;
+	height: 30;
+}
+.rencateg{
+	width: 174px;
 }

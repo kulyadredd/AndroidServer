@@ -105,7 +105,7 @@
 								<transformer
 									implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
 									<manifestEntries>
-										<Main-Class>webs.WebServer</Main-Class>
+										<Main-Class>com.webs.WebServer</Main-Class>
 										<Build-Number>${project.version}</Build-Number>
 									</manifestEntries>
 								</transformer>
@@ -139,5 +139,5 @@
 			</plugins>
 		</pluginManagement>
 	</build>
-	<version>0.0.23</version>
+	<version>0.0.24</version>
 </project>
