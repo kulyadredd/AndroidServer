@@ -1,12 +1,10 @@
 ﻿<div class="container">
 	<div class="row">
-		<div class="col-md-12">
-			<div align="center">
-				<input type="text" ng-model="search"
-					class="search-query form-control" placeholder="Search category" />
-			</div>
+		<div class="col-md-12" style="padding-top: 10px;">
+			<input type="text" ng-model="searchcateg"
+				class="search-query form-control" placeholder="Search category" />
 			<div class="list"
-				ng-repeat="category in categories | myFilter: search">
+				ng-repeat="category in categories | myFilter: searchcateg">
 				<button ng-if="category.visible"
 					ng-click="toggleModal(category.name)" class="close">&times;</button>
 				<div ng-if="category.visible" ng-click="showinput(category.name)"
@@ -21,11 +19,11 @@
 	</div>
 </div>
 <modal-dialog show='modalShown' width="400px" height="150">
-</br>
-<p class="text-center">Ви дійсно бажаєте видалити цю категорію?</p>
-</br>
-<div align="center">
-	<button class="btn btn-danger" ng-click="delcat()">yes</button>
-	<button class="btn btn-success" ng-click="toggleModal()">cancel</button>
-</div>
+	</br>
+	<p class="text-center">Ви дійсно бажаєте видалити цю категорію?</p>
+	</br>
+	<div align="center">
+		<button class="btn btn-danger" ng-click="delcat()">yes</button>
+		<button class="btn btn-success" ng-click="toggleModal()">cancel</button>
+	</div>
 </modal-dialog>

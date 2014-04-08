@@ -4,7 +4,6 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css">
         <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap-theme.min.css">
-		<link rel="stylesheet" href="//mgcrea.github.io/angular-strap/static/styles/angular-motion.css">
         <link rel="stylesheet" href="/css/dev.css">
         <link rel="stylesheet" href="/css/manag.css">
         <script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
@@ -29,13 +28,13 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <span class="navbar-brand user-logo glyphicon glyphicon-user">$name</span>
+        <span class="navbar-brand user-logo"><span class="glyphicon glyphicon-user"></span>$name</span>
       </div>
       <div class="collapse navbar-collapse navbar-ex1-collapse">
         <ul class="nav navbar-nav pull-right">
-	        <li><a class="btn btn-link glyphicon glyphicon-home quit-btn" ui-sref="main">Main</a></li>
-	        <li><a class="btn btn-link glyphicon glyphicon-wrench quit-btn" ui-sref="manip">Category</a></li>
-        	<li><a class="btn btn-link glyphicon glyphicon-log-out quit-btn" href="/logout">Exit </a></li>
+	        <li><a class="btn btn-link bar-btn" ui-sref="main"><span class="glyphicon glyphicon-home"></span>Main</a></li>
+	        <li><a class="btn btn-link bar-btn" ui-sref="manip"><span class="glyphicon glyphicon-wrench"></span>Category</a></li>
+        	<li><a class="btn btn-link quit-btn" href="/logout"><span class="glyphicon glyphicon-log-out"></span>Exit</a></li>
         </ul>
       </div>
     </div>     

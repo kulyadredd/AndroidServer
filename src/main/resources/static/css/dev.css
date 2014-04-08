@@ -1,19 +1,32 @@
 .quit-btn {
-	color: orange;
 	font-size: 25px;
+	font-weight: bold;
+	padding-left: 0px;
+	padding-right: 0px;
+	margin-right: 10px;
+}
+
+.bar-btn {
+	font-size: 25px;
+	font-weight: bold;
+	padding-left: 0px;
+	padding-right: 0px;
+}
+
+.glyphicon {
 	margin-right: 10px;
 }
 
 .user-logo {
-	color: orange;
 	word-spacing: -20px;
 	font-size: 25px;
+	font-weight: bold;
 	margin-left: 10px;
 }
 
 .version {
 	font-size: 14, 5px;
-	color: orange;
+	color: #999;
 	margin-top: 5px;
 	margin-bottom: 5px;
 }
@@ -108,24 +121,25 @@
 
 .inputclear {
 	position: fixed;
+	left: 180px;
+	margin-top: 2px;
+	margin-bottom: 0px;
 	border: 0px;
 	padding: 0px;
-	margin-top: 7px;
-	margin-bottom: 7px;
-	left: 175px;
+	font-family: Georgia;
+	font-size: 20px;
 }
 
 .addbnt {
 	position: fixed;
-	left: 190px;
+	left: 200px;
 	padding-left: 0px;
 	padding-right: 0px;
 }
 
 .catlist {
-	position: fixed;
-	width: 170px;
-	margin: auto;
+	margin-left: 5px;
+	width: 176px;
 }
 
 .inTXT {
@@ -221,5 +235,5 @@ audio {
 }
 
 .typeahead {
-	position: fixed;
+	margin-left: 5px;
 }

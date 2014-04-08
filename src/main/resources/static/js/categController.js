@@ -58,13 +58,13 @@ angular.module('KittnsApp').controller('CategoryManipulation', ['$scope','$http'
     };
 }]);
 app.filter('myFilter', function() {
-	  return function(categories, search) {
-	    if (!search){
+	  return function(categories, searchcateg) {
+	    if (!searchcateg){
 	        return categories;
 	    }
 	    var result = [];
 	    for(var i in categories)
-	        if (categories[i].name.toString().toLowerCase().search(search) != -1)
+	        if (categories[i].name.toString().toLowerCase().search(searchcateg) != -1)
 	        	result.push(categories[i]);
 	    return result;
 	  }

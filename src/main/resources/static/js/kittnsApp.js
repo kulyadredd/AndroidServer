@@ -95,7 +95,7 @@ app.controller('RenderControls', ['$scope', '$http', 'fileUpload', function ($sc
                 if (typeof $scope.allValues[key] !== 'object')
                     $scope.allValues[key] = {};
                 
-                $scope.allValues[key].IMG = "/images/"+$scope.ncateg+"/"+data[i];
+                $scope.allValues[key].image = "/images/"+$scope.ncateg+"/"+data[i];
                 addId($scope.allValues, key);                    
             }
         }).
@@ -109,7 +109,7 @@ app.controller('RenderControls', ['$scope', '$http', 'fileUpload', function ($sc
                 var key = "/"+$scope.ncateg+"/"+data[i].replace('.mp3','');
                 if (typeof $scope.allValues[key] !== 'object')
                     $scope.allValues[key] = {};                    
-                $scope.allValues[key].SOUND = "/sounds/"+$scope.ncateg+"/"+data[i];
+                $scope.allValues[key].sound = "/sounds/"+$scope.ncateg+"/"+data[i];
                 addId($scope.allValues, key);                  
             }
         }).
@@ -165,7 +165,7 @@ app.controller('RenderControls', ['$scope', '$http', 'fileUpload', function ($sc
         				if (!data[id][elementType] || data[id][elementType] == "null")
         					$scope.allValues[id][elementType] = undefined;
         			
-        			if (!$scope.allValues[id]['TXT'] && !$scope.allValues[id]['IMG'] && !$scope.allValues[id]['SOUND']){
+        			if (!$scope.allValues[id]['TXT'] && !$scope.allValues[id]['images'] && !$scope.allValues[id]['sound']){
         				$scope.allValues[id]['id'] = undefined; 
         				$scope.allValues[id] = undefined;
         				delete $scope.allValues[id];

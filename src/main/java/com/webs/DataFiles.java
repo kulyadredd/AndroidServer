@@ -67,14 +67,12 @@ public class DataFiles extends Controller {
 
     protected Map<String, Map<String, String>> composeUpdateObject(String category, String id, String base, File newFile) throws IOException {
         Map<String, String> vals = new HashMap<String, String>();
-        String uri = "/"+base+"/"+category+"/"+newFile.getName();
-        if ("images".equals(base)){
-            vals.put("IMG", uri);
-        } else if ("sounds".equals(base)){
-            vals.put("SOUND", uri);
-        } else if ("text".equals(base)){
+        String uri = "/"+base+"/"+category+"/"+newFile.getName();        
+        
+        if ("text".equals(base))
             vals.put("TXT", FileUtils.readFileToString(newFile));
-        }
+        else
+        	vals.put(base.substring(0, base.length()-1),uri);
         
         Map<String, Map<String, String>> responseStub = new HashMap<String, Map<String, String>>();
         responseStub.put("/"+category+"/"+id, vals);
@@ -97,20 +95,16 @@ public class DataFiles extends Controller {
         
         Map<String, String> vals = new HashMap<String, String>();
         String val = "null";
-        if ("images".equals(base)){
-            vals.put("IMG", val);
-        } else if ("sounds".equals(base)){
-            vals.put("SOUND", val);
-        } else if ("text".equals(base)){
+        
+        if ("text".equals(base))
             vals.put("TXT", val);
-        }
+        else
+        	vals.put(base.substring(0, base.length()-1),val);
         
         Map<String, Map<String, String>> responseStub = new HashMap<String, Map<String, String>>();
         responseStub.put(key, vals);
         
         return new JsonView(responseStub);
     }
-    
-    
     
 }

@@ -1,18 +1,22 @@
 ﻿<div class="container">
 	<div class="row">
 		<div class="col-md-2">
-			<div class="form-inline" style=" padding-top: 0px;">
-	            <input type="text" class="form-control catlist" ng-model="incat" data-min-length="0" data-animation="am-flip-x" 
-	            ng-options="aCategory for aCategory in categories | filter: catName" bs-typeahead/>
-	            <span class="btn inputclear" ng-show="listclear" ng-click="clear()">x</span>
-	            <button class="btn btn-info addbnt" ng-show="addcateg" ng-click="addcat()">add</button>
-	        </div>
+			<div style="padding-top: 10px;">
+				<span class="btn inputclear" ng-show="listclear" ng-click="clear()">&times;</span>
+				<button class="btn btn-info addbnt" ng-if="addcateg"
+					ng-click="addcat()">add</button>
+				<input type="text" class="form-control catlist" ng-model="incat"
+					data-min-length="0" data-animation="am-flip-x"
+					ng-options="aCategory for aCategory in categories | filter: catName"
+					bs-typeahead />
+			</div>
 			<input id='inFile' type='file'
 				onchange="angular.element(this).scope().fileFromInput(this)"
 				style="display: none;" />
 		</div>
 		<div class="col-md-10">
-			<div ng-repeat="aValue in allValues" class="category">
+			<div ng-repeat="aValue in allValues" class="category"
+				style="padding-top: 10px;">
 				<button ng-if="aValue.TXT"
 					ng-click="toggleModal('/text'+aValue.id+'.txt')" class="close">&times;</button>
 				<div ng-if="aValue.TXT" class="text-center imageTitle smallBox">{{aValue.TXT}}</div>
@@ -24,28 +28,28 @@
 						placeholder="Add text or drop txt file" />
 				</form>
 
-				<button ng-if="aValue.IMG" ng-click="toggleModal(aValue.IMG)"
+				<button ng-if="aValue.image" ng-click="toggleModal(aValue.image)"
 					class="close">&times;</button>
-				<img ng-if="aValue.IMG" ng-src={{aValue.IMG}} title="{{aValue.TXT}}"
+				<img ng-if="aValue.image" ng-src={{aValue.image}} title="{{aValue.TXT}}"
 					class="image bigBox" width="176" height="220" />
-				<div ng-click="openInput('/images', aValue.id)" ng-if="!aValue.IMG"
+				<div ng-click="openInput('/images', aValue.id)" ng-if="!aValue.image"
 					class="imagesPlaceHolder bigBox text-center "
 					id="{{aValue.id}}.image" filedrop
 					on-file-drop="fileDropped('images', aValue.id)">Drop image
 					file here</div>
 
-				<button ng-if="aValue.SOUND" ng-click="toggleModal(aValue.SOUND)"
+				<button ng-if="aValue.sound" ng-click="toggleModal(aValue.sound)"
 					class="close">&times;</button>
-				<div ng-if="aValue.SOUND" class="sound smallBox">
-					<audio style="width: 172px;" ng-if="aValue.SOUND" controls
-						ng-src={{aValue.SOUND}}></audio>
+				<div ng-if="aValue.sound" class="sound smallBox">
+					<audio style="width: 172px;" ng-if="aValue.sound" controls
+						ng-src={{aValue.sound}}></audio>
 				</div>
 				<div ng-click="openInput('/sounds', aValue.id)"
-					ng-if="!aValue.SOUND" class="soundsPlaceHolder  smallBox" filedrop
+					ng-if="!aValue.sound" class="soundsPlaceHolder  smallBox" filedrop
 					on-file-drop="fileDropped('sounds', aValue.id)">Drop sound
 					file here</div>
 			</div>
-			<div class="category" ng-if="ncateg">
+			<div class="category" ng-if="ncateg" style="padding-top: 10px;">
 				<form ng-submit="setNewTitle()">
 					<input ng-model="newBundle.title" type="text" filedrop
 						on-file-drop="fileDropped('text', '/'+ncateg)"
@@ -65,11 +69,11 @@
 	</div>
 </div>
 <modal-dialog show='modalShown' width="400px" height="150">
-</br>
-<p class="text-center">Ви дійсно бажаєте видалити цей об'єкт?</p>
-</br>
-<div align="center">
-	<button class="btn btn-danger" ng-click="del('/text'+aValue.id+'.txt')">yes</button>
-	<button class="btn btn-success" ng-click="toggleModal()">cancel</button>
-</div>
+	</br>
+	<p class="text-center">Ви дійсно бажаєте видалити цей об'єкт?</p>
+	</br>
+	<div align="center">
+		<button class="btn btn-danger" ng-click="del('/text'+aValue.id+'.txt')">yes</button>
+		<button class="btn btn-success" ng-click="toggleModal()">cancel</button>
+	</div>
 </modal-dialog>
