@@ -15,15 +15,15 @@
 				style="display: none;" />
 		</div>
 		<div class="col-md-10">
-			<div ng-repeat="aValue in allValues" class="category"
+			<div ng-repeat="aValue in allValues| myOrderBy: 'sortBy':false" class="category"
 				style="padding-top: 10px;">
-				<button ng-if="aValue.TXT"
-					ng-click="toggleModal('/text'+aValue.id+'.txt')" class="close">&times;</button>
-				<div ng-if="aValue.TXT" class="text-center imageTitle smallBox">{{aValue.TXT}}</div>
-				<form ng-if="!aValue.TXT"
+				<button ng-if="aValue.label"
+					ng-click="toggleModal('/labels'+aValue.id+'.txt')" class="close">&times;</button>
+				<div ng-if="aValue.label" class="text-center imageTitle smallBox">{{aValue.label}}</div>
+				<form ng-if="!aValue.label"
 					ng-submit="setTitle(aValue.id, aValue.newTitle)">
 					<input class="titlePlaceHolder smallBox" filedrop
-						on-file-drop="fileDropped('text', aValue.id)"
+						on-file-drop="fileDropped('labels', aValue.id)"
 						ng-model="aValue.newTitle" type="text"
 						placeholder="Add text or drop txt file" />
 				</form>
@@ -52,7 +52,7 @@
 			<div class="category" ng-if="ncateg" style="padding-top: 10px;">
 				<form ng-submit="setNewTitle()">
 					<input ng-model="newBundle.title" type="text" filedrop
-						on-file-drop="fileDropped('text', '/'+ncateg)"
+						on-file-drop="fileDropped('labels', '/'+ncateg)"
 						class="titlePlaceHolder smallBox"
 						placeholder="Add text or drop txt file" />
 				</form>

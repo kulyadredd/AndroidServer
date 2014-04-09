@@ -29,7 +29,7 @@ public class CategoryManipulation extends Controller {
 			File sounds = new File(dataRoot + File.separator + "sounds" + File.separator + newcategory);
 			boolean soundsCategoryCreated = sounds.mkdir();
 	
-			File texts = new File(dataRoot + File.separator + "text" + File.separator + newcategory);
+			File texts = new File(dataRoot + File.separator + "labels" + File.separator + newcategory);
 			boolean textsCategoryCreated = texts.mkdir();
 	
 			if (!imageCategoryCreated || !soundsCategoryCreated || !textsCategoryCreated)
@@ -49,8 +49,8 @@ public class CategoryManipulation extends Controller {
 			File renameSounds = new File (dataRoot+ File.separator + "sounds" + File.separator + renameCategory);
 			boolean soundsCategoryRename = renamecategory(oldSounds, renameSounds);
 			
-			File oldTexts = new File (dataRoot+ File.separator + "text" + File.separator + oldCategory);
-			File renameTexts = new File (dataRoot+ File.separator + "text" + File.separator + renameCategory);
+			File oldTexts = new File (dataRoot+ File.separator + "labels" + File.separator + oldCategory);
+			File renameTexts = new File (dataRoot+ File.separator + "labels" + File.separator + renameCategory);
 			boolean textsCategoryRename = renamecategory(oldTexts, renameTexts);
 			
 			if (!imageCategoryRename || !soundsCategoryRename || !textsCategoryRename)
@@ -77,7 +77,7 @@ public class CategoryManipulation extends Controller {
 		File sounds = new File(dataRoot + File.separator + "sounds" + File.separator + delcategory);
 		boolean soundsCategoryDelete = deleteCategory(sounds);
 
-		File texts = new File(dataRoot + File.separator + "text" + File.separator + delcategory);
+		File texts = new File(dataRoot + File.separator + "labels" + File.separator + delcategory);
 		boolean textsCategoryDelete = deleteCategory(texts);
 
 		if (!imageCategoryDelete || !soundsCategoryDelete || !textsCategoryDelete)

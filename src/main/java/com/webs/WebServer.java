@@ -34,7 +34,7 @@ public class WebServer {
         initVelocity();        
         AuthService auth = new AuthService();
         String[] excludes = { "/info/*", "/info", "/images/*", "/sounds/*",
-                "/text/*", "/js/*", "/favicon.ico", LoginFilter.LOGIN_URI };
+                "/labels/*", "/js/*", "/favicon.ico", LoginFilter.LOGIN_URI };
         
         server.addFilter(new LogFilter());
         server.addFilter(new LoginFilter(auth, config, Arrays.asList(excludes)));
@@ -42,7 +42,7 @@ public class WebServer {
 	    MultipartConfigElement mce = new MultipartConfigElement("/tmp", 1024*1024*50, 1024*1024*100, 1024*1024*10); // maxFileSize= 50 MB maxRequestSize=100 MB fileSizeThreshold= 10 MB
         server.add("/images/*", new ImageFiles(config.dataRoot), mce);
 	    server.add("/sounds/*", new DataFiles(config.dataRoot), mce);
-	    server.add("/text/*", new TextFiles(config.dataRoot), new MultipartConfigElement("/tmp", 1048576, 1048576, 262144));
+	    server.add("/labels/*", new TextFiles(config.dataRoot), new MultipartConfigElement("/tmp", 1048576, 1048576, 262144));
 	    
 	    server.add("/info/*", new DataInfo(config.dataRoot));
 	    

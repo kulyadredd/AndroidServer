@@ -66,14 +66,13 @@ public class DataFiles extends Controller {
     }
 
     protected Map<String, Map<String, String>> composeUpdateObject(String category, String id, String base, File newFile) throws IOException {
-        Map<String, String> vals = new HashMap<String, String>();
-        String uri = "/"+base+"/"+category+"/"+newFile.getName();        
-        
-        if ("text".equals(base))
-            vals.put("TXT", FileUtils.readFileToString(newFile));
+       
+    	Map<String, String> vals = new HashMap<String, String>();
+        String uri = "/"+base+"/"+category+"/"+newFile.getName();
+        if ("labels".equals(base))
+            vals.put(base.substring(0, base.length()-1), FileUtils.readFileToString(newFile));
         else
         	vals.put(base.substring(0, base.length()-1),uri);
-        
         Map<String, Map<String, String>> responseStub = new HashMap<String, Map<String, String>>();
         responseStub.put("/"+category+"/"+id, vals);
         return responseStub;
@@ -95,12 +94,7 @@ public class DataFiles extends Controller {
         
         Map<String, String> vals = new HashMap<String, String>();
         String val = "null";
-        
-        if ("text".equals(base))
-            vals.put("TXT", val);
-        else
-        	vals.put(base.substring(0, base.length()-1),val);
-        
+        vals.put(base.substring(0, base.length()-1),val);        
         Map<String, Map<String, String>> responseStub = new HashMap<String, Map<String, String>>();
         responseStub.put(key, vals);
         

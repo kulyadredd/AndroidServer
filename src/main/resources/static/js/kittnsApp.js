@@ -30,13 +30,14 @@ app.controller('RenderControls', ['$scope', '$http', 'fileUpload', function ($sc
         $scope.incat='';
         $scope.ncateg = '';
         $scope.listclear = false;
+        $scope.orderby = 0;
     }
     
     $scope.changeScope = function(){
     	$scope.newBundle.title = new Date().getTime()+'';
     	console.log($scope.newBundle.title);
     }    
-        
+    
     $scope.addcat = function() {
         $http.get("/category?newcategory="+$scope.incat).
         success(function(data, status, headers, config) {
@@ -117,17 +118,17 @@ app.controller('RenderControls', ['$scope', '$http', 'fileUpload', function ($sc
     }
 
     $scope.getPathTxt = function(){
-       $http.get("/info/text/"+$scope.ncateg).success(function (data){ 
+       $http.get("/info/labels/"+$scope.ncateg).success(function (data){ 
             var length = data.length;
             for (var i=0; i < data.length ; i++){
-                $http.get("/text/"+$scope.ncateg+"/"+data[i]).
+                $http.get("/labels/"+$scope.ncateg+"/"+data[i]).
                 success(function(data, status, headers, config){
-                    var key = config.url.replace('/text', '').replace('.txt','');
+                    var key = config.url.replace('/labels', '').replace('.txt','');
                     
                     if (typeof $scope.allValues[key] !== 'object')
                         $scope.allValues[key] = {};
                     
-                    $scope.allValues[key].TXT = data;
+                    $scope.allValues[key].label = data;
                     addId($scope.allValues, key);
                 }).
                 error(logErrorHandler);
@@ -165,7 +166,7 @@ app.controller('RenderControls', ['$scope', '$http', 'fileUpload', function ($sc
         				if (!data[id][elementType] || data[id][elementType] == "null")
         					$scope.allValues[id][elementType] = undefined;
         			
-        			if (!$scope.allValues[id]['TXT'] && !$scope.allValues[id]['images'] && !$scope.allValues[id]['sound']){
+        			if (!$scope.allValues[id]['label'] && !$scope.allValues[id]['image'] && !$scope.allValues[id]['sound']){
         				$scope.allValues[id]['id'] = undefined; 
         				$scope.allValues[id] = undefined;
         				delete $scope.allValues[id];
@@ -179,7 +180,7 @@ app.controller('RenderControls', ['$scope', '$http', 'fileUpload', function ($sc
     }
     
     $scope.setTitle = function(uri, title){
-    	uri = "/text"+uri;
+    	uri = "/labels"+uri;
     	var config = {headers: {'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8'}};
     	var data = $.param({'title':title});
     	$http.post(uri, data, config).
@@ -187,7 +188,7 @@ app.controller('RenderControls', ['$scope', '$http', 'fileUpload', function ($sc
     }
     
     $scope.setNewTitle = function(){
-    	uri = "/text/"+$scope.ncateg;
+    	uri = "/labels/"+$scope.ncateg;
     	var config = {headers: {'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8'}};
     	var data = $.param({'title': $scope.newBundle.title});
     	
@@ -217,13 +218,12 @@ app.controller('RenderControls', ['$scope', '$http', 'fileUpload', function ($sc
                     $scope.allValues[id] = {};
                     $scope.allValues[id]['id'] = id;
                 }
-                $scope.allValues[id][elementType] = data[id][elementType];
+                $scope.allValues[id][elementType] = data[id][elementType];                
             } 
         }
     }
     
 }]);
-
 
 app.service('fileUpload', ['$http', function ($http) {
     this.uploadFileToUrl = function(file, uploadUrl, callback){
@@ -254,3 +254,13 @@ app.config(function($stateProvider, $urlRouterProvider){
             controller: 'CategoryManipulation'
       })
   })
+  
+app.filter('myOrderBy', function() {
+  return function(items, field, reverse) {
+    var filtered = [];
+    angular.forEach(items, function(item) {
+      filtered.push(item);
+    });
+    return filtered;
+  };
+});
