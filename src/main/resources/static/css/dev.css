@@ -120,7 +120,7 @@
 }
 
 .inputclear {
-	position: fixed;
+	position: absolute;
 	left: 180px;
 	margin-top: 2px;
 	margin-bottom: 0px;
@@ -131,10 +131,15 @@
 }
 
 .addbnt {
-	position: fixed;
+	position: absolute;
 	left: 200px;
 	padding-left: 0px;
 	padding-right: 0px;
+}
+
+.searchInput{
+	width: 190px;
+	padding-top: 10px;
 }
 
 .catlist {
@@ -181,7 +186,7 @@ audio {
 }
 
 .close {
-	position: fixed;
+	position: absolute;
 	margin-left: 155px;
 }
 

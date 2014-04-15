@@ -1,5 +1,6 @@
 package com.webs;
 
+import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Arrays;
@@ -35,7 +36,9 @@ public class WebServer {
         AuthService auth = new AuthService();
         String[] excludes = { "/info/*", "/info", "/images/*", "/sounds/*",
                 "/labels/*", "/js/*", "/favicon.ico", LoginFilter.LOGIN_URI };
-        
+        File dirtext = new File(config.dataRoot+File.separator+"text");
+        File dirlabels = new File(config.dataRoot+File.separator+"labels");
+        dirtext.renameTo(dirlabels);
         server.addFilter(new LogFilter());
         server.addFilter(new LoginFilter(auth, config, Arrays.asList(excludes)));
         
