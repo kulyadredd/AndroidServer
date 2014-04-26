@@ -35,12 +35,11 @@ public class WebServer {
         initVelocity();        
         AuthService auth = new AuthService();
         String[] excludes = { "/info/*", "/info", "/images/*", "/sounds/*",
-                "/labels/*", "/js/*", "/favicon.ico", LoginFilter.LOGIN_URI };
-        File dirtext = new File(config.dataRoot+File.separator+"text");
-        File dirlabels = new File(config.dataRoot+File.separator+"labels");
-        dirtext.renameTo(dirlabels);
+                "/labels/*", "/js/*", "/newuser/*", "/favicon.ico", LoginFilter.LOGIN_URI };
         server.addFilter(new LogFilter());
         server.addFilter(new LoginFilter(auth, config, Arrays.asList(excludes)));
+        File UserDir = new File (config.dataRoot+File.separator+"Users");
+        UserDir.mkdir();
         
 	    MultipartConfigElement mce = new MultipartConfigElement("/tmp", 1024*1024*50, 1024*1024*100, 1024*1024*10); // maxFileSize= 50 MB maxRequestSize=100 MB fileSizeThreshold= 10 MB
         server.add("/images/*", new ImageFiles(config.dataRoot), mce);
@@ -56,8 +55,9 @@ public class WebServer {
 	    server.add("/html/*", new StaticFiles(config.staticRoot) );
 	    
 	    server.add("/", new CategoryManager(config.dataRoot));
-	    server.add("/favicon.ico", new StaticFiles(config.staticRoot) );
-	    
+	    server.add("/favicon.ico", new StaticFiles(config.staticRoot));
+	    server.add("/usersinfo", new UsersInfo(config.dataRoot));
+	    server.add("/newuser/*", new ClientUser(config.dataRoot));
 	    server.add("/category/*", new CategoryManipulation(config.dataRoot));
 	    server.add("/login", new Login(auth));
 	    server.add("/logout", new Logout(auth));

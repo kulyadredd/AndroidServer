@@ -1,5 +1,13 @@
 var app = angular.module('KittnsApp', ['ngSanitize', 'mgcrea.ngStrap', 'ui.dnd', 'ui.popup', 'ui.router'], function() {})
 
+app.controller('UserList', ['$scope', '$http', function ($scope, $http) {
+	
+	$http.get("/usersinfo").
+	success(function(data){
+		$scope.users =data;
+    });
+}])
+
 app.controller('RenderControls', ['$scope', '$http', 'fileUpload', function ($scope, $http, fileUpload) {      
     
     $scope.addcateg = false;
@@ -252,6 +260,11 @@ app.config(function($stateProvider, $urlRouterProvider){
             url: "/manipulation",
             templateUrl: "html/catmanag.html",
             controller: 'CategoryManipulation'
+      })
+        .state('users', {
+        url: "/showusers",
+        templateUrl: "html/users.html",
+        controller: 'UserList'
       })
   })
   

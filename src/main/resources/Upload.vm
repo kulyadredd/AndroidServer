@@ -35,7 +35,8 @@
 				<div class="navbar-collapse collapse">
 					<ul class="nav navbar-nav pull-right">
 						<li><a class="btn btn-link bar-btn" ui-sref="main"><span class="glyphicon glyphicon-home"></span>Main</a></li>
-						<li><a class="btn btn-link bar-btn" ui-sref="manip"><span class="glyphicon glyphicon-wrench"></span>Category</a></li>
+						<li><a class="btn btn-link bar-btn" ui-sref="manip"><span class="glyphicon glyphicon-cog"></span>Category</a></li>
+						<li><a class="btn btn-link bar-btn" ui-sref="users"><span class="glyphicon glyphicon-wrench"></span>Users</a></li>
 						<li><a class="btn btn-link quit-btn" href="/logout"><span class="glyphicon glyphicon-log-out"></span>Exit</a></li>
 					</ul>
 				</div>
