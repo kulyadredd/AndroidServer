@@ -16,12 +16,12 @@ import com.mvc.PathParser;
 import com.mvc.View;
 
 public class DataInfo extends Controller{
-	
+
     private String dataRoot;
 	public DataInfo(String dataRoot){
         this.dataRoot = dataRoot;
 	}
-	
+
 	public View get(HttpServletRequest request, PathParser pathInfo)
 			throws Exception {
 	    String rest = pathInfo.getRest().toString();
@@ -29,18 +29,18 @@ public class DataInfo extends Controller{
 			return new JsonView(getCategoryList());
 		else 
 			return new JsonView(getFileList(rest));
-		
+
 	}
 
     private String[] getCategoryList() {	
-        String dirName = dataRoot + File.separator + "images" + File.separator;
+        String dirName = dataRoot + File.separator + "BaseCategory" + File.separator + "images" + File.separator;
         File checkDir = new File(dirName);
         return checkDir.list();
     }
-	
+
 	private String[] getFileList(String valueOfCategories) {
-		
-		String dirName = dataRoot+File.separator+valueOfCategories;
+
+		String dirName = dataRoot + File.separator + "BaseCategory" + File.separator + valueOfCategories;
 		File checkDir = new File (dirName);
 		return checkDir.list();
 	}

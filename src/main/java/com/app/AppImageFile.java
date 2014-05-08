@@ -1,4 +1,4 @@
-package com.webs;
+package com.app;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
@@ -12,20 +12,22 @@ import java.net.URLDecoder;
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 
+import org.eclipse.jetty.servlets.DataRateLimitedServlet;
+
 import com.mvc.PathParser;
 import com.mvc.ResizeImageView;
 import com.mvc.View;
 
-public class ImageFiles extends DataFiles {
-
+public class AppImageFile extends AppDataFile{
+	
 	private int ratiowigth;
 	private int ratioheigth;
 	private BufferedImage originalImage;
-
-	public ImageFiles(String root) {
-		super(root);
+	
+	public AppImageFile(String dataRoot) {
+		super(dataRoot);		
 	}
-
+	
 	public View get(HttpServletRequest request, PathParser pathInfo)
 			throws Exception {
 		String category = pathInfo.cutNext();
@@ -35,7 +37,7 @@ public class ImageFiles extends DataFiles {
 		else {
 			int wigth = Integer.parseInt(name);
 			int heigth = Integer.parseInt(pathInfo.cutNext());
-			String filepath = root+File.separator+"BaseCategory"+"/images/"+URLDecoder.decode(category, "UTF-8") + File.separator+pathInfo.cutNext();
+			String filepath = dataRoot +File.separator+"Users"+File.separator+request.getParameter("id")+"/images/" + URLDecoder.decode(category, "UTF-8") + File.separator + pathInfo.cutNext();
 			originalImage = ImageIO.read(new File(filepath));
 			if (originalImage.getWidth() > originalImage.getHeight())
 				normalResolutionImage(wigth, heigth);
@@ -85,3 +87,4 @@ public class ImageFiles extends DataFiles {
 	}
 
 }
+

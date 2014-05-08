@@ -2,7 +2,7 @@ var app = angular.module('KittnsApp', ['ngSanitize', 'mgcrea.ngStrap', 'ui.dnd',
 
 app.controller('UserList', ['$scope', '$http', function ($scope, $http) {
 	
-	$http.get("/usersinfo").
+	$http.get("/showusers").
 	success(function(data){
 		$scope.users =data;
     });

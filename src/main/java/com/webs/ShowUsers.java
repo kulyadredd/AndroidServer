@@ -8,11 +8,11 @@ import com.mvc.PathParser;
 import com.mvc.View;
 import com.users.UserDB;
 
-public class UsersInfo extends Controller {
+public class ShowUsers extends Controller {
 	
 	private String dataRoot;
 
-	public UsersInfo(String dataRoot) {
+	public ShowUsers(String dataRoot) {
 		this.dataRoot = dataRoot;
 	}
 	

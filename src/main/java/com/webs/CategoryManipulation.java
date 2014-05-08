@@ -21,7 +21,7 @@ public class CategoryManipulation extends Controller {
 
 	public View get(HttpServletRequest request, PathParser pathInfo) throws Exception {
 		if (request.getParameter("id")==null){
-			path = File.separator;
+			path = File.separator + "BaseCategory" + File.separator;
 			if (request.getParameter("newcategory")!=null){
 				newcategory(path, request.getParameter("newcategory"));		
 				return new JsonView(request.getParameter("newcategory"));
@@ -84,7 +84,7 @@ public class CategoryManipulation extends Controller {
 			return true;	
 	}
 	
-	public void createClienDir(String clientDir){
+	public void createClientDir(String clientDir){
 		File sourceDir = new File(dataRoot+File.separator+"Users"+File.separator+clientDir);
 		if(!sourceDir.exists())
 			if (sourceDir.mkdir()){
@@ -100,7 +100,7 @@ public class CategoryManipulation extends Controller {
 	public View delete(HttpServletRequest request) throws Exception {
 		String delcategory = request.getPathInfo();
 		if (request.getParameter("id")==null){
-			path = File.separator;
+			path = File.separator + "BaseCategory" + File.separator;
 			deleteCategory(path, delcategory);
 		}else{
 			path = File.separator + "Users" + File.separator + request.getParameter("id") + File.separator;

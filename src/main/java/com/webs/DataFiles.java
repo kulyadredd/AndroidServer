@@ -31,7 +31,7 @@ public class DataFiles extends Controller {
     
     @Override
     public View get(HttpServletRequest request, PathParser pathInfo) throws Exception {
-    	return new DataFilesView(root+URLDecoder.decode(request.getRequestURI(), "UTF-8"));
+    	return new DataFilesView(root+File.separator+"BaseCategory"+URLDecoder.decode(request.getRequestURI(), "UTF-8"));
     }
 
     public View post(HttpServletRequest request, PathParser pathInfo) throws IOException, ServletException, FileUploadException {
@@ -45,7 +45,7 @@ public class DataFiles extends Controller {
             id = UUID.randomUUID().toString();
         
         String base = request.getServletPath().substring(1);
-        File outputDir = new File(root+File.separator+base+File.separator+category);
+        File outputDir = new File(root+File.separator+"BaseCategory"+File.separator+base+File.separator+category);
         
         if (!outputDir.exists())
             return ErrorView.FORBIDDEN_GENERIC;
@@ -80,7 +80,7 @@ public class DataFiles extends Controller {
 
     @Override
     public View delete(HttpServletRequest request) throws Exception {
-        File f = new File(this.root+URLDecoder.decode(request.getRequestURI(), "UTF-8"));
+        File f = new File(this.root+File.separator+"BaseCategory"+URLDecoder.decode(request.getRequestURI(), "UTF-8"));
         
         if (!f.exists())
             return ErrorView.NOT_FOUND_GENERIC;
