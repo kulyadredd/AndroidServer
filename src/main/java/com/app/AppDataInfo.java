@@ -16,7 +16,7 @@ import com.mvc.View;
 public class AppDataInfo extends Controller {
 	
 	private String dataRoot;
-	private Map<String, String[]> mainCategory = new HashMap<String, String[]>();
+	private Map<String, String[]> category = new HashMap<String, String[]>();
 	
 	public AppDataInfo(String dataRoot) {
 		this.dataRoot = dataRoot;
@@ -29,7 +29,7 @@ public class AppDataInfo extends Controller {
 			getBaseCategoryList();
 			if(!isBlank(request.getParameter("id")))
 				getUserCategoryList(request.getParameter("id"));			
-			return new JsonView(mainCategory);
+			return new JsonView(category);
 		}else 
 			return new JsonView(getFileList(rest, request.getParameter("id")));		
 	}
@@ -37,13 +37,13 @@ public class AppDataInfo extends Controller {
 	private void getBaseCategoryList(){
         String dirName = dataRoot + File.separator + "BaseCategory" + File.separator + "images" + File.separator;
         File checkDir = new File(dirName);
-        mainCategory.put("Base", checkDir.list());
+        category.put("Base", checkDir.list());
 	}
 	
 	private void getUserCategoryList(String id) {
         String dirName = dataRoot + File.separator + "Users" + File.separator + id + File.separator +"images" + File.separator;
         File checkDir = new File(dirName);        
-        mainCategory.put("User", checkDir.list());
+        category.put("User", checkDir.list());
 	}
 	
 	private String[] getFileList(String valueOfCategories, String id) {		
