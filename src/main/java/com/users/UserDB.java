@@ -18,8 +18,6 @@ public class UserDB {
 
 	public static void initDB() {
 		redis = new Jedis(Config.IP_DB, Config.DB_PORT);
-		redis.select(15);
-		redis.flushDB();
 		redis.select(4);
 		redis.flushDB();
 		if (redis.dbSize() == 0) {

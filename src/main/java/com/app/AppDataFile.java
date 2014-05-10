@@ -18,6 +18,7 @@ import com.mvc.PathParser;
 import com.mvc.View;
 import com.webs.SaveOneFileManager;
 
+@SuppressWarnings("serial")
 public class AppDataFile extends Controller{
 	
 	public final String dataRoot;
@@ -27,7 +28,7 @@ public class AppDataFile extends Controller{
 	}
 	
 	public View get(HttpServletRequest request, PathParser pathInfo) throws Exception{
-		return new DataFilesView(dataRoot+File.separator+"Users"+File.separator+request.getParameter("id")+File.separator+URLDecoder.decode(request.getRequestURI().substring(4), "UTF-8"));		
+		return new DataFilesView(dataRoot+File.separator+"Users"+File.separator+pathInfo.cutNext()+File.separator+request.getServletPath().substring(4)+File.separator+URLDecoder.decode(pathInfo.getRest(), "UTF-8"));		
 	}
 	
     public View post(HttpServletRequest request, PathParser pathInfo) throws IOException, ServletException, FileUploadException {
@@ -36,7 +37,8 @@ public class AppDataFile extends Controller{
             return ErrorView.FORBIDDEN_GENERIC;        
         String id = pathInfo.cutNext();       
         String base = request.getServletPath().substring(4);
-        File outputDir = new File(dataRoot+File.separator+"Users"+File.separator+request.getParameter("id")+File.separator+base+File.separator+category);       
+        String userId = pathInfo.cutNext();
+        File outputDir = new File(dataRoot+File.separator+"Users"+File.separator+userId+File.separator+base+File.separator+category);       
         if (!outputDir.exists())
             return ErrorView.FORBIDDEN_GENERIC;
         return saveUploadedFile(request, category, id, base, outputDir);

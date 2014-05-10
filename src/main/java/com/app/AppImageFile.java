@@ -30,14 +30,15 @@ public class AppImageFile extends AppDataFile{
 	
 	public View get(HttpServletRequest request, PathParser pathInfo)
 			throws Exception {
+		String userId = pathInfo.cutNext();
 		String category = pathInfo.cutNext();
-		String name = pathInfo.cutNext();
+		String name = pathInfo.cutNext();		
 		if (name.contains(".png") || name.contains(".jpg"))
 			return super.get(request, pathInfo);
 		else {
 			int wigth = Integer.parseInt(name);
 			int heigth = Integer.parseInt(pathInfo.cutNext());
-			String filepath = dataRoot +File.separator+"Users"+File.separator+request.getParameter("id")+"/images/" + URLDecoder.decode(category, "UTF-8") + File.separator + pathInfo.cutNext();
+			String filepath = dataRoot +File.separator+"Users"+File.separator+userId+"/images/" + URLDecoder.decode(category, "UTF-8") + File.separator + pathInfo.cutNext();
 			originalImage = ImageIO.read(new File(filepath));
 			if (originalImage.getWidth() > originalImage.getHeight())
 				normalResolutionImage(wigth, heigth);

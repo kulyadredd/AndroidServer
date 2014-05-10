@@ -28,7 +28,7 @@ public class AppClientCategory extends Controller {
 		Map<String, String[]> category = new HashMap<String, String[]>();
         String dirName = dataRoot + File.separator + "Users" + File.separator + id + File.separator +"images" + File.separator;
         File checkDir = new File(dirName);        
-        category.put("User", checkDir.list());
+        category.put("user", checkDir.list());
         return category;
 	}
 	
