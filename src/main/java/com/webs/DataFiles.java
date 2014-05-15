@@ -31,7 +31,9 @@ public class DataFiles extends Controller {
     
     @Override
     public View get(HttpServletRequest request, PathParser pathInfo) throws Exception {
-    	return new DataFilesView(root+File.separator+"BaseCategory"+URLDecoder.decode(request.getRequestURI(), "UTF-8"));
+    	if(new File(root+File.separator+"BaseCategory"+URLDecoder.decode(request.getRequestURI(), "UTF-8")).exists())
+    		return new DataFilesView(root+File.separator+"BaseCategory"+URLDecoder.decode(request.getRequestURI(), "UTF-8"));
+    	return null;
     }
 
     public View post(HttpServletRequest request, PathParser pathInfo) throws IOException, ServletException, FileUploadException {

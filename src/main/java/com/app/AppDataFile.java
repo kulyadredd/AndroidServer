@@ -28,7 +28,9 @@ public class AppDataFile extends Controller{
 	}
 	
 	public View get(HttpServletRequest request, PathParser pathInfo) throws Exception{
-		return new DataFilesView(dataRoot+File.separator+"Users"+File.separator+pathInfo.cutNext()+File.separator+request.getServletPath().substring(4)+File.separator+URLDecoder.decode(pathInfo.getRest(), "UTF-8"));		
+		if (new File(dataRoot+File.separator+"Users"+File.separator+pathInfo.cutNext()+File.separator+request.getServletPath().substring(4)+File.separator+URLDecoder.decode(pathInfo.getRest(), "UTF-8")).exists())
+			return new DataFilesView(dataRoot+File.separator+"Users"+File.separator+pathInfo.cutNext()+File.separator+request.getServletPath().substring(4)+File.separator+URLDecoder.decode(pathInfo.getRest(), "UTF-8"));		
+		return null; 
 	}
 	
     public View post(HttpServletRequest request, PathParser pathInfo) throws IOException, ServletException, FileUploadException {

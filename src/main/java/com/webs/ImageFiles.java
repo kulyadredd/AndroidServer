@@ -36,7 +36,10 @@ public class ImageFiles extends DataFiles {
 			int wigth = Integer.parseInt(name);
 			int heigth = Integer.parseInt(pathInfo.cutNext());
 			String filepath = root+File.separator+"BaseCategory"+"/images/"+URLDecoder.decode(category, "UTF-8") + File.separator+pathInfo.cutNext();
-			originalImage = ImageIO.read(new File(filepath));
+			if(new File(filepath).exists())
+				originalImage = ImageIO.read(new File(filepath));
+			else
+				return null;
 			if (originalImage.getWidth() > originalImage.getHeight())
 				normalResolutionImage(wigth, heigth);
 			else

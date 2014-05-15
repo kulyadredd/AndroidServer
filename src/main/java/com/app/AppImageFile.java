@@ -39,7 +39,10 @@ public class AppImageFile extends AppDataFile{
 			int wigth = Integer.parseInt(name);
 			int heigth = Integer.parseInt(pathInfo.cutNext());
 			String filepath = dataRoot +File.separator+"Users"+File.separator+userId+"/images/" + URLDecoder.decode(category, "UTF-8") + File.separator + pathInfo.cutNext();
-			originalImage = ImageIO.read(new File(filepath));
+			if (new File(filepath).exists())
+				originalImage = ImageIO.read(new File(filepath));
+			else 
+				return null;
 			if (originalImage.getWidth() > originalImage.getHeight())
 				normalResolutionImage(wigth, heigth);
 			else

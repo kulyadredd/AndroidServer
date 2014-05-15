@@ -1,13 +1,11 @@
 package com.webs;
 
-import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Arrays;
 
 import javax.servlet.MultipartConfigElement;
 
-import org.apache.commons.io.FileUtils;
 import org.apache.velocity.app.Velocity;
 import org.eclipse.jetty.server.handler.ErrorHandler;
 
@@ -44,29 +42,7 @@ public class WebServer {
         		"/appimages/*", "/appsounds/*", "/applabels/*", "/js/*", "/newuser/*", 
         		"/appinfo*", "/appinfo/*", "/usercateg*","/category/*", "/favicon.ico", LoginFilter.LOGIN_URI };
         server.addFilter(new LogFilter());
-        server.addFilter(new LoginFilter(auth, config, Arrays.asList(excludes))); 
-        
-        File user = new File (config.dataRoot+File.separator+"Users");
-        FileUtils.deleteDirectory(user);
-        File users = new File (config.dataRoot+File.separator+"Users");
-        users.mkdir();
-        File BaseDir = new File (config.dataRoot+File.separator+"BaseCategory");
-        BaseDir.mkdir();
-        File BaseImage = new File (config.dataRoot+File.separator+"BaseCategory"+File.separator+"images");
-        BaseImage.mkdir();
-        File BaseSound = new File (config.dataRoot+File.separator+"BaseCategory"+File.separator+"sounds");
-        BaseSound.mkdir();
-        File BaseText = new File (config.dataRoot+File.separator+"BaseCategory"+File.separator+"labels");
-        BaseText.mkdir();
-        File SourceImage = new File(config.dataRoot+File.separator+"images");
-        File SourceSound = new File(config.dataRoot+File.separator+"sounds");
-        File SourceText = new File(config.dataRoot+File.separator+"labels");
-        FileUtils.copyDirectory(SourceImage, BaseImage);
-        FileUtils.copyDirectory(SourceSound, BaseSound);
-        FileUtils.copyDirectory(SourceText, BaseText);
-        FileUtils.deleteDirectory(SourceImage);
-        FileUtils.deleteDirectory(SourceSound);
-        FileUtils.deleteDirectory(SourceText);
+        server.addFilter(new LoginFilter(auth, config, Arrays.asList(excludes)));         
         
 	    MultipartConfigElement mce = new MultipartConfigElement("/tmp", 1024*1024*50, 1024*1024*100, 1024*1024*10); // maxFileSize= 50 MB maxRequestSize=100 MB fileSizeThreshold= 10 MB
         server.add("/images/*", new ImageFiles(config.dataRoot), mce);
