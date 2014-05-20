@@ -29,8 +29,12 @@ public class Controller extends HttpServlet implements Servlet {
     public View put(HttpServletRequest request, PathParser pathInfo) throws Exception {
         return null;
     }
-
+    
     public View delete(HttpServletRequest request) throws Exception {
+        return delete(request,PathParser.pathInfoParser(request.getPathInfo()));
+    }
+
+    public View delete(HttpServletRequest request, PathParser pathInfo) throws Exception {
         return null;
     }
 
@@ -64,7 +68,7 @@ public class Controller extends HttpServlet implements Servlet {
     protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException,
             IOException {
         try {
-            View view = delete(request);
+            View view = delete(request, pathInfoParser(request.getPathInfo()));
             if (view != null) {
                 view.view(request, response);
             }

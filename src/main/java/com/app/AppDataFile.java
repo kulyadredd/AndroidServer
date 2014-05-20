@@ -46,15 +46,17 @@ public class AppDataFile extends Controller{
 	
     protected View saveUploadedFile(HttpServletRequest request, String category, String id, String base, File outputDir) throws IOException, ServletException {
         SaveOneFileManager fileManager = new SaveOneFileManager(request, outputDir , id);
-        File newFile = fileManager.getNewFile();        
-        if (newFile.exists())
-            return ErrorView.FORBIDDEN_GENERIC;        
+//        File newFile = fileManager.getNewFile();        
+//        if (newFile.exists())
+//            return ErrorView.FORBIDDEN_GENERIC;        
         fileManager.save();             
         return new JsonView(200);
     }
    
-    public View delete(HttpServletRequest request) throws Exception {
-        File f = new File(this.dataRoot+File.separator+"Users"+File.separator+request.getParameter("id")+File.separator+URLDecoder.decode(request.getRequestURI().substring(4), "UTF-8"));        
+    public View delete(HttpServletRequest request, PathParser pathInfo) throws Exception { 
+    	String category = pathInfo.cutNext();
+    	String userId = pathInfo.cutNext();
+        File f = new File(this.dataRoot+File.separator+"Users"+File.separator+userId+File.separator+request.getServletPath().substring(4)+File.separator+URLDecoder.decode(category, "UTF-8")+File.separator+pathInfo.getRest());       
         if (!f.exists())
             return ErrorView.NOT_FOUND_GENERIC;        
         if (!f.delete())
