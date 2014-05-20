@@ -71,7 +71,6 @@ public class WebServer {
 	    server.add("/appimages/*", new AppImageFile(config.dataRoot), mce);
 	    server.add("/appsounds/*", new AppDataFile(config.dataRoot), mce);
 	    server.add("/applabels/*", new AppDataFile(config.dataRoot), new MultipartConfigElement("/tmp", 1048576, 1048576, 262144));
-	    server.add("/deleteCard/*", new AppDataFile(config.dataRoot), mce);
 	    
         System.out.println("v"+Version.version()+" init completed.");
     }

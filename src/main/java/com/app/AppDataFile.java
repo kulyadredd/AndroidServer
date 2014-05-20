@@ -1,3 +1,4 @@
+
 package com.app;
 
 import java.io.File;
@@ -28,7 +29,9 @@ public class AppDataFile extends Controller{
 	}
 	
 	public View get(HttpServletRequest request, PathParser pathInfo) throws Exception{
-		return new DataFilesView(dataRoot+File.separator+"Users"+File.separator+pathInfo.cutNext()+File.separator+request.getServletPath().substring(4)+File.separator+URLDecoder.decode(pathInfo.getRest(), "UTF-8"));		
+		if (new File(dataRoot+File.separator+"Users"+File.separator+pathInfo.cutNext()+File.separator+request.getServletPath().substring(4)+File.separator+URLDecoder.decode(pathInfo.getRest(), "UTF-8")).exists())
+			return new DataFilesView(dataRoot+File.separator+"Users"+File.separator+pathInfo.cutNext()+File.separator+request.getServletPath().substring(4)+File.separator+URLDecoder.decode(pathInfo.getRest(), "UTF-8"));		
+		return null; 
 	}
 	
     public View post(HttpServletRequest request, PathParser pathInfo) throws IOException, ServletException, FileUploadException {
@@ -45,10 +48,7 @@ public class AppDataFile extends Controller{
     }
 	
     protected View saveUploadedFile(HttpServletRequest request, String category, String id, String base, File outputDir) throws IOException, ServletException {
-        SaveOneFileManager fileManager = new SaveOneFileManager(request, outputDir , id);
-//        File newFile = fileManager.getNewFile();        
-//        if (newFile.exists())
-//            return ErrorView.FORBIDDEN_GENERIC;        
+        SaveOneFileManager fileManager = new SaveOneFileManager(request, outputDir , id);        
         fileManager.save();             
         return new JsonView(200);
     }
